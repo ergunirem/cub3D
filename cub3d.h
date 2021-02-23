@@ -6,7 +6,7 @@
 /*   By: icikrikc <icikrikc@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/10 14:36:42 by icikrikc      #+#    #+#                 */
-/*   Updated: 2021/02/21 16:31:26 by icikrikc      ########   odam.nl         */
+/*   Updated: 2021/02/23 21:00:55 by icikrikc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,10 @@
 # define EVENT_MOUSE_MOVE		6
 # define EVENT_EXIT				17
 
+# define TRUE					0 //problem with other macros?
+# define FALSE					1
+
+
 typedef struct  s_image {
     void        *img;
     char        *addr;
@@ -37,8 +41,10 @@ typedef struct  s_image {
 }               t_image;
 
 typedef struct  s_map {
+	int			map_started;
 	int			floor_color;
 	int			ceiling_color;
+	char		*map_array;
 }				t_map;
 
 typedef struct  s_tex {
@@ -67,8 +73,10 @@ typedef struct  s_window {
 
 //proper funcs
 int		parse(char *file_name, t_window *window);
+void	parse_texture(t_window *window, t_image *img, char *line);
 void	parse_resolution(t_window *window, char *line);
 void	parse_color(t_window *window, char *line);
+void	parse_map(t_window *window, char *line, t_list *map_list);
 
 void	exit_w_message(char *msg, int window_open, t_window *window);
 

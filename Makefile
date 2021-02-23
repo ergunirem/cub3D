@@ -6,7 +6,7 @@
 #    By: icikrikc <icikrikc@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2021/02/10 14:12:56 by icikrikc      #+#    #+#                  #
-#    Updated: 2021/02/21 10:23:54 by icikrikc      ########   odam.nl          #
+#    Updated: 2021/02/23 19:42:37 by icikrikc      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -59,8 +59,7 @@ BLUE = \033[38;5;4m
 
 SRCS	=	utils/gnl/get_next_line.c utils/gnl/get_next_line_utils.c \
 			main.c \
-			parse.c \
-			parse_color_size.c \
+			parse.c parse_color_size.c parse_map.c\
 			error.c \
 
 OBJS	= $(SRCS:.c=.o)
@@ -80,19 +79,21 @@ all:	$(NAME)
 .PHONY:	clean fclean re bonus bench bclean
 
 $(NAME):	$(OBJS)
-	$(MAKE) -C utils/libft
+	$(MAKE) bonus -C utils/libft
 	$(MAKE) -C minilibx_opengl
 	gcc $(FLAGS) -o $(NAME) $(OBJS) -L utils/libft -lft -L$(MLX_DIR) -lmlx -framework OpenGL -framework AppKit
 
 clean:
 	@echo "$(RED)Removing all object files...$(NORMAL)"
 	rm -f $(OBJS)
+	make clean -C ./utils/libft
 	@echo "$(GREEN)Succesfully removed all object files!$(NORMAL)"
 
 fclean: clean
 	@echo "$(RED)Removing library...$(NORMAL)"
 	rm -f $(NAME)
 	rm -f screenshot.bmp
+	rm -f ./utils/libft/libft.a
 	@echo "$(GREEN)Successfully removed library!$(NORMAL)"
 
 re: fclean all
