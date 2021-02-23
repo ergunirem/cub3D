@@ -6,7 +6,7 @@
 /*   By: icikrikc <icikrikc@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/20 12:47:23 by icikrikc      #+#    #+#                 */
-/*   Updated: 2021/02/21 22:18:10 by icikrikc      ########   odam.nl         */
+/*   Updated: 2021/02/23 17:45:09 by icikrikc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,19 +25,21 @@ void	validate_input(int argc, char **argv, t_window *window)
 	int len;
 
 	if (argc == 1)
-		exit_w_message("Error: No argument provided\n", 1, window);
+		exit_w_message("No argument provided\n", 1, window);
 	if (argc > 3)
-		exit_w_message("Error: More than 2 arguments\n", 1, window);
+		exit_w_message("More than 2 arguments\n", 1, window);
 	if (argv[1])
 	{
-		len = ft_strlen(argv[1]); //what if len < 4?still error
-		if (len > 4 && (argv[1][len - 4] != '.' || argv[1][len - 3] != 'c' || argv[1][len - 2] != 'u' || argv[1][len - 1] != 'b'))
-			exit_w_message("Error: .cub extension needed!\n", 1, window);
+		len = ft_strlen(argv[1]);
+		if (len >= 4 && (argv[1][len - 4] != '.' || argv[1][len - 3] != 'c' || argv[1][len - 2] != 'u' || argv[1][len - 1] != 'b'))
+			exit_w_message(".cub extension needed!\n", 1, window);
+		else if (len < 4)
+			exit_w_message(".cub extension needed!\n", 1, window);
 	}
 	if (argc == 3)
 	{
 		if (ft_strncmp(argv[2], "--save", 7))
-			exit_w_message("Error: Invalid screenshot argument\n", 1, window);
+			exit_w_message("Invalid screenshot argument\n", 1, window);
 		else
 			window->screenshot = 1;
 	}
@@ -62,6 +64,7 @@ int		main(int argc, char **argv)
 	window.textures->east = &east;
 	window.textures->west = &west;
 	window.textures->sprite = &sprite;
+	window.map->map_started = FALSE;
 	// window.mlx = mlx_init();
 	// window.win = mlx_new_window(window.mlx, 640, 480, "cub3D");
 	parse(argv[1], &window); //segfault after writing check_input?
