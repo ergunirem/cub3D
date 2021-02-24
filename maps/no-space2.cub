@@ -1,0 +1,18 @@
+S ./textures/pillar.xpm
+R 900 600
+H ./textures/health.xpm
+NO ./textures/north.xpm
+SO ./textures/south.xpm
+WE ./textures/west.xpm
+EA ./textures/east.xpm
+F 184,113,39
+C 51,198,227
+
+111111111111111111
+111000000000000001
+10000000100000001
+10000000000000001
+10000000000000N01
+10000000000000001
+10000111111111001
+11111        111111111111
