@@ -37,6 +37,7 @@ REG_SOURCE_FILES =		ft_atoi.c \
 						ft_xtoa.c \
 						ft_iswhitespace.c \
 						ft_putstr.c \
+						ft_lstfree.c \
 
 BONUS_SOURCE_FILES =	ft_lstnew.c \
 						ft_lstadd_front.c \

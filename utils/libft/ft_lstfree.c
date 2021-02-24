@@ -1,28 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   ft_lstadd_back.c                                   :+:    :+:            */
+/*   ft_lstfree.c                                       :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: icikrikc <icikrikc@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2020/11/17 13:15:52 by icikrikc      #+#    #+#                 */
-/*   Updated: 2021/02/24 17:21:40 by icikrikc      ########   odam.nl         */
+/*   Created: 2020/11/17 13:15:28 by icikrikc      #+#    #+#                 */
+/*   Updated: 2021/02/24 17:57:42 by icikrikc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include <stdlib.h>
 
-void	ft_lstadd_back(t_list **lst, t_list *new)
+void	ft_lstfree(t_list **ptr_lst)
 {
-	t_list *last;
+	t_list	*temp;
 
-	if (lst == NULL || new == NULL)
+	if (!ptr_lst || !*ptr_lst)
 		return ;
-	if (*lst == NULL)
+	while (*ptr_lst)
 	{
-		*lst = new;
-		return ;
+		temp = (*ptr_lst)->next;
+		free((*ptr_lst)->content);
+		free(*ptr_lst);
+		*ptr_lst = temp;
 	}
-	last = ft_lstlast(*lst);
-	last->next = new;
+	return ;
 }

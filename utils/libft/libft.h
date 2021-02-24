@@ -6,7 +6,7 @@
 /*   By: icikrikc <icikrikc@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/11/04 13:43:20 by icikrikc      #+#    #+#                 */
-/*   Updated: 2021/02/23 17:21:41 by icikrikc      ########   odam.nl         */
+/*   Updated: 2021/02/24 17:53:43 by icikrikc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,5 +71,6 @@ char			*ft_xtoa(unsigned long long int nbr);
 char			*ft_uitoa(unsigned int nbr);
 int				ft_iswhitespace(int c);
 void			ft_putstr(char *s);
+void			ft_lstfree(t_list **ptr_lst);
 
 #endif
