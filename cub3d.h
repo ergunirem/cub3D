@@ -6,7 +6,7 @@
 /*   By: icikrikc <icikrikc@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/10 14:36:42 by icikrikc      #+#    #+#                 */
-/*   Updated: 2021/02/23 21:00:55 by icikrikc      ########   odam.nl         */
+/*   Updated: 2021/02/24 21:33:32 by icikrikc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,11 @@ typedef struct  s_map {
 	int			map_started;
 	int			floor_color;
 	int			ceiling_color;
-	char		*map_array;
+	char		**map_array;
+	int			max_row;
+	int			max_col;
+	int			row_pos;
+	int			col_pos;
 }				t_map;
 
 typedef struct  s_tex {
@@ -77,6 +81,7 @@ void	parse_texture(t_window *window, t_image *img, char *line);
 void	parse_resolution(t_window *window, char *line);
 void	parse_color(t_window *window, char *line);
 void	parse_map(t_window *window, char *line, t_list *map_list);
+void	flood_fill(t_window *window, int row, int col);
 
 void	exit_w_message(char *msg, int window_open, t_window *window);
 

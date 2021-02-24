@@ -6,7 +6,7 @@
 /*   By: icikrikc <icikrikc@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/20 12:47:23 by icikrikc      #+#    #+#                 */
-/*   Updated: 2021/02/23 17:45:09 by icikrikc      ########   odam.nl         */
+/*   Updated: 2021/02/24 21:46:46 by icikrikc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,10 +65,17 @@ int		main(int argc, char **argv)
 	window.textures->west = &west;
 	window.textures->sprite = &sprite;
 	window.map->map_started = FALSE;
+	window.map->row_pos = 0;
+	window.map->col_pos = 0;
 	// window.mlx = mlx_init();
 	// window.win = mlx_new_window(window.mlx, 640, 480, "cub3D");
 	parse(argv[1], &window); //segfault after writing check_input?
-
+	// 	int i = 0;
+	// while (i < map.row)
+	// {
+	// 	printf("%s\n", map.map_array[i]);
+	// 	i++;
+	// }
 
 	// mlx_loop(window.mlx);
 	return (0);
