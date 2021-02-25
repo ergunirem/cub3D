@@ -6,7 +6,7 @@
 /*   By: icikrikc <icikrikc@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/20 12:47:23 by icikrikc      #+#    #+#                 */
-/*   Updated: 2021/02/24 21:46:46 by icikrikc      ########   odam.nl         */
+/*   Updated: 2021/02/25 22:05:38 by icikrikc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,12 @@ int		main(int argc, char **argv)
 	t_image		sprite;
 
 	validate_input(argc, argv, &window);
+	north.endian = -1;
+	south.endian = -1;
+	east.endian = -1;
+	west.endian = -1;
+	sprite.endian = -1;
+
 	window.map = &map;
 	window.textures = &textures;
 	window.textures->north = &north;
@@ -67,6 +73,10 @@ int		main(int argc, char **argv)
 	window.map->map_started = FALSE;
 	window.map->row_pos = 0;
 	window.map->col_pos = 0;
+	window.map->max_row = 0;
+	window.map->max_col = 0;
+	window.map->floor_color = -1;
+	window.map->ceiling_color = -1;
 	// window.mlx = mlx_init();
 	// window.win = mlx_new_window(window.mlx, 640, 480, "cub3D");
 	parse(argv[1], &window); //segfault after writing check_input?
