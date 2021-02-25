@@ -6,7 +6,7 @@
 #    By: icikrikc <icikrikc@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2021/02/10 14:12:56 by icikrikc      #+#    #+#                  #
-#    Updated: 2021/02/24 20:39:10 by icikrikc      ########   odam.nl          #
+#    Updated: 2021/02/25 10:57:55 by icikrikc      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -59,9 +59,8 @@ BLUE = \033[38;5;4m
 
 SRCS	=	utils/gnl/get_next_line.c utils/gnl/get_next_line_utils.c \
 			main.c \
-			parse.c parse_color_size.c parse_map.c\
+			parse.c parse_other.c parse_map.c\
 			error.c \
-			flood.c \
 
 OBJS	= $(SRCS:.c=.o)
 

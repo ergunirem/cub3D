@@ -6,7 +6,7 @@
 /*   By: icikrikc <icikrikc@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/10 14:36:42 by icikrikc      #+#    #+#                 */
-/*   Updated: 2021/02/24 21:33:32 by icikrikc      ########   odam.nl         */
+/*   Updated: 2021/02/25 16:42:28 by icikrikc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,8 +81,11 @@ void	parse_texture(t_window *window, t_image *img, char *line);
 void	parse_resolution(t_window *window, char *line);
 void	parse_color(t_window *window, char *line);
 void	parse_map(t_window *window, char *line, t_list *map_list);
-void	flood_fill(t_window *window, int row, int col);
+void	save_map(t_window *window, t_map *map, t_list *map_list);
+void	check_start_pos(t_window *window);
+void	check_map(t_window *window, int row, int col);
 
 void	exit_w_message(char *msg, int window_open, t_window *window);
+void	ft_exit(char *msg);
 
 #endif
