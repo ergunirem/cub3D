@@ -6,7 +6,7 @@
 /*   By: icikrikc <icikrikc@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/10 14:36:42 by icikrikc      #+#    #+#                 */
-/*   Updated: 2021/02/25 16:42:28 by icikrikc      ########   odam.nl         */
+/*   Updated: 2021/02/26 21:15:25 by icikrikc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,5 +87,7 @@ void	check_map(t_window *window, int row, int col);
 
 void	exit_w_message(char *msg, int window_open, t_window *window);
 void	ft_exit(char *msg);
+void	init_map(t_window *window, t_map *map);
+void	init_textures(t_window *window, t_tex *textures);
 
 #endif
