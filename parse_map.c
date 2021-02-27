@@ -6,7 +6,7 @@
 /*   By: icikrikc <icikrikc@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/23 15:30:38 by icikrikc      #+#    #+#                 */
-/*   Updated: 2021/02/25 10:56:16 by icikrikc      ########   odam.nl         */
+/*   Updated: 2021/02/26 20:32:24 by icikrikc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,13 @@ void	save_map(t_window *window, t_map *map, t_list *map_list)
 			j++;
 		}
 		map->map_array[i][j] = '\0';
+		j++;
+		while (j < map->max_col)
+		{
+			map->map_array[i][j] = ' ';
+			j++;
+		}
+		map->map_array[i][j] = '\0';
 		map_list = map_list->next;
 		i++;
 	}
@@ -93,25 +100,35 @@ void	check_start_pos(t_window *window)
 /*
  * This function implements flood fiil alghorithm which is
  * one of the easiest and quickest way to check map validity
+ * 1st if: for out of bounds
+ * 2nd if: there is a wall or if i have been there
+ * 3rd if: if it's a space, throw error
+ * 4th and 5th if: if it's a zero on borders, throw error
+ * Then, mark the point with 'X' so that I know if player passed through it.
+ * Then by calling func recursively player can either go south or north
+ * or east or west
 */
 
 void	check_map(t_window *window, int row, int col)
 {
-	t_map *map;
+	t_map	*map;
 
 	map = window->map;
-	if (row < 0 || col < 0 || row > map->max_row || col > map->max_col) /*Out of bounds */
+	if (row < 0 || col < 0 || row > map->max_row || col > map->max_col)
 		return ;
-	if(map->map_array[row][col] == '1' || map->map_array[row][col] == 'X') // if there is a wall or if i have been there
+	if (map->map_array[row][col] == '1' || map->map_array[row][col] == 'X')
 		return ;
-	if(map->map_array[row][col] == '\0') // to avoid abort errors
-		return ;
-	if(map->map_array[row][col] == ' ') // if it's a space throw error
-		exit_w_message("Map is not surrounded by walls\n", 1, window) ;
-	map->map_array[row][col] = 'X'; // mark the point so that I know if I passed through it.
-	check_map(window, row + 1, col);  // then i can either go south
-	check_map(window, row - 1, col);  // or north
-	check_map(window, row, col + 1);  // or east
-	check_map(window, row, col - 1);  // or west
+	if (map->map_array[row][col] == ' ')
+		exit_w_message("Map is not surrounded by walls\n", 1, window);
+	if ((row == 0 || col == 0) && map->map_array[row][col] == '0')
+		exit_w_message("Map is not surrounded by walls\n", 1, window);
+	if ((row == map->max_row - 1 || col == map->max_col - 1)
+		&& map->map_array[row][col] == '0')
+		exit_w_message("Map is not surrounded by walls\n", 1, window);
+	map->map_array[row][col] = 'X';
+	check_map(window, row + 1, col);
+	check_map(window, row - 1, col);
+	check_map(window, row, col + 1);
+	check_map(window, row, col - 1);
 	return ;
 }
