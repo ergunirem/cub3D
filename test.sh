@@ -67,3 +67,18 @@ echo -e "${PURPLE}Invalid char in map ${NORMAL}"
 
 echo -e "${PURPLE}Info Order: Map is not the last info${NORMAL}"
 ./cub3D ./maps/invalid-char.cub
+
+echo -e "${YELLOW}Zero's at rightest border${NORMAL}"
+./cub3D ./maps/zero-borders-right.cub
+
+echo -e "${YELLOW}Zero's at leftest border${NORMAL}"
+./cub3D ./maps/zero-borders-left.cub
+
+echo -e "${YELLOW}Zero's at top border${NORMAL}"
+./cub3D ./maps/zero-borders-top.cub
+
+echo -e "${YELLOW}Zero's at bottom border${NORMAL}"
+./cub3D ./maps/zero-borders-bottom.cub
+
+echo -e "${YELLOW}Spaces inside map that are reachable${NORMAL}"
+./cub3D ./maps/not-surrounded.cub
