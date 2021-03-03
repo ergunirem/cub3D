@@ -10,7 +10,7 @@ int key_released(int keycode, void *param)
 
 }
 
-int exit(void *param)
+int exit_game(void *param)
 {
 
 }

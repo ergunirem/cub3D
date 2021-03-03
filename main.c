@@ -6,7 +6,7 @@
 /*   By: icikrikc <icikrikc@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/20 12:47:23 by icikrikc      #+#    #+#                 */
-/*   Updated: 2021/02/27 07:56:22 by icikrikc      ########   odam.nl         */
+/*   Updated: 2021/03/03 17:54:40 by icikrikc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,55 +25,60 @@ void	validate_input(int argc, char **argv, t_window *window)
 	int	len;
 
 	if (argc == 1)
-		exit_w_message("No argument provided\n", 1, window);
+		ft_exit("No argument provided\n");
 	if (argc > 3)
-		exit_w_message("More than 2 arguments\n", 1, window);
+		ft_exit("More than 2 arguments\n");
 	if (argv[1])
 	{
 		len = ft_strlen(argv[1]);
 		if (len >= 4 && (argv[1][len - 4] != '.' || argv[1][len - 3] != 'c'
 			|| argv[1][len - 2] != 'u' || argv[1][len - 1] != 'b'))
-			exit_w_message(".cub extension needed!\n", 1, window);
+			ft_exit(".cub extension needed!\n");
 		else if (len < 4)
-			exit_w_message(".cub extension needed!\n", 1, window);
+			ft_exit(".cub extension needed!\n");
 	}
 	if (argc == 3)
 	{
 		if (ft_strncmp(argv[2], "--save", 7))
-			exit_w_message("Invalid screenshot argument\n", 1, window);
+			ft_exit("Invalid screenshot argument\n");
 		else
 			window->screenshot = 1;
 	}
 }
 
+t_window	*init_window(void)
+{
+	t_window *new_window;
+
+	new_window = (t_window*)malloc(sizeof(t_window));
+	if (!new_window)
+		ft_exit("init malloc failed\n");
+	ft_bzero(new_window, sizeof(t_window));
+	new_window->mlx = mlx_init();
+	if (!new_window->mlx)
+		ft_exit("mlx_init failed\n");
+	new_window->height = 0;
+	new_window->width = 0;
+	new_window->screenshot = 0;
+	return (new_window);
+
+}
 int	main(int argc, char **argv)
 {
-	t_window 	window;
-	t_map		map;
-	t_tex		textures;
-	t_image		north;
-	t_image		south;
-	t_image		east;
-	t_image		west;
-	t_image		sprite;
+	t_window 	*window;
 
-	validate_input(argc, argv, &window);
-	init_map(&window, &map);
-	init_textures(&window, &textures);
-	window.textures->north = &north;
-	window.textures->south = &south;
-	window.textures->east = &east;
-	window.textures->west = &west;
-	window.textures->sprite = &sprite;
-	north.endian = -1;
-	south.endian = -1;
-	east.endian = -1;
-	west.endian = -1;
-	sprite.endian = -1;
+	validate_input(argc, argv, window);
+	window = init_window();
+	init_map(window);
+	init_textures(window);
 
-	// window.mlx = mlx_init();
-	// window.win = mlx_new_window(window.mlx, 640, 480, "cub3D");
-	parse(argv[1], &window); //segfault after writing check_input?
-	// mlx_loop(window.mlx);
+	parse(argv[1], window);
+	window->win = mlx_new_window(window->mlx, 640, 480, "cub3D");
+
+	mlx_hook(window->win, EVENT_KEY_PRESS, 1L << 0, key_pressed, window);
+	mlx_hook(window->win, EVENT_KEY_RELEASE, 1L << 1, key_released, window);
+	mlx_hook(window->win, EVENT_EXIT, 1L << 17, exit_game, window);
+	mlx_loop_hook(window->mlx, handle_loop, window);
+	mlx_loop(window->mlx);
 	return (0);
 }
