@@ -6,7 +6,7 @@
 /*   By: icikrikc <icikrikc@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/10 14:36:42 by icikrikc      #+#    #+#                 */
-/*   Updated: 2021/02/26 21:15:25 by icikrikc      ########   odam.nl         */
+/*   Updated: 2021/03/03 19:00:15 by icikrikc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,42 @@
 # define TRUE					0 //problem with other macros?
 # define FALSE					1
 
+typedef	struct			s_player
+{
+	double				pos_x;
+	double				pos_y;
+	double				speed;
+	double				dir_x;
+	double				dir_y;
+	double				plane_x;
+	double				plane_y;
+	double				rotate_speed;
+	double				cam_height;
+	int					health;
+}						t_player;
+
+typedef struct	s_ray
+{
+	int			pix;
+	int			map_x;
+	int			map_y;
+	double		cam_x;
+	double		ray_dir_x;
+	double		ray_dir_y;
+	double		side_dist_x;
+	double		side_dist_y;
+	double		del_dist_x;
+	double		del_dist_y;
+	double		perp_wall_dist;
+	int			step_x;
+	int			step_y;
+	int			hit;
+	int			side;
+	int			line_height;
+	int			draw_start;
+	int			draw_end;
+	double		*z_buffer;
+} t_ray;
 
 typedef struct  s_image {
     void        *img;
@@ -67,13 +103,14 @@ typedef struct  s_window {
 	int			screenshot;
 	t_map		*map;
 	t_image		*image;
-	t_tex 		*textures;
+	t_tex		*textures;
+	t_player	*player;
 }				t_window;
 
 //not proper funcs
-// int key_pressed(int keycode, void *param);
-// int key_released(int keycode, void *param);
-// int exit(void *param);
+int key_pressed(int keycode, void *param);
+int key_released(int keycode, void *param);
+int exit_game(void *param);
 
 //proper funcs
 int		parse(char *file_name, t_window *window);
@@ -87,7 +124,7 @@ void	check_map(t_window *window, int row, int col);
 
 void	exit_w_message(char *msg, int window_open, t_window *window);
 void	ft_exit(char *msg);
-void	init_map(t_window *window, t_map *map);
-void	init_textures(t_window *window, t_tex *textures);
+void	init_map(t_window *window);
+void	init_textures(t_window *window);
 
 #endif
