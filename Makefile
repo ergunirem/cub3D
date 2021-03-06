@@ -6,7 +6,7 @@
 #    By: icikrikc <icikrikc@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2021/02/10 14:12:56 by icikrikc      #+#    #+#                  #
-#    Updated: 2021/03/03 16:19:29 by icikrikc      ########   odam.nl          #
+#    Updated: 2021/03/06 23:30:45 by icikrikc      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -62,7 +62,9 @@ SRCS	=	utils/gnl/get_next_line.c utils/gnl/get_next_line_utils.c \
 			parse.c parse_other.c parse_map.c\
 			error.c \
 			init.c \
-			events.c \
+			hooks.c \
+			paint.c \
+			ray-casting.c
 
 OBJS	= $(SRCS:.c=.o)
 

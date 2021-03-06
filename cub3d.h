@@ -6,7 +6,7 @@
 /*   By: icikrikc <icikrikc@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/10 14:36:42 by icikrikc      #+#    #+#                 */
-/*   Updated: 2021/03/03 19:00:15 by icikrikc      ########   odam.nl         */
+/*   Updated: 2021/03/06 23:31:00 by icikrikc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <stdio.h>
 # include <fcntl.h>
 # include <unistd.h>
+# include <math.h>
 
 # define EVENT_KEY_PRESS		2
 # define EVENT_KEY_RELEASE		3
@@ -74,6 +75,8 @@ typedef struct  s_image {
     int         bits_per_pixel;
     int         line_length;
     int         endian;
+	int			width;
+	int			height;
 }               t_image;
 
 typedef struct  s_map {
@@ -111,6 +114,14 @@ typedef struct  s_window {
 int key_pressed(int keycode, void *param);
 int key_released(int keycode, void *param);
 int exit_game(void *param);
+// int	handle_loop(t_window *window);
+int	handle_loop(void *param);
+void	my_mlx_pixel_put(t_image *data, int x, int y, int color);
+
+//ray-casting
+void	draw(t_window *window);
+void	color_vertical_line(t_window *window, int color, int draw_start, int draw_end, int x_ray_pix);
+
 
 //proper funcs
 int		parse(char *file_name, t_window *window);
@@ -126,5 +137,6 @@ void	exit_w_message(char *msg, int window_open, t_window *window);
 void	ft_exit(char *msg);
 void	init_map(t_window *window);
 void	init_textures(t_window *window);
-
+int		init_player(t_window *window);
+t_window	*init_window(void);
 #endif
