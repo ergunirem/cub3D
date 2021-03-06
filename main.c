@@ -6,19 +6,19 @@
 /*   By: icikrikc <icikrikc@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/20 12:47:23 by icikrikc      #+#    #+#                 */
-/*   Updated: 2021/03/03 17:54:40 by icikrikc      ########   odam.nl         */
+/*   Updated: 2021/03/06 23:13:36 by icikrikc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-// void	my_mlx_pixel_put(t_image *data, int x, int y, int color)
-// {
-//     char    *dst;
+void	my_mlx_pixel_put(t_image *data, int x, int y, int color)
+{
+    char    *dst;
 
-//     dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
-//     *(unsigned int*)dst = color;
-// }
+    dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
+    *(unsigned int*)dst = color;
+}
 
 void	validate_input(int argc, char **argv, t_window *window)
 {
@@ -46,23 +46,6 @@ void	validate_input(int argc, char **argv, t_window *window)
 	}
 }
 
-t_window	*init_window(void)
-{
-	t_window *new_window;
-
-	new_window = (t_window*)malloc(sizeof(t_window));
-	if (!new_window)
-		ft_exit("init malloc failed\n");
-	ft_bzero(new_window, sizeof(t_window));
-	new_window->mlx = mlx_init();
-	if (!new_window->mlx)
-		ft_exit("mlx_init failed\n");
-	new_window->height = 0;
-	new_window->width = 0;
-	new_window->screenshot = 0;
-	return (new_window);
-
-}
 int	main(int argc, char **argv)
 {
 	t_window 	*window;
@@ -71,9 +54,10 @@ int	main(int argc, char **argv)
 	window = init_window();
 	init_map(window);
 	init_textures(window);
+	init_player(window);
 
 	parse(argv[1], window);
-	window->win = mlx_new_window(window->mlx, 640, 480, "cub3D");
+	window->win = mlx_new_window(window->mlx, window->width, window->height, "cub3D");
 
 	mlx_hook(window->win, EVENT_KEY_PRESS, 1L << 0, key_pressed, window);
 	mlx_hook(window->win, EVENT_KEY_RELEASE, 1L << 1, key_released, window);
