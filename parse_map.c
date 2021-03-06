@@ -6,7 +6,7 @@
 /*   By: icikrikc <icikrikc@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/23 15:30:38 by icikrikc      #+#    #+#                 */
-/*   Updated: 2021/02/26 20:32:24 by icikrikc      ########   odam.nl         */
+/*   Updated: 2021/03/05 15:58:20 by icikrikc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,17 +57,50 @@ void	save_map(t_window *window, t_map *map, t_list *map_list)
 			map->map_array[i][j] = str[j];
 			j++;
 		}
-		map->map_array[i][j] = '\0';
-		j++;
-		while (j < map->max_col)
-		{
-			map->map_array[i][j] = ' ';
-			j++;
-		}
-		map->map_array[i][j] = '\0';
+		// map->map_array[i][j] = '\0'; // do i need this calloc already?
+		// j++;
+		// while (j < map->max_col)
+		// {
+		// 	map->map_array[i][j] = ' ';
+		// 	j++;
+		// }
+		// map->map_array[i][j] = '\0';
 		map_list = map_list->next;
 		i++;
 	}
+}
+
+static void	set_start_camera(t_window *window, double dir_x, double plane_x, double plane_y)
+{
+	window->player->dir_x = dir_x;
+	window->player->plane_x = plane_x;
+	window->player->plane_y = plane_y;
+}
+
+static void	set_start_pos(t_window *window, char pos, int j, int i)
+{
+	if (pos == 'E')
+	{
+		window->player->dir_y = 0.0;
+		set_start_camera(window, 1.0, 0.0, 0.66);
+	}
+	else if (pos == 'W')
+	{
+		window->player->dir_y = 0.0;
+		set_start_camera(window, -1.0, 0.0, -0.66);
+	}
+	else if (pos == 'N')
+	{
+		window->player->dir_y = -1.0;
+		set_start_camera(window, 0.0, 0.66, 0.0);
+	}
+	else if (pos == 'S')
+	{
+		window->player->dir_y = 1.0;
+		set_start_camera(window, 0.0, -0.66, 0.0);
+	}
+	window->player->pos_x = (double)j + 0.5;
+	window->player->pos_y = (double)i + 0.5;
 }
 
 void	check_start_pos(t_window *window)
@@ -88,6 +121,8 @@ void	check_start_pos(t_window *window)
 			{
 				if (window->map->row_pos > 0 || window->map->col_pos > 0)
 					exit_w_message("Multiple starting positions\n", 1, window);
+				set_start_pos(window, map[i][j], j, i);
+				map[i][j] = '0';
 				window->map->row_pos = i;
 				window->map->col_pos = j;
 			}

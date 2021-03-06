@@ -6,7 +6,7 @@
 /*   By: icikrikc <icikrikc@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/19 10:20:45 by icikrikc      #+#    #+#                 */
-/*   Updated: 2021/02/26 20:20:27 by icikrikc      ########   odam.nl         */
+/*   Updated: 2021/03/06 23:22:10 by icikrikc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,8 @@ static void	parse_line(t_window *window, char *line, t_list *map_list)
 		parse_texture(window, window->textures->sprite, line + i + 2);
 	else if (line[i] == '1' || line[i] == '0') //any other char (2NESW)
 		parse_map(window, line, map_list);
+	//else
+		//unknown identifier
 }
 
 /* 	//ft_lstfree(&map_list); //bus error :(
@@ -91,7 +93,6 @@ int	parse(char *file_name, t_window *window)
 		exit_w_message("no map provided\n", 1, window);
 	save_map(window, window->map, map_list);
 	check_start_pos(window);
-	printf("r: %d | c: %d\n", window->map->row_pos, window->map->col_pos);
 	check_map(window, window->map->row_pos, window->map->col_pos);
 	i = 0;
 	while (i < window->map->max_row)
