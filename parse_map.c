@@ -6,7 +6,7 @@
 /*   By: icikrikc <icikrikc@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/23 15:30:38 by icikrikc      #+#    #+#                 */
-/*   Updated: 2021/03/05 15:58:20 by icikrikc      ########   odam.nl         */
+/*   Updated: 2021/03/07 22:42:05 by icikrikc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,13 +68,6 @@ void	save_map(t_window *window, t_map *map, t_list *map_list)
 		map_list = map_list->next;
 		i++;
 	}
-}
-
-static void	set_start_camera(t_window *window, double dir_x, double plane_x, double plane_y)
-{
-	window->player->dir_x = dir_x;
-	window->player->plane_x = plane_x;
-	window->player->plane_y = plane_y;
 }
 
 static void	set_start_pos(t_window *window, char pos, int j, int i)
