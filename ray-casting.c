@@ -6,7 +6,7 @@
 /*   By: icikrikc <icikrikc@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/06 23:27:20 by icikrikc      #+#    #+#                 */
-/*   Updated: 2021/03/06 23:28:38 by icikrikc      ########   odam.nl         */
+/*   Updated: 2021/03/07 11:28:19 by icikrikc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,9 @@ static void	get_distance(t_ray *ray, t_player *player, t_window *win_infos)
 	else
 		ray->perp_wall_dist = (ray->map_y - player->pos_y + (1 - ray->step_y) / 2)
 		/ ray->ray_dir_y;
+	//Calculate height of line to draw on screen
 	ray->line_height = (int)(win_infos->height / ray->perp_wall_dist);
+	//calculate lowest and highest pixel to fill in current stripe
 	ray->draw_start = (-ray->line_height / 2 + ((win_infos->height / 2)
 		* win_infos->player->cam_height));
 	if (ray->draw_start < 0)
@@ -72,7 +74,7 @@ static void	hit(t_ray *ray,t_window *win_infos)
 		//whether an x-side or y-side of a wall was hit in the variable "side",
 		//and what wall was hit with mapX and mapY
 		get_wall_side(ray);
-		if (win_infos->map->map_array[ray->map_y][ray->map_x] == '1')
+		if (win_infos->map->map_array[ray->map_y][ray->map_x] == '1') // > '0'?
 			ray->hit = 1;
 		// else if (win_infos->map->map_array[ray->map_y][ray->map_x] == '2')
 		// 	is_sprite(ray, win_infos);

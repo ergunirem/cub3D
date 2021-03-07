@@ -1,18 +1,76 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        ::::::::            */
+/*   hooks.c                                            :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: icikrikc <icikrikc@student.codam.nl>         +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2021/03/07 11:33:06 by icikrikc      #+#    #+#                 */
+/*   Updated: 2021/03/07 23:03:16 by icikrikc      ########   odam.nl         */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
-int key_pressed(int keycode, void *param)
+void	check_keys(t_window *window)
 {
-
+	if (window->keys->forward == 1)
+		move_forward(window);
+	if (window->keys->backward == 1)
+		move_backward(window);
+	if (window->keys->left == 1)
+		move_left(window);
+	if (window->keys->right == 1)
+		move_right(window);
+	if (window->keys->look_left == 1)
+		look_left(window);
+	if (window->keys->look_right == 1)
+		look_right(window);
+	if (window->keys->close == 1)
+		exit_game(window);
 }
 
-int key_released(int keycode, void *param)
+int	key_pressed(int keycode, t_window *window)
 {
-
+	if (keycode == 13)
+		window->keys->forward = 1;
+	else if (keycode == 1)
+		window->keys->backward = 1;
+	else if (keycode == 0)
+		window->keys->left = 1;
+	else if (keycode == 2)
+		window->keys->right = 1;
+	else if (keycode == 123)
+		window->keys->look_left = 1;
+	else if (keycode == 124)
+		window->keys->look_right = 1;
+	else if (keycode == 53)
+		window->keys->close = 1;
+	return (0);
 }
 
-int exit_game(void *param)
+int	key_released(int keycode, t_window *window)
 {
+	if (keycode == 13 && window->keys->forward == 1)
+		window->keys->forward = 0;
+	else if (keycode == 1 && window->keys->backward == 1)
+		window->keys->backward = 0;
+	else if (keycode == 0 && window->keys->left == 1)
+		window->keys->left = 0;
+	else if (keycode == 2 && window->keys->right == 1)
+		window->keys->right = 0;
+	else if (keycode == 123 && window->keys->look_left == 1)
+		window->keys->look_left = 0;
+	else if (keycode == 124 && window->keys->look_right == 1)
+		window->keys->look_right = 0;
+	return (0);
+}
 
+int	exit_game(t_window *window)
+{
+	mlx_destroy_window(window->mlx, window->win);
+	exit(0);
+	return (0);
 }
 
 int	handle_loop(void *param)
@@ -21,5 +79,6 @@ int	handle_loop(void *param)
 
 	window = (t_window *)param;
 	draw(window);
-	return (0);
+	check_keys(window);
+	return (1);
 }
