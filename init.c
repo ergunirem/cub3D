@@ -6,7 +6,7 @@
 /*   By: icikrikc <icikrikc@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/26 20:49:48 by icikrikc      #+#    #+#                 */
-/*   Updated: 2021/03/06 23:12:09 by icikrikc      ########   odam.nl         */
+/*   Updated: 2021/03/07 19:16:53 by icikrikc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,14 +76,14 @@ void	init_textures(t_window *window)
 	window->textures->sprite->endian = -1;
 }
 
-int			init_player(t_window *window)
+void	init_player(t_window *window)
 {
 	if (!(window->player = malloc(sizeof(t_player))))
-		return (-1);
+		ft_exit("Malloc failed\n");
 	ft_bzero(window->player, sizeof(t_player));
 	window->player->pos_x = -20.0;
 	window->player->pos_y = -20.0;
-	window->player->speed = 0.10;
+	window->player->move_speed = 0.10;
 	window->player->dir_x = 1.0;
 	window->player->dir_y = 0.0;
 	window->player->plane_x = -20.0;
@@ -91,5 +91,18 @@ int			init_player(t_window *window)
 	window->player->rotate_speed = 0.10;
 	window->player->cam_height = 1.0;
 	window->player->health = 20;
-	return (0);
+}
+
+void	init_keys(t_window *window)
+{
+	if (!(window->keys = malloc(sizeof(t_keys))))
+		ft_exit("Malloc failed\n");
+	ft_bzero(window->keys, sizeof(t_keys));
+	window->keys->forward = 0;
+	window->keys->backward = 0;
+	window->keys->left = 0;
+	window->keys->right = 0;
+	window->keys->look_left = 0;
+	window->keys->look_right = 0;
+	window->keys->close = 0;
 }
