@@ -6,7 +6,7 @@
 /*   By: icikrikc <icikrikc@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/10 14:36:42 by icikrikc      #+#    #+#                 */
-/*   Updated: 2021/03/06 23:31:00 by icikrikc      ########   odam.nl         */
+/*   Updated: 2021/03/07 22:43:26 by icikrikc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,22 @@
 # define TRUE					0 //problem with other macros?
 # define FALSE					1
 
+typedef struct	s_keys
+{
+	int			forward;
+	int			backward;
+	int			left;
+	int			right;
+	int			look_left;
+	int			look_right;
+	int			close;
+}				t_keys;
+
 typedef	struct			s_player
 {
 	double				pos_x;
 	double				pos_y;
-	double				speed;
+	double				move_speed;
 	double				dir_x;
 	double				dir_y;
 	double				plane_x;
@@ -108,12 +119,13 @@ typedef struct  s_window {
 	t_image		*image;
 	t_tex		*textures;
 	t_player	*player;
+	t_keys		*keys;
 }				t_window;
 
 //not proper funcs
-int key_pressed(int keycode, void *param);
-int key_released(int keycode, void *param);
-int exit_game(void *param);
+int key_pressed(int keycode, t_window *window);
+int key_released(int keycode, t_window *window);
+int exit_game(t_window *window);
 // int	handle_loop(t_window *window);
 int	handle_loop(void *param);
 void	my_mlx_pixel_put(t_image *data, int x, int y, int color);
@@ -121,6 +133,14 @@ void	my_mlx_pixel_put(t_image *data, int x, int y, int color);
 //ray-casting
 void	draw(t_window *window);
 void	color_vertical_line(t_window *window, int color, int draw_start, int draw_end, int x_ray_pix);
+
+//hook funcs
+void	move_forward(t_window *window);
+void	move_backward(t_window *window);
+void	move_left(t_window *window);
+void	move_right(t_window *window);
+void	look_left(t_window *window);
+void	look_right(t_window *window);
 
 
 //proper funcs
@@ -132,11 +152,14 @@ void	parse_map(t_window *window, char *line, t_list *map_list);
 void	save_map(t_window *window, t_map *map, t_list *map_list);
 void	check_start_pos(t_window *window);
 void	check_map(t_window *window, int row, int col);
-
+//
+void	set_start_camera(t_window *window, double dir_x, double plane_x, double plane_y);
+//
 void	exit_w_message(char *msg, int window_open, t_window *window);
 void	ft_exit(char *msg);
 void	init_map(t_window *window);
 void	init_textures(t_window *window);
-int		init_player(t_window *window);
+void	init_player(t_window *window);
+void	init_keys(t_window *window);
 t_window	*init_window(void);
 #endif
