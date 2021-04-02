@@ -6,7 +6,7 @@
 /*   By: icikrikc <icikrikc@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/10 14:36:42 by icikrikc      #+#    #+#                 */
-/*   Updated: 2021/03/07 22:43:26 by icikrikc      ########   odam.nl         */
+/*   Updated: 2021/04/02 21:36:02 by icikrikc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,13 @@
 # define TRUE					0 //problem with other macros?
 # define FALSE					1
 
+typedef struct	s_sprite
+{
+	double		x;
+	double		y;
+	int			tex;
+}				t_sprite;
+
 typedef struct	s_keys
 {
 	int			forward;
@@ -43,19 +50,19 @@ typedef struct	s_keys
 	int			close;
 }				t_keys;
 
-typedef	struct			s_player
+typedef	struct	s_player
 {
-	double				pos_x;
-	double				pos_y;
-	double				move_speed;
-	double				dir_x;
-	double				dir_y;
-	double				plane_x;
-	double				plane_y;
-	double				rotate_speed;
-	double				cam_height;
-	int					health;
-}						t_player;
+	double		pos_x;
+	double		pos_y;
+	double		move_speed;
+	double		dir_x;
+	double		dir_y;
+	double		plane_x;
+	double		plane_y;
+	double		rotate_speed;
+	double		cam_height;
+	int			health;
+}				t_player;
 
 typedef struct	s_ray
 {
@@ -107,6 +114,14 @@ typedef struct  s_tex {
 	t_image		*east;
 	t_image		*west;
 	t_image		*sprite;
+	int			tex_num;
+	int			tex_x;
+	int			tex_y;
+	int			width;
+	int			height;
+	double		wall_x;
+	double		tex_pos;
+	double		step;
 }				t_tex;
 
 typedef struct  s_window {
@@ -133,6 +148,7 @@ void	my_mlx_pixel_put(t_image *data, int x, int y, int color);
 //ray-casting
 void	draw(t_window *window);
 void	color_vertical_line(t_window *window, int color, int draw_start, int draw_end, int x_ray_pix);
+void	cast_ray(t_window *window, t_ray *ray);
 
 //hook funcs
 void	move_forward(t_window *window);
@@ -152,8 +168,9 @@ void	parse_map(t_window *window, char *line, t_list *map_list);
 void	save_map(t_window *window, t_map *map, t_list *map_list);
 void	check_start_pos(t_window *window);
 void	check_map(t_window *window, int row, int col);
+void	restore_map(t_map *map);
 //
-void	set_start_camera(t_window *window, double dir_x, double plane_x, double plane_y);
+void	set_camera(t_window *win, double dir_x, double plane_x, double plane_y);
 //
 void	exit_w_message(char *msg, int window_open, t_window *window);
 void	ft_exit(char *msg);

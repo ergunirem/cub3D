@@ -6,7 +6,7 @@
 #    By: icikrikc <icikrikc@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2021/02/10 14:12:56 by icikrikc      #+#    #+#                  #
-#    Updated: 2021/03/07 12:12:04 by icikrikc      ########   odam.nl          #
+#    Updated: 2021/03/08 17:56:56 by icikrikc      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -64,8 +64,8 @@ SRCS	=	utils/gnl/get_next_line.c utils/gnl/get_next_line_utils.c \
 			init.c \
 			hooks.c \
 			paint.c \
-			ray-casting.c \
-			move.c
+			draw.c ray-casting.c \
+			move.c rotate.c \
 
 OBJS	= $(SRCS:.c=.o)
 

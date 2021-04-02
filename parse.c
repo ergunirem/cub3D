@@ -6,7 +6,7 @@
 /*   By: icikrikc <icikrikc@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/19 10:20:45 by icikrikc      #+#    #+#                 */
-/*   Updated: 2021/03/06 23:22:10 by icikrikc      ########   odam.nl         */
+/*   Updated: 2021/03/08 14:39:10 by icikrikc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,7 @@ int	parse(char *file_name, t_window *window)
 		printf("%s\n", window->map->map_array[i]);
 		i++;
 	}
+	restore_map(window->map);
 	close(fd);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: icikrikc <icikrikc@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/07 11:33:06 by icikrikc      #+#    #+#                 */
-/*   Updated: 2021/03/07 23:03:16 by icikrikc      ########   odam.nl         */
+/*   Updated: 2021/03/08 17:48:57 by icikrikc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,5 +80,5 @@ int	handle_loop(void *param)
 	window = (t_window *)param;
 	draw(window);
 	check_keys(window);
-	return (1);
+	return (0);
 }

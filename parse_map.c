@@ -6,7 +6,7 @@
 /*   By: icikrikc <icikrikc@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/23 15:30:38 by icikrikc      #+#    #+#                 */
-/*   Updated: 2021/03/07 22:42:05 by icikrikc      ########   odam.nl         */
+/*   Updated: 2021/03/09 22:57:32 by icikrikc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,22 +75,22 @@ static void	set_start_pos(t_window *window, char pos, int j, int i)
 	if (pos == 'E')
 	{
 		window->player->dir_y = 0.0;
-		set_start_camera(window, 1.0, 0.0, 0.66);
+		set_camera(window, 1.0, 0.0, 0.66);
 	}
 	else if (pos == 'W')
 	{
 		window->player->dir_y = 0.0;
-		set_start_camera(window, -1.0, 0.0, -0.66);
+		set_camera(window, -1.0, 0.0, -0.66);
 	}
 	else if (pos == 'N')
 	{
 		window->player->dir_y = -1.0;
-		set_start_camera(window, 0.0, 0.66, 0.0);
+		set_camera(window, 0.0, 0.66, 0.0);
 	}
 	else if (pos == 'S')
 	{
 		window->player->dir_y = 1.0;
-		set_start_camera(window, 0.0, -0.66, 0.0);
+		set_camera(window, 0.0, -0.66, 0.0);
 	}
 	window->player->pos_x = (double)j + 0.5;
 	window->player->pos_y = (double)i + 0.5;
@@ -154,9 +154,29 @@ void	check_map(t_window *window, int row, int col)
 		&& map->map_array[row][col] == '0')
 		exit_w_message("Map is not surrounded by walls\n", 1, window);
 	map->map_array[row][col] = 'X';
+	//floodfill should be in 8 directions!
 	check_map(window, row + 1, col);
 	check_map(window, row - 1, col);
 	check_map(window, row, col + 1);
 	check_map(window, row, col - 1);
 	return ;
+}
+
+void	restore_map(t_map *map)
+{
+	int i;
+	int j;
+
+	i = 0;
+	while (i < map->max_row)
+	{
+		j = 0;
+		while (j < map->max_col)
+		{
+			if (map->map_array[i][j] == 'X')
+				map->map_array[i][j] = '0';
+			j++;
+		}
+		i++;
+	}
 }
