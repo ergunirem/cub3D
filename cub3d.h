@@ -6,7 +6,7 @@
 /*   By: icikrikc <icikrikc@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/10 14:36:42 by icikrikc      #+#    #+#                 */
-/*   Updated: 2021/04/02 21:36:02 by icikrikc      ########   odam.nl         */
+/*   Updated: 2021/04/05 22:00:59 by icikrikc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,7 +143,11 @@ int key_released(int keycode, t_window *window);
 int exit_game(t_window *window);
 // int	handle_loop(t_window *window);
 int	handle_loop(void *param);
+
+//pixel funcs
 void	my_mlx_pixel_put(t_image *data, int x, int y, int color);
+int				my_mlx_pixel_get(t_image *img, int x, int y);
+void			my_mlx_pixel_set(t_image *img, int x, int y, int color);
 
 //ray-casting
 void	draw(t_window *window);
