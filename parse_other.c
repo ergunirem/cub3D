@@ -6,7 +6,7 @@
 /*   By: icikrikc <icikrikc@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/19 16:09:36 by icikrikc      #+#    #+#                 */
-/*   Updated: 2021/02/26 20:15:53 by icikrikc      ########   odam.nl         */
+/*   Updated: 2021/04/05 21:00:59 by icikrikc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ void	parse_texture(t_window *window, t_image *img, char *line)
 	char	*path;
 	int		len;
 	int		fd;
-	int		img_width;
-	int		img_height;
+	// int		img_width;
+	// int		img_height;
 
 	if (window->map->map_started == TRUE)
 		exit_w_message("map is not the last info\n", 1, window);
@@ -39,9 +39,10 @@ void	parse_texture(t_window *window, t_image *img, char *line)
 	fd = open(path, O_RDONLY);
 	if (fd < 0)
 		exit_w_message("opening xpm file failed\n", 1, window);
-	img->img = mlx_xpm_file_to_image(window->mlx, path, &img_width, &img_height);
+	img->img = mlx_xpm_file_to_image(window->mlx, path, &img->width, &img->height);
 	img->addr = mlx_get_data_addr(img->img, &img->bits_per_pixel, &img->line_length,
 			&img->endian);
+	printf("y: %d ", img->height);
 	free(path);
 	close(fd);
 }
