@@ -6,7 +6,7 @@
 /*   By: icikrikc <icikrikc@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/06 23:27:20 by icikrikc      #+#    #+#                 */
-/*   Updated: 2021/04/02 22:54:31 by icikrikc      ########   odam.nl         */
+/*   Updated: 2021/04/05 22:00:53 by icikrikc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,25 +14,7 @@
 
 /* Calculate distance projected on camera direction
 (Euclidean distance will give fisheye effect!) */
-int				mlx_pixel_get(t_image *img, int x, int y)
-{
-	int		dst;
-	// printf("> %s\n", img->addr);
-	dst = (int)(img->addr + (y * img->line_length + \
-		x * (img->bits_per_pixel / 8)));
-	// printf("> %d\n", (int)(img->addr + (y * img->line_length + \
-	// 	x * (img->bits_per_pixel / 8))));
-	// printf("> %d\n", dst);
-	return (dst);
-}
 
-void			mlx_pixel_set(t_image *img, int x, int y, int color)
-{
-	int		*dst;
-	dst = (int *)(img->addr + (y * img->line_length + \
-		x * (img->bits_per_pixel / 8)));
-	*dst = color;
-}
 
 static void	get_distance(t_ray *ray, t_player *player, t_window *window)
 {
@@ -114,7 +96,6 @@ static void	init_ray(t_ray *ray, t_player *player, t_window *window)
 t_image	*designate_tex(t_ray *ray, t_window *window, double wall_x)
 {
 	t_image	*img;
-	// int		tex_x;
 
 	img = window->textures->north;
 	if (ray->side == 1)
@@ -124,16 +105,6 @@ t_image	*designate_tex(t_ray *ray, t_window *window, double wall_x)
 	if (ray->side == 3)
 		img = window->textures->west;
 	return (img);
-	// tex_x = (int)(wall_x * (double)img->width);
-	// if ((ray->side == 0 || ray->side == 1) && ray->ray_dir_x > 0)
-	// 	tex_x = img->width - tex_x - 1;
-	// if ((ray->side == 2 || ray->side == 3) && ray->ray_dir_y < 0)
-	// 	tex_x = img->width - tex_x - 1;
-	// line->y0 = ray->draw_end;
-	// line->y1 = ray->draw_start;
-	// line->tex_x = tex_x;
-	// ver_line_texture_image(line, window, img, ray);
-
 }
 
 void	apply_textures(t_ray *ray, t_window *window)
@@ -146,31 +117,29 @@ void	apply_textures(t_ray *ray, t_window *window)
 
 	p = window->player;
 	tex = window->textures;
-	// tex->tex_num = map[ray->map_x][ray->map_y] - 1; necessary?
+	if (window->map->map_array[ray->map_y][ray->map_x] == '1')
+		img = designate_tex(ray, window, tex->wall_x);
 	if (ray->side == 0 || ray->side == 1)
 		tex->wall_x = p->pos_y + ray->perp_wall_dist * ray->ray_dir_y;
 	else
 		tex->wall_x = p->pos_x + ray->perp_wall_dist * ray->ray_dir_x;
 	tex->wall_x -= floor((tex->wall_x));
-	tex->tex_x = (int)(tex->wall_x * (double)(tex->width));
-	if ((ray->side == 0 || ray->side == 1) && ray->ray_dir_x > 0)
-		tex->tex_x = tex->width - tex->tex_x - 1;
-	if ((ray->side == 0 || ray->side == 1) && ray->ray_dir_y < 0)
-		tex->tex_x = tex->width - tex->tex_x - 1;
-	if (window->map->map_array[ray->map_y][ray->map_x] == '1')
-		img = designate_tex(ray, window, tex->wall_x);
-	tex->step = 1.0 * tex->height / ray->line_height;
+	tex->tex_x = (int)(tex->wall_x * (double)(img->width));
+	if ((ray->side == 0 || ray->side == 2) && ray->ray_dir_x > 0)
+		tex->tex_x = img->width - tex->tex_x - 1;
+	if ((ray->side == 1 || ray->side == 3) && ray->ray_dir_y < 0)
+		tex->tex_x = img->width - tex->tex_x - 1;
+	tex->step = 1.0 * 64 / ray->line_height;
 	tex->tex_pos = (ray->draw_start - window->height / 2 + ray->line_height / 2) * tex->step;
 
-	//fill_stripe
+	// printf("y: %d ", img->height);
 	y = ray->draw_start;
 	while (y < ray->draw_end)
 	{
-		tex->tex_y = (int)tex->tex_pos & tex->height - 1; //(int)tex->tex_pos % tex->height;
+		tex->tex_y = (int)tex->tex_pos & (64 - 1);
 		tex->tex_pos += tex->step;
-		// mlx_pixel_get(img, tex->tex_x, tex->tex_y);
-		color = mlx_pixel_get(img, tex->tex_x, tex->tex_y);
-		mlx_pixel_set(window->image, ray->pix, y, color);
+		color = my_mlx_pixel_get(img, tex->tex_x, tex->tex_y);
+		my_mlx_pixel_set(window->image, ray->pix, y, color);
 		y++;
 	}
 }
@@ -191,16 +160,8 @@ void	cast_ray(t_window *window, t_ray *ray)
 		// 	is_sprite(ray, window);
 	}
 	get_distance(ray, player, window);
-	ray->z_buffer[ray->pix] = ray->perp_wall_dist;
 	apply_textures(ray, window);
-	// if (ray->side == 0)
-	// 	color_vertical_line(window, 0x00FF0000,ray->draw_start, ray->draw_end, ray->pix);
-	// if (ray->side == 1)
-	// 	color_vertical_line(window, 0x0000FF00,ray->draw_start, ray->draw_end, ray->pix);
-	// if (ray->side == 2)
-	// 	color_vertical_line(window, 0x00FFFF00,ray->draw_start, ray->draw_end, ray->pix);
-	// if (ray->side == 3)
-	// 	color_vertical_line(window, 0x000000FF,ray->draw_start, ray->draw_end, ray->pix);
+	ray->z_buffer[ray->pix] = ray->perp_wall_dist;
 	color_vertical_line(window, 0x0000000, 0, ray->draw_start, ray->pix);
 	color_vertical_line(window, 0x0000000, ray->draw_end, window->height, ray->pix);
 	ray->pix++;
