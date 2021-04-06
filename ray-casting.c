@@ -6,7 +6,7 @@
 /*   By: icikrikc <icikrikc@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/06 23:27:20 by icikrikc      #+#    #+#                 */
-/*   Updated: 2021/04/05 22:00:53 by icikrikc      ########   odam.nl         */
+/*   Updated: 2021/04/06 15:38:57 by icikrikc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 /* Calculate distance projected on camera direction
 (Euclidean distance will give fisheye effect!) */
-
 
 static void	get_distance(t_ray *ray, t_player *player, t_window *window)
 {
@@ -93,57 +92,6 @@ static void	init_ray(t_ray *ray, t_player *player, t_window *window)
 	ray->hit = 0;
 }
 
-t_image	*designate_tex(t_ray *ray, t_window *window, double wall_x)
-{
-	t_image	*img;
-
-	img = window->textures->north;
-	if (ray->side == 1)
-		img = window->textures->south;
-	if (ray->side == 2)
-		img = window->textures->east;
-	if (ray->side == 3)
-		img = window->textures->west;
-	return (img);
-}
-
-void	apply_textures(t_ray *ray, t_window *window)
-{
-	t_player	*p;
-	t_tex		*tex;
-	t_image		*img;
-	int			y;
-	int			color;
-
-	p = window->player;
-	tex = window->textures;
-	if (window->map->map_array[ray->map_y][ray->map_x] == '1')
-		img = designate_tex(ray, window, tex->wall_x);
-	if (ray->side == 0 || ray->side == 1)
-		tex->wall_x = p->pos_y + ray->perp_wall_dist * ray->ray_dir_y;
-	else
-		tex->wall_x = p->pos_x + ray->perp_wall_dist * ray->ray_dir_x;
-	tex->wall_x -= floor((tex->wall_x));
-	tex->tex_x = (int)(tex->wall_x * (double)(img->width));
-	if ((ray->side == 0 || ray->side == 2) && ray->ray_dir_x > 0)
-		tex->tex_x = img->width - tex->tex_x - 1;
-	if ((ray->side == 1 || ray->side == 3) && ray->ray_dir_y < 0)
-		tex->tex_x = img->width - tex->tex_x - 1;
-	tex->step = 1.0 * 64 / ray->line_height;
-	tex->tex_pos = (ray->draw_start - window->height / 2 + ray->line_height / 2) * tex->step;
-
-	// printf("y: %d ", img->height);
-	y = ray->draw_start;
-	while (y < ray->draw_end)
-	{
-		tex->tex_y = (int)tex->tex_pos & (64 - 1);
-		tex->tex_pos += tex->step;
-		color = my_mlx_pixel_get(img, tex->tex_x, tex->tex_y);
-		my_mlx_pixel_set(window->image, ray->pix, y, color);
-		y++;
-	}
-}
-
 void	cast_ray(t_window *window, t_ray *ray)
 {
 	t_player	*player;
@@ -154,16 +102,19 @@ void	cast_ray(t_window *window, t_ray *ray)
 	while (ray->hit == 0)
 	{
 		get_wall_side(ray);
-		if (window->map->map_array[ray->map_y][ray->map_x] == '1') // > '0'?
+		if (window->map->map_array[ray->map_y][ray->map_x] == '1')
 			ray->hit = 1;
-		// else if (window->map->map_array[ray->map_y][ray->map_x] == '2')
-		// 	is_sprite(ray, window);
+		else if (window->map->map_array[ray->map_y][ray->map_x] == '2')
+		{
+			printf("sprite\n");
+			handle_sprite(ray, window);
+		}
 	}
 	get_distance(ray, player, window);
 	apply_textures(ray, window);
 	ray->z_buffer[ray->pix] = ray->perp_wall_dist;
-	color_vertical_line(window, 0x0000000, 0, ray->draw_start, ray->pix);
-	color_vertical_line(window, 0x0000000, ray->draw_end, window->height, ray->pix);
+	color_vertical_line(window, window->map->ceiling_color, 0, ray->draw_start, ray->pix);
+	color_vertical_line(window, window->map->floor_color, ray->draw_end, window->height, ray->pix);
 	ray->pix++;
 }
 
