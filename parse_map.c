@@ -6,7 +6,7 @@
 /*   By: icikrikc <icikrikc@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/23 15:30:38 by icikrikc      #+#    #+#                 */
-/*   Updated: 2021/03/09 22:57:32 by icikrikc      ########   odam.nl         */
+/*   Updated: 2021/04/06 15:27:55 by icikrikc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,7 +144,7 @@ void	check_map(t_window *window, int row, int col)
 	map = window->map;
 	if (row < 0 || col < 0 || row > map->max_row || col > map->max_col)
 		return ;
-	if (map->map_array[row][col] == '1' || map->map_array[row][col] == 'X')
+	if (map->map_array[row][col] == '1' || map->map_array[row][col] == 'X' || map->map_array[row][col] == '2')
 		return ;
 	if (map->map_array[row][col] == ' ')
 		exit_w_message("Map is not surrounded by walls\n", 1, window);
