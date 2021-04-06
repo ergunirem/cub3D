@@ -6,7 +6,7 @@
 #    By: icikrikc <icikrikc@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2021/02/10 14:12:56 by icikrikc      #+#    #+#                  #
-#    Updated: 2021/04/05 22:33:54 by icikrikc      ########   odam.nl          #
+#    Updated: 2021/04/06 15:37:19 by icikrikc      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -63,7 +63,7 @@ SRCS	=	utils/gnl/get_next_line.c utils/gnl/get_next_line_utils.c \
 			error.c \
 			init.c \
 			hooks.c \
-			draw.c ray-casting.c \
+			draw.c ray-casting.c texture.c sprite.c\
 			move.c rotate.c \
 			pixel_funcs.c \
 

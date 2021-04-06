@@ -6,7 +6,7 @@
 /*   By: icikrikc <icikrikc@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/20 12:47:23 by icikrikc      #+#    #+#                 */
-/*   Updated: 2021/04/02 10:52:49 by icikrikc      ########   odam.nl         */
+/*   Updated: 2021/04/06 11:35:45 by icikrikc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,6 @@ int	main(int argc, char **argv)
 
 	parse(argv[1], window);
 	window->win = mlx_new_window(window->mlx, window->width, window->height, "cub3D");
-
 	mlx_hook(window->win, EVENT_KEY_PRESS, 1L << 0, key_pressed, window);
 	mlx_hook(window->win, EVENT_KEY_RELEASE, 1L << 1, key_released, window);
 	mlx_hook(window->win, EVENT_EXIT, 1L << 17, exit_game, window);

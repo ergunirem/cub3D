@@ -6,7 +6,7 @@
 /*   By: icikrikc <icikrikc@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/10 14:36:42 by icikrikc      #+#    #+#                 */
-/*   Updated: 2021/04/05 22:00:59 by icikrikc      ########   odam.nl         */
+/*   Updated: 2021/04/06 15:21:21 by icikrikc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,11 +141,9 @@ typedef struct  s_window {
 int key_pressed(int keycode, t_window *window);
 int key_released(int keycode, t_window *window);
 int exit_game(t_window *window);
-// int	handle_loop(t_window *window);
 int	handle_loop(void *param);
 
 //pixel funcs
-void	my_mlx_pixel_put(t_image *data, int x, int y, int color);
 int				my_mlx_pixel_get(t_image *img, int x, int y);
 void			my_mlx_pixel_set(t_image *img, int x, int y, int color);
 
@@ -153,6 +151,8 @@ void			my_mlx_pixel_set(t_image *img, int x, int y, int color);
 void	draw(t_window *window);
 void	color_vertical_line(t_window *window, int color, int draw_start, int draw_end, int x_ray_pix);
 void	cast_ray(t_window *window, t_ray *ray);
+t_image	*designate_tex(t_ray *ray, t_window *window, double wall_x);
+void	apply_textures(t_ray *ray, t_window *window);
 
 //hook funcs
 void	move_forward(t_window *window);

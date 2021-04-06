@@ -6,7 +6,7 @@
 /*   By: icikrikc <icikrikc@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/08 17:56:22 by icikrikc      #+#    #+#                 */
-/*   Updated: 2021/04/02 22:04:35 by icikrikc      ########   odam.nl         */
+/*   Updated: 2021/04/06 16:07:38 by icikrikc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,9 @@ void	draw(t_window *window)
 	ft_bzero(ray->z_buffer, sizeof(double) * window->width);
 	while (ray->pix < window->width)
 		cast_ray(window, ray);
-	// if (!draw_sprite(ray, window))
-	// 	return (ERROR);
+	//sprites are drawn after walls&floor&ceiling are drawn - the ray-casting loop ends
+	draw_sprites(ray, window);
+		// return (ERROR);
 	// if (window->screenshot == 1)
 	// {
 	// 	window->screenshot = 0;

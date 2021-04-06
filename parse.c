@@ -6,7 +6,7 @@
 /*   By: icikrikc <icikrikc@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/19 10:20:45 by icikrikc      #+#    #+#                 */
-/*   Updated: 2021/03/08 14:39:10 by icikrikc      ########   odam.nl         */
+/*   Updated: 2021/04/06 11:57:32 by icikrikc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,11 @@ static void	parse_line(t_window *window, char *line, t_list *map_list)
 	else if (line[i] == 'F' || line[i] == 'C')
 		parse_color(window, line + i);
 	else if (line[i] == 'N' && line[i + 1] == 'O')
+	{
 		parse_texture(window, window->textures->north, line + i + 2);
+		// printf("y: %d ", window->textures->north->height);
+	}
+
 	else if (line[i] == 'S' && line[i + 1] == 'O')
 		parse_texture(window, window->textures->south, line + i + 2);
 	else if (line[i] == 'W' && line[i + 1] == 'E')
@@ -59,6 +63,7 @@ static void	parse_line(t_window *window, char *line, t_list *map_list)
 		parse_texture(window, window->textures->sprite, line + i + 2);
 	else if (line[i] == '1' || line[i] == '0') //any other char (2NESW)
 		parse_map(window, line, map_list);
+
 	//else
 		//unknown identifier
 }
@@ -88,6 +93,7 @@ int	parse(char *file_name, t_window *window)
 			parse_line(window, line, map_list);
 		free(line);
 	}
+	printf("y: %d ", window->textures->north->height);
 	parse_check(window);
 	if (ft_lstsize(map_list) == 1)
 		exit_w_message("no map provided\n", 1, window);
