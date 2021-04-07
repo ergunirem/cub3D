@@ -6,7 +6,7 @@
 /*   By: icikrikc <icikrikc@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/04/06 15:37:02 by icikrikc      #+#    #+#                 */
-/*   Updated: 2021/04/07 22:01:52 by icikrikc      ########   odam.nl         */
+/*   Updated: 2021/04/07 22:49:32 by icikrikc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,8 @@ void	draw_sprites(t_window *window, t_ray *ray)
 		printf("s_stripe:%d \n", s->stripe);
 		while (s->stripe < s->draw_end_x)
 		{
-			window->textures->tex_x = (int)(256 * (s->stripe - (-s->sprite_width / 2 + s-> sprite_screen_x)) * window->textures->sprite->width / s->sprite_width) / 256;
+			//changed the cals for the next line! (the reason?)
+			s->tex_x = (int)(256 * (s->stripe - (-s->sprite_width / 2 + s-> sprite_screen_x)) * window->textures->sprite->width / s->sprite_width) / window->textures->sprite->line_length;
 			//the conditions in the if are:
 			//1) it's in front of camera plane so you don't see things behind you
 			//2) it's on the screen (left)
@@ -112,8 +113,8 @@ void	draw_sprites(t_window *window, t_ray *ray)
 				{
 					s->d = (s->y) * 256 - window->height * 128 + s->sprite_height * 128; //256 and 128 factors to avoid floats
 					//change 64 here: it's actually tex_height but there is a problem with it
-					window->textures->tex_y = ((s->d * 64) / s->sprite_height) / 256;
-					color = my_mlx_pixel_get(window->textures->sprite, window->textures->tex_x, window->textures->tex_y); // texture[sprite[spriteOrder[i]].texture][texWidth * texY + texX]; //get current color from the texture
+					s->tex_y = ((s->d * 64) / s->sprite_height) / 256;
+					color = my_mlx_pixel_get(window->textures->sprite, s->tex_x, s->tex_y); // texture[sprite[spriteOrder[i]].texture][texWidth * texY + texX]; //get current color from the texture
 
 					// //paint pixel if it isn't black, black is the invisible color
 					if ((color & 0x00FFFFFF) != 0)
