@@ -6,7 +6,7 @@
 /*   By: icikrikc <icikrikc@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/10 14:36:42 by icikrikc      #+#    #+#                 */
-/*   Updated: 2021/04/06 15:21:21 by icikrikc      ########   odam.nl         */
+/*   Updated: 2021/04/07 12:15:30 by icikrikc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,29 @@
 
 # define TRUE					0 //problem with other macros?
 # define FALSE					1
+
+typedef struct		s_sprite_info
+{
+	int				num_sprites;
+	int				v_move_screen;
+	int				sprite_screen_x;
+	int				sprite_height;
+	int				draw_start_y;
+	int				draw_end_y;
+	int				sprite_width;
+	int				draw_start_x;
+	int				draw_end_x;
+	int				tex_x;
+	int				tex_y;
+	int				d;
+	int				stripe;
+	int				y;
+	double			sprite_x;
+	double			sprite_y;
+	double			inv_det;
+	double			transform_x;
+	double			transform_y;
+}					t_sprite_info;
 
 typedef struct	s_sprite
 {
@@ -124,18 +147,20 @@ typedef struct  s_tex {
 	double		step;
 }				t_tex;
 
-typedef struct  s_window {
-	void		*mlx;
-	void		*win;
-	int			height;
-	int			width;
-	int			screenshot;
-	t_map		*map;
-	t_image		*image;
-	t_tex		*textures;
-	t_player	*player;
-	t_keys		*keys;
-}				t_window;
+typedef struct		s_window {
+	void			*mlx;
+	void			*win;
+	int				height;
+	int				width;
+	int				screenshot;
+	t_map			*map;
+	t_image			*image;
+	t_tex			*textures;
+	t_player		*player;
+	t_keys			*keys;
+	t_sprite_info	*s_info;
+	//t_ray?
+}					t_window;
 
 //not proper funcs
 int key_pressed(int keycode, t_window *window);
@@ -153,6 +178,7 @@ void	color_vertical_line(t_window *window, int color, int draw_start, int draw_e
 void	cast_ray(t_window *window, t_ray *ray);
 t_image	*designate_tex(t_ray *ray, t_window *window, double wall_x);
 void	apply_textures(t_ray *ray, t_window *window);
+void	draw_sprites(t_window *window, t_ray *ray);
 
 //hook funcs
 void	move_forward(t_window *window);
