@@ -6,7 +6,7 @@
 /*   By: icikrikc <icikrikc@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/04/06 15:37:02 by icikrikc      #+#    #+#                 */
-/*   Updated: 2021/04/07 22:49:32 by icikrikc      ########   odam.nl         */
+/*   Updated: 2021/04/08 11:31:31 by icikrikc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,51 +49,55 @@ void	draw_sprites(t_window *window, t_ray *ray)
 	t_player		*p;
 	int				color;
 	int				i;
-	t_sprite		sprite[1]; //this will be created in handle_sprite
+	t_sprite		sprite[3]; //this will be created in handle_sprite
 
 	init_sprite_info(window);
 	sprite[0].x = 26;
 	sprite[0].y = 8;
+	sprite[1].x = 14;
+	sprite[1].y = 3;
+	sprite[2].x = 18;
+	sprite[2].y = 2;
 	printf("y:%f x:%f\n", sprite[0].y, sprite[0].x);
 	s = window->s_info;
 	p = window->player;
 	printf("p:%f\n", p->pos_x);
 	//sort the sprites
 	//draw sprites one by one with a loop that goes through the linked list
-	s->num_sprites = 1;
+	s->num_sprites = 3;
 	i = 0;
 	while(i < s->num_sprites)
 	{
-		//translate sprite position to relative to camera
+		//translate sprite position to relative to camera - do i need 0.5?
 		s->sprite_x = sprite[i].x - (p->pos_x - 0.5);
 		s->sprite_y = sprite[i].y - (p->pos_y - 0.5);
 		printf("s_x:%f - s_y:%f\n", s->sprite_x, s->sprite_y);
 		//further calculations
-			//intDev, transform_x, transform_y, sprite_screen_x, sprite_height
-			s->inv_det = 1.0 / (p->plane_x * p->dir_y - p->dir_x * p->plane_y);
-			s->transform_x = s->inv_det * (p->dir_y * s->sprite_x - p->dir_x * s->sprite_y);
-			s->transform_y = s->inv_det * (-p->plane_y * s->sprite_x + p->plane_x * s->sprite_y);
-			s->sprite_screen_x = (int)(window->width / 2) * (1 + s->transform_x / s->transform_y); //not sure about window->w
-			//fabs or abs?
-			s->sprite_height = abs((int)(window->height/ s->transform_y));
-			printf("s_h:%d \n", s->sprite_height);
-			//calculate lowest and highest pixel to fill in current stripe
-			s->draw_start_y = -s->sprite_height / 2 + window->height / 2;
-			if (s->draw_start_y < 0)
-				s->draw_start_y = 0;
-			s->draw_end_y = s->sprite_height / 2 + window->height / 2;
-			if (s->draw_end_y >= window->height)
-				s->draw_end_y = window->height - 1;
-			printf("s_d_s_y:%d - s_d_e_y:%d\n", s->draw_start_y, s->draw_end_y);
-			s->sprite_width = abs((int)(window->height / s->transform_y));
-			printf("s_w:%d \n", s->sprite_width);
-			s->draw_start_x = -s->sprite_width / 2 + s->sprite_screen_x;
-			if (s->draw_start_x < 0)
-				s->draw_start_x = 0;
-			s->draw_end_x = s->sprite_width / 2 + s->sprite_screen_x;
-			if (s->draw_end_x >= window->width)
-				s->draw_end_x = window->width - 1;
-			printf("s_d_s_x:%d - s_d_e_x:%d\n", s->draw_start_x, s->draw_end_x);
+		//intDev, transform_x, transform_y, sprite_screen_x, sprite_height
+		s->inv_det = 1.0 / (p->plane_x * p->dir_y - p->dir_x * p->plane_y);
+		s->transform_x = s->inv_det * (p->dir_y * s->sprite_x - p->dir_x * s->sprite_y);
+		s->transform_y = s->inv_det * (-p->plane_y * s->sprite_x + p->plane_x * s->sprite_y);
+		s->sprite_screen_x = (int)(window->width / 2) * (1 + s->transform_x / s->transform_y); //not sure about window->w
+		//fabs or abs?
+		s->sprite_height = abs((int)(window->height / s->transform_y));
+		printf("s_h:%d \n", s->sprite_height);
+		//calculate lowest and highest pixel to fill in current stripe
+		s->draw_start_y = -s->sprite_height / 2 + window->height / 2;
+		if (s->draw_start_y < 0)
+			s->draw_start_y = 0;
+		s->draw_end_y = s->sprite_height / 2 + window->height / 2;
+		if (s->draw_end_y >= window->height)
+			s->draw_end_y = window->height - 1;
+		printf("s_d_s_y:%d - s_d_e_y:%d\n", s->draw_start_y, s->draw_end_y);
+		s->sprite_width = abs((int)(window->height / s->transform_y));
+		printf("s_w:%d \n", s->sprite_width);
+		s->draw_start_x = -s->sprite_width / 2 + s->sprite_screen_x;
+		if (s->draw_start_x < 0)
+			s->draw_start_x = 0;
+		s->draw_end_x = s->sprite_width / 2 + s->sprite_screen_x;
+		if (s->draw_end_x >= window->width)
+			s->draw_end_x = window->width - 1;
+		printf("s_d_s_x:%d - s_d_e_x:%d\n", s->draw_start_x, s->draw_end_x);
 		//loop through every vertical stripe of the sprite on screen
 		s->stripe = s->draw_start_x;
 		printf("s_stripe:%d \n", s->stripe);
@@ -128,6 +132,7 @@ void	draw_sprites(t_window *window, t_ray *ray)
 			s->stripe++;
 		}
 		printf("s_stripe:%d \n", s->stripe);
+		i++;
 		//check out stripe value?
 		//pixels from string and black check
 	}
