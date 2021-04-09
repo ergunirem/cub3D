@@ -6,55 +6,16 @@
 /*   By: icikrikc <icikrikc@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/04/06 15:37:02 by icikrikc      #+#    #+#                 */
-/*   Updated: 2021/04/09 09:11:15 by icikrikc      ########   odam.nl         */
+/*   Updated: 2021/04/09 21:31:43 by icikrikc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-// void	init_sprite_info(t_window *window)
-// {
-// 	if (!(window->s_info = malloc(sizeof(t_sprite_info))))
-// 		ft_exit("Malloc failed\n");
-// 	ft_bzero(window->s_info, sizeof(t_sprite_info));
-// }
-
 //implement bubble sort
 // void	sort_sprites()
 // {
-
 // }
-
-//create sprite? save sprites in a linked list? and save its position in the map?
-void	handle_sprite(t_window *window, t_ray *ray, t_list *s_list)
-{
-	t_list		*new;
-	t_sprite	*sprite;
-	t_sprite	*sprite_tmp;
-	int i;
-
-	sprite = (t_sprite*)malloc(sizeof(t_sprite));
-	if (!sprite)
-		exit_w_message("malloc failed in handle_sprite\n", 1, window);
-	sprite->x = ray->map_x;
-	sprite->y = ray->map_y;
-	new = ft_lstnew(sprite);
-
-	if (!new)
-		exit_w_message("ft_lstnew failed\n", 1, window);
-	ft_lstadd_back(&s_list, new);
-	// sprite_tmp = window->s_info->s_list->content;
-	// printf("x:%f - y:%f\n", sprite_tmp->x, sprite_tmp->y);
-	// i = 0;
-	// while(i < ft_lstsize(s_list))
-	// {
-	// 	sprite_tmp = s_list->content;
-	// 	printf("x:%f - y:%f\n", sprite_tmp->x, sprite_tmp->y);
-	// 	s_list = s_list->next;
-	// 	i++;
-	// }
-	// printf("num: %d\n", ft_lstsize(s_list));
-}
 
 /*
 It projects each sprite, calculates the size it should have on screen.
@@ -138,21 +99,29 @@ void	draw_sprites(t_window *window, t_ray *ray)
 {
 	t_sprite_info	*s;
 	t_sprite		*current_sprite;
+	t_sprite		*s_list_tmp;
 	t_player		*p;
 	int				i;
 
 	s = window->s_info;
+	s_list_tmp = s->s_list;
 	// sort_sprites(s);
-	s->num_sprites = ft_lstsize(s->s_list);
-	// printf("numS: %d\n", s->num_sprites);
-	i = 0;
-	while(i < s->num_sprites)
+	s->num_sprites = my_lstsize(s_list_tmp);
+	printf("numS: %d\n", s->num_sprites);
+	// i = 0;
+	while(s_list_tmp->next != NULL)
 	{
-		current_sprite = s->s_list->content;
+		if (s_list_tmp->next)
+			current_sprite = s_list_tmp->next;
+		// printf("-x:%f - y:%f\n", current_sprite->x, current_sprite->y);
+		// printf("-x:%f - y:%f\n", s->s_list->x, s->s_list->y);
 		calculate_projection(s, window, current_sprite);
 		draw_vertical_stripe(s, ray, window);
-		s->s_list = s->s_list->next;
-		i++;
+		s_list_tmp = s_list_tmp->next;
+		// i++;
 	}
-	//free the linked list
+	my_lstfree(s->s_list);
 }
+
+//check out freeing and adding new sprite info > it-ray casts so many times!
+// So slow when getting close to the sprite

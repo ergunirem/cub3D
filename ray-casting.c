@@ -6,7 +6,7 @@
 /*   By: icikrikc <icikrikc@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/06 23:27:20 by icikrikc      #+#    #+#                 */
-/*   Updated: 2021/04/08 20:55:18 by icikrikc      ########   odam.nl         */
+/*   Updated: 2021/04/09 10:56:25 by icikrikc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,7 @@ void	cast_ray(t_window *window, t_ray *ray)
 	while (ray->hit == 0)
 	{
 		get_wall_side(ray);
+		// printf("lst: %p\n", window->s_info->s_list->next);
 		if (window->map->map_array[ray->map_y][ray->map_x] == '1')
 			ray->hit = 1;
 		else if (window->map->map_array[ray->map_y][ray->map_x] == '2')
