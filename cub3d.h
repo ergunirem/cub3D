@@ -6,7 +6,7 @@
 /*   By: icikrikc <icikrikc@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/10 14:36:42 by icikrikc      #+#    #+#                 */
-/*   Updated: 2021/04/08 16:03:49 by icikrikc      ########   odam.nl         */
+/*   Updated: 2021/04/09 21:23:14 by icikrikc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,13 @@
 # define TRUE					0 //problem with other macros?
 # define FALSE					1
 
+typedef struct		s_sprite
+{
+	double			x;
+	double			y;
+	struct s_sprite	*next;
+}					t_sprite;
+
 typedef struct		s_sprite_info
 {
 	int				num_sprites;
@@ -53,20 +60,8 @@ typedef struct		s_sprite_info
 	double			inv_det;
 	double			transform_x;
 	double			transform_y;
-	t_list			*s_list;
+	t_sprite		*s_list;
 }					t_sprite_info;
-
-// typedef struct	s_sprite_lst
-// {
-// 	t_sprite		*content;
-// 	struct s_list	*next;
-// }				t_sprite_lst;
-
-typedef struct	s_sprite
-{
-	double		x;
-	double		y;
-}				t_sprite;
 
 typedef struct	s_keys
 {
@@ -185,7 +180,13 @@ void	cast_ray(t_window *window, t_ray *ray);
 t_image	*designate_tex(t_ray *ray, t_window *window, double wall_x);
 void	apply_textures(t_ray *ray, t_window *window);
 void	draw_sprites(t_window *window, t_ray *ray);
-void	handle_sprite(t_window *window, t_ray *ray, t_list *s_list);
+void	handle_sprite(t_window *window, t_ray *ray, t_sprite *s_list);
+
+//list funcs
+void	my_lstfree(t_sprite *ptr_lst);
+int	my_lstsize(t_sprite *lst);
+t_sprite	*my_lstlast(t_sprite *lst);
+void	my_lstadd_back(t_sprite *lst, t_sprite *new);
 
 //hook funcs
 void	move_forward(t_window *window);
