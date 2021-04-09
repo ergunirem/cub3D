@@ -6,7 +6,7 @@
 #    By: icikrikc <icikrikc@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2021/02/10 14:12:56 by icikrikc      #+#    #+#                  #
-#    Updated: 2021/04/06 15:37:19 by icikrikc      ########   odam.nl          #
+#    Updated: 2021/04/08 13:33:13 by icikrikc      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -71,7 +71,7 @@ OBJS	= $(SRCS:.c=.o)
 
 NAME	= cub3D
 
-GCC		= gcc
+GCC		= clang
 
 FLAGS	= -Wall -Wextra -Werror -fsanitize=address -g
 

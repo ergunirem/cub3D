@@ -6,7 +6,7 @@
 /*   By: icikrikc <icikrikc@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/10 14:36:42 by icikrikc      #+#    #+#                 */
-/*   Updated: 2021/04/07 12:15:30 by icikrikc      ########   odam.nl         */
+/*   Updated: 2021/04/08 16:03:49 by icikrikc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,28 +38,34 @@ typedef struct		s_sprite_info
 	int				v_move_screen;
 	int				sprite_screen_x;
 	int				sprite_height;
+	int				sprite_width;
 	int				draw_start_y;
 	int				draw_end_y;
-	int				sprite_width;
 	int				draw_start_x;
 	int				draw_end_x;
 	int				tex_x;
 	int				tex_y;
-	int				d;
 	int				stripe;
+	int				d;
 	int				y;
 	double			sprite_x;
 	double			sprite_y;
 	double			inv_det;
 	double			transform_x;
 	double			transform_y;
+	t_list			*s_list;
 }					t_sprite_info;
+
+// typedef struct	s_sprite_lst
+// {
+// 	t_sprite		*content;
+// 	struct s_list	*next;
+// }				t_sprite_lst;
 
 typedef struct	s_sprite
 {
 	double		x;
 	double		y;
-	int			tex;
 }				t_sprite;
 
 typedef struct	s_keys
@@ -179,6 +185,7 @@ void	cast_ray(t_window *window, t_ray *ray);
 t_image	*designate_tex(t_ray *ray, t_window *window, double wall_x);
 void	apply_textures(t_ray *ray, t_window *window);
 void	draw_sprites(t_window *window, t_ray *ray);
+void	handle_sprite(t_window *window, t_ray *ray, t_list *s_list);
 
 //hook funcs
 void	move_forward(t_window *window);

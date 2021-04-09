@@ -6,7 +6,7 @@
 /*   By: icikrikc <icikrikc@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/06 23:27:20 by icikrikc      #+#    #+#                 */
-/*   Updated: 2021/04/07 15:14:13 by icikrikc      ########   odam.nl         */
+/*   Updated: 2021/04/08 20:55:18 by icikrikc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,11 +104,8 @@ void	cast_ray(t_window *window, t_ray *ray)
 		get_wall_side(ray);
 		if (window->map->map_array[ray->map_y][ray->map_x] == '1')
 			ray->hit = 1;
-		// else if (window->map->map_array[ray->map_y][ray->map_x] == '2')
-		// {
-		// 	printf("y: %d - x: %d\n", ray->map_y, ray->map_x);
-		// 	// handle_sprite(ray, window);
-		// }
+		else if (window->map->map_array[ray->map_y][ray->map_x] == '2')
+			handle_sprite(window, ray, window->s_info->s_list);
 	}
 	get_distance(ray, player, window);
 	apply_textures(ray, window);
