@@ -6,7 +6,7 @@
 /*   By: icikrikc <icikrikc@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/19 16:09:36 by icikrikc      #+#    #+#                 */
-/*   Updated: 2021/04/06 11:56:49 by icikrikc      ########   odam.nl         */
+/*   Updated: 2021/04/12 15:23:39 by icikrikc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,15 @@ void	parse_resolution(t_window *window, char *line)
 	window->height = ft_atoi(line);
 	if (window->height > 1440)
 		window->height = 1440;
+	if (line)
+		line++;
+	while (ft_isdigit(*line))
+		line++;
+	while (ft_iswhitespace(*line))
+		line++;
+	printf("res: %c", *line);
+	if (*line != '\0')
+		exit_w_message("Resolution info is incorrect\n", 1, window);
 }
 
 /*printf("color:%d\n", rgb); */
