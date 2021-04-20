@@ -6,7 +6,7 @@
 /*   By: icikrikc <icikrikc@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/10 14:36:42 by icikrikc      #+#    #+#                 */
-/*   Updated: 2021/04/09 21:23:14 by icikrikc      ########   odam.nl         */
+/*   Updated: 2021/04/20 02:32:57 by icikrikc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,17 @@
 
 # define TRUE					0 //problem with other macros?
 # define FALSE					1
+
+typedef struct		s_bmp
+{
+	int				fd;
+	int				size;
+	char			*img;
+	unsigned char	header[14];
+	unsigned char	info[40];
+	unsigned char	pad[3];
+	int				color;
+}					t_bmp;
 
 typedef struct		s_sprite
 {
@@ -177,6 +188,11 @@ void			my_mlx_pixel_set(t_image *img, int x, int y, int color);
 void	draw(t_window *window);
 void	color_vertical_line(t_window *window, int color, int draw_start, int draw_end, int x_ray_pix);
 void	cast_ray(t_window *window, t_ray *ray);
+void	init_ray(t_ray *ray, t_player *player, t_window *window);
+void	next_step(t_ray *ray, t_player *player);
+void	get_wall_side(t_ray *ray);
+void	get_distance(t_ray *ray, t_player *player, t_window *window);
+void	set_start_pos(t_window *window, char pos, int j, int i);
 t_image	*designate_tex(t_ray *ray, t_window *window, double wall_x);
 void	apply_textures(t_ray *ray, t_window *window);
 void	draw_sprites(t_window *window, t_ray *ray);
@@ -206,15 +222,20 @@ void	parse_map(t_window *window, char *line, t_list *map_list);
 void	save_map(t_window *window, t_map *map, t_list *map_list);
 void	check_start_pos(t_window *window);
 void	check_map(t_window *window, int row, int col);
+void	check_borders(t_window *window, int row, int col);
 void	restore_map(t_map *map);
 //
 void	set_camera(t_window *win, double dir_x, double plane_x, double plane_y);
 //
 void	exit_w_message(char *msg, int window_open, t_window *window);
-void	ft_exit(char *msg);
+void	ft_exit(char *msg, t_window *window);
 void	init_map(t_window *window);
 void	init_textures(t_window *window);
 void	init_player(t_window *window);
 void	init_keys(t_window *window);
+void	init_image(t_window *window);
+void	init_sprite_info(t_window *window);
 t_window	*init_window(void);
+
+void	create_bitmap(t_window *window);
 #endif

@@ -6,7 +6,7 @@
 #    By: icikrikc <icikrikc@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2021/02/10 14:12:56 by icikrikc      #+#    #+#                  #
-#    Updated: 2021/04/09 21:23:48 by icikrikc      ########   odam.nl          #
+#    Updated: 2021/04/20 02:23:54 by icikrikc      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -59,13 +59,13 @@ BLUE = \033[38;5;4m
 
 SRCS	=	utils/gnl/get_next_line.c utils/gnl/get_next_line_utils.c \
 			main.c \
-			parse.c parse_other.c parse_map.c\
+			parse.c parse_other.c handle_map.c\
 			error.c \
-			init.c \
+			init_one.c init_two.c \
 			hooks.c \
 			draw.c ray-casting.c texture.c sprite.c handle_sprites.c \
 			move.c rotate.c \
-			pixel_funcs.c \
+			pixel_funcs.c bitmap.c\
 
 OBJS	= $(SRCS:.c=.o)
 
