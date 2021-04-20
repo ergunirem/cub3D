@@ -6,7 +6,7 @@
 /*   By: icikrikc <icikrikc@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/19 16:09:36 by icikrikc      #+#    #+#                 */
-/*   Updated: 2021/04/12 15:23:39 by icikrikc      ########   odam.nl         */
+/*   Updated: 2021/04/20 02:05:08 by icikrikc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,6 @@ void	parse_resolution(t_window *window, char *line)
 		line++;
 	while (ft_iswhitespace(*line))
 		line++;
-	printf("res: %c", *line);
 	if (*line != '\0')
 		exit_w_message("Resolution info is incorrect\n", 1, window);
 }
@@ -96,7 +95,7 @@ static	int	get_color(char *line, int *index)
 
 	color = ft_atoi(line + *index);
 	if (color < 0 || color > 255)
-		ft_exit("invalid rgb values\n");
+		// ft_exit("invalid rgb values\n", window);
 	while (ft_isdigit(line[*index]))
 		(*index)++;
 	(*index)++;
