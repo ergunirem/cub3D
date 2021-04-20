@@ -68,6 +68,9 @@ echo -e "${PURPLE}Invalid char in map ${NORMAL}"
 echo -e "${PURPLE}Info Order: Map is not the last info${NORMAL}"
 ./cub3D ./maps/invalid-char.cub
 
+echo -e "${PURPLE}Unknown identifier in map.cub ${NORMAL}"
+./cub3D ./maps/unknown-identifier.cub
+
 echo -e "${YELLOW}Zero's at rightest border${NORMAL}"
 ./cub3D ./maps/zero-borders-right.cub
 
@@ -82,3 +85,18 @@ echo -e "${YELLOW}Zero's at bottom border${NORMAL}"
 
 echo -e "${YELLOW}Spaces inside map that are reachable${NORMAL}"
 ./cub3D ./maps/not-surrounded.cub
+
+echo -e "${BLUE}R 640 480  123${NORMAL}"
+./cub3D ./maps/incorrect-resolution.cub
+
+echo -e "${BLUE}First row has '0'${NORMAL}"
+./cub3D ./maps/first-row-error.cub
+
+echo -e "${BLUE}First col has '0'${NORMAL}"
+./cub3D ./maps/first-col-error.cub
+
+echo -e "${BLUE}Last row has '0'${NORMAL}"
+./cub3D ./maps/last-row-error.cub
+
+echo -e "${BLUE}Last col has '0'${NORMAL}"
+./cub3D ./maps/last-col-error.cub
