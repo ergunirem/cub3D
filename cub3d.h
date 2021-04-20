@@ -6,7 +6,7 @@
 /*   By: icikrikc <icikrikc@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/10 14:36:42 by icikrikc      #+#    #+#                 */
-/*   Updated: 2021/04/20 02:32:57 by icikrikc      ########   odam.nl         */
+/*   Updated: 2021/04/20 11:24:40 by icikrikc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ typedef struct		s_sprite
 {
 	double			x;
 	double			y;
+	double			dist;
 	struct s_sprite	*next;
 }					t_sprite;
 
