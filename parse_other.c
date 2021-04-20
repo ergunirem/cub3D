@@ -6,7 +6,7 @@
 /*   By: icikrikc <icikrikc@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/19 16:09:36 by icikrikc      #+#    #+#                 */
-/*   Updated: 2021/04/20 02:05:08 by icikrikc      ########   odam.nl         */
+/*   Updated: 2021/04/20 16:12:34 by icikrikc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ static	int	get_color(char *line, int *index)
 
 	color = ft_atoi(line + *index);
 	if (color < 0 || color > 255)
-		// ft_exit("invalid rgb values\n", window);
+		exit(0); //change
 	while (ft_isdigit(line[*index]))
 		(*index)++;
 	(*index)++;
