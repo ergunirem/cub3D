@@ -6,7 +6,7 @@
 /*   By: icikrikc <icikrikc@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/04/09 21:18:14 by icikrikc      #+#    #+#                 */
-/*   Updated: 2021/04/09 23:31:22 by icikrikc      ########   odam.nl         */
+/*   Updated: 2021/04/20 02:34:52 by icikrikc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,10 +58,6 @@ void	my_lstadd_back(t_sprite *lst, t_sprite *new)
 	if (lst == NULL || new == NULL)
 		return ;
 	tmp = lst;
-	// printf("p: %p\n", tmp->next);
-	// printf("-x:%f - y:%f\n", lst->x, lst->y);
-	// printf("-x:%f - y:%f\n", tmp->x, tmp->y);
-	int i = 1;
 	while (tmp->next != NULL)
 	{
 		if (tmp->x == new->x && tmp->y == new->y)
@@ -69,21 +65,20 @@ void	my_lstadd_back(t_sprite *lst, t_sprite *new)
 			free(new);
 			return ;
 		}
-		printf("%d > x:%f - y:%f\n", i, tmp->x, tmp->y);
 		tmp = tmp->next;
-		i++;
 	}
 	last = my_lstlast(lst);
 	last->next = new;
 }
 
-//create sprite? save sprites in a linked list? and save its position in the map?
+/*
+save sprites in a linked list and save its position in the map
+*/
 
 void	handle_sprite(t_window *window, t_ray *ray, t_sprite *s_list)
 {
 	t_sprite	*sprite;
-	t_sprite	*sprite_tmp;
-	int i;
+	int			i;
 
 	sprite = (t_sprite*)malloc(sizeof(t_sprite));
 	if (!sprite)
@@ -91,9 +86,5 @@ void	handle_sprite(t_window *window, t_ray *ray, t_sprite *s_list)
 	sprite->x = ray->map_x;
 	sprite->y = ray->map_y;
 	sprite->next = NULL;
-	// printf("x:%f - y:%f\n", sprite->x, sprite->y);
 	my_lstadd_back(window->s_info->s_list, sprite);
 }
-
-
-// 2 starting sprite with -1, -1 in the list?
