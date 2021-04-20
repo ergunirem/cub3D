@@ -6,7 +6,7 @@
 /*   By: icikrikc <icikrikc@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/19 10:20:45 by icikrikc      #+#    #+#                 */
-/*   Updated: 2021/04/06 11:57:32 by icikrikc      ########   odam.nl         */
+/*   Updated: 2021/04/20 02:15:40 by icikrikc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,44 +15,37 @@
 static void	parse_check(t_window *window)
 {
 	if (window->width <= 0 || window->height <= 0)
-		exit_w_message("invalid or no resolution\n", 1, window);
+		ft_exit("invalid or no resolution\n", window);
 	if (window->map->floor_color < 0 || window->map->ceiling_color < 0)
-		exit_w_message("invalid or no color\n", 1, window);
+		ft_exit("invalid or no color\n", window);
 	if (window->map->floor_color == window->map->ceiling_color)
-		exit_w_message("same colour for floor&ceiling\n", 1, window);
+		ft_exit("same colour for floor&ceiling\n", window);
 	if (window->textures->north->endian == -1)
-		exit_w_message("no north texture path\n", 1, window);
+		ft_exit("no north texture path\n", window);
 	if (window->textures->south->endian == -1)
-		exit_w_message("no south texture path\n", 1, window);
+		ft_exit("no south texture path\n", window);
 	if (window->textures->east->endian == -1)
-		exit_w_message("no east texture path\n", 1, window);
+		ft_exit("no east texture path\n", window);
 	if (window->textures->west->endian == -1)
-		exit_w_message("no west texture path\n", 1, window);
+		ft_exit("no west texture path\n", window);
 	if (window->textures->sprite->endian == -1)
-		exit_w_message("no sprite texture path\n", 1, window);
+		ft_exit("no sprite texture path\n", window);
 }
 
-static void	parse_line(t_window *window, char *line, t_list *map_list)
+static void	parse_line(t_window *window, char *line, t_list *map_list, int i)
 {
-	int	i;
-
-	i = 0;
 	while (ft_iswhitespace(line[i]))
 		i++;
 	if (line[i] == '\0' && window->map->map_started == TRUE)
-		exit_w_message("empty line inside or after map\n", 1, window);
+		ft_exit("empty line inside or after map\n", window);
 	else if (line[i] == '\0' && window->map->map_started == FALSE)
 		return ;
 	else if (line[i] == 'R')
-		parse_resolution(window, line + 1);
+		parse_resolution(window, line + i + 1);
 	else if (line[i] == 'F' || line[i] == 'C')
 		parse_color(window, line + i);
 	else if (line[i] == 'N' && line[i + 1] == 'O')
-	{
 		parse_texture(window, window->textures->north, line + i + 2);
-		// printf("y: %d ", window->textures->north->height);
-	}
-
 	else if (line[i] == 'S' && line[i + 1] == 'O')
 		parse_texture(window, window->textures->south, line + i + 2);
 	else if (line[i] == 'W' && line[i + 1] == 'E')
@@ -61,16 +54,54 @@ static void	parse_line(t_window *window, char *line, t_list *map_list)
 		parse_texture(window, window->textures->east, line + i + 2);
 	else if (line[i] == 'S' && line[i + 1] == ' ')
 		parse_texture(window, window->textures->sprite, line + i + 2);
-	else if (line[i] == '1' || line[i] == '0') //any other char (2NESW)
+	else if (line[i] == '1' || line[i] == '0')
 		parse_map(window, line, map_list);
-
-	//else
-		//unknown identifier
+	else if ((line[i] && line[i] != '\0'))
+		ft_exit("unknown identifier\n", window);
 }
 
-/* 	//ft_lstfree(&map_list); //bus error :(
+static void	handle_map(t_window *window, t_list	*map_list)
+{
+	t_list	*temp;
 
-*/
+	if (ft_lstsize(map_list) == 1)
+		ft_exit("no map provided\n", window);
+	map_list = map_list->next;
+	window->map->max_row = ft_lstsize(map_list);
+	save_map(window, window->map, map_list);
+	check_start_pos(window);
+	printf("row:%d col: %d\n", window->map->max_row, window->map->max_col);
+	check_borders(window, window->map->max_row, window->map->max_col);
+	check_map(window, window->map->row_pos, window->map->col_pos);
+	restore_map(window->map);
+	while (map_list)
+	{
+		temp = map_list->next;
+		free(map_list);
+		map_list = temp;
+	}
+}
+
+void	parse_map(t_window *window, char *line, t_list *map_list)
+{
+	int		i;
+	t_list	*new;
+
+	window->map->map_started = TRUE;
+	i = 0;
+	while (line[i])
+	{
+		if (ft_strchr("012NSEW ", line[i]) == NULL)
+			exit_w_message("invalid char inside map\n", 1, window);
+		i++;
+	}
+	if (window->map->max_col < ft_strlen(line))
+		window->map->max_col = ft_strlen(line);
+	new = ft_lstnew(ft_strdup(line));
+	if (!new)
+		exit_w_message("ft_lstnew failed\n", 1, window);
+	ft_lstadd_back(&map_list, new);
+}
 
 int	parse(char *file_name, t_window *window)
 {
@@ -78,35 +109,21 @@ int	parse(char *file_name, t_window *window)
 	int		fd;
 	char	*line;
 	t_list	*map_list;
-	int		i;
 
 	fd = open(file_name, O_RDONLY);
 	ret_val = 1;
 	line = NULL;
-	map_list = ft_lstnew("map");
 	while (ret_val > 0)
 	{
 		ret_val = get_next_line(fd, &line);
 		if (ret_val == -1)
-			exit_w_message("get next line failed\n", 1, window);
+			ft_exit("get next line failed\n", window);
 		else if (ret_val > 0)
-			parse_line(window, line, map_list);
+			parse_line(window, line, map_list, 0);
 		free(line);
 	}
-	printf("y: %d ", window->textures->north->height);
 	parse_check(window);
-	if (ft_lstsize(map_list) == 1)
-		exit_w_message("no map provided\n", 1, window);
-	save_map(window, window->map, map_list);
-	check_start_pos(window);
-	check_map(window, window->map->row_pos, window->map->col_pos);
-	i = 0;
-	while (i < window->map->max_row)
-	{
-		printf("%s\n", window->map->map_array[i]);
-		i++;
-	}
-	restore_map(window->map);
+	handle_map(window, map_list);
 	close(fd);
 	return (0);
 }
