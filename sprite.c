@@ -6,11 +6,66 @@
 /*   By: icikrikc <icikrikc@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/04/06 15:37:02 by icikrikc      #+#    #+#                 */
-/*   Updated: 2021/04/20 02:42:24 by icikrikc      ########   odam.nl         */
+/*   Updated: 2021/04/20 17:06:03 by icikrikc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+t_sprite *swap(t_sprite *s_one, t_sprite *s_two)
+{
+	t_sprite *tmp;
+
+	tmp = s_two->next;
+	s_two->next = s_one;
+	s_one->next = tmp;
+	return (s_two);
+}
+
+void print_list(t_sprite *s_list, int i)
+{
+	while (s_list)
+	{
+		// printf("%d x: %f y: %f\n", i, s_list->x, s_list->y);
+		printf("Dist %d: %f\n", i, s_list->dist);
+		s_list = s_list->next;
+		i++;
+	}
+}
+
+/*
+It bubble sorts the sprites list based on distance (perp_wall_dist)
+*/
+
+void	sort_sprites(int num_sprites, t_sprite **s_list, int i, int j)
+{
+	t_sprite **head;
+	t_sprite *s_one;
+	t_sprite *s_two;
+	int	swapped;
+
+	while (i <= num_sprites)
+	{
+		head = s_list;
+		swapped = 0;
+		j = 0;
+		while (j < num_sprites - i - 1)
+		{
+			s_one = *head;
+			s_two = s_one->next;
+			if (s_one->dist < s_two->dist)
+			{
+				*head = swap(s_one, s_two);
+				swapped = 1;
+			}
+			head = &(*head)->next;
+			j++;
+		}
+		if (swapped == 0)
+			break ;
+		i++;
+	}
+}
 
 /*
 It projects each sprite, calculates the size it should have on screen.
@@ -87,15 +142,19 @@ Draws sprites one by one with a loop that goes through the linked list
 void	draw_sprites(t_window *window, t_ray *ray)
 {
 	t_sprite_info	*s;
-	t_sprite		*current_sprite;
 	t_sprite		*s_list;
 	t_player		*p;
 	int				i;
 
+	// if (!s->s_list)
+	// 	ft_exit("empty sprite list\n", window);
 	s = window->s_info;
 	s_list = s->s_list;
-	// // sort_sprites(s);
 	s->num_sprites = my_lstsize(s_list);
+	print_list(s_list, 0);
+	sort_sprites(s->num_sprites, &s_list, 0, 0);
+	printf("after\n");
+	print_list(s_list, 0);
 	i = 0;
 	while (i < s->num_sprites)
 	{
@@ -104,5 +163,6 @@ void	draw_sprites(t_window *window, t_ray *ray)
 		s_list = s_list->next;
 		i++;
 	}
-	my_lstfree(s->s_list);
+	// if (s_list->next)
+	// 	my_lstfree(s_list); //segv when no sprite is available
 }
