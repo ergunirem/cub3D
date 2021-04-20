@@ -6,7 +6,7 @@
 /*   By: icikrikc <icikrikc@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/04/09 21:18:14 by icikrikc      #+#    #+#                 */
-/*   Updated: 2021/04/20 02:34:52 by icikrikc      ########   odam.nl         */
+/*   Updated: 2021/04/20 17:24:02 by icikrikc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ void	handle_sprite(t_window *window, t_ray *ray, t_sprite *s_list)
 		exit_w_message("malloc failed in handle_sprite\n", 1, window);
 	sprite->x = ray->map_x;
 	sprite->y = ray->map_y;
+	sprite->dist = ray->perp_wall_dist;
 	sprite->next = NULL;
 	my_lstadd_back(window->s_info->s_list, sprite);
 }
