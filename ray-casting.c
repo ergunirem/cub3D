@@ -6,7 +6,7 @@
 /*   By: icikrikc <icikrikc@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/06 23:27:20 by icikrikc      #+#    #+#                 */
-/*   Updated: 2021/04/09 10:56:25 by icikrikc      ########   odam.nl         */
+/*   Updated: 2021/04/20 02:30:20 by icikrikc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 /* Calculate distance projected on camera direction
 (Euclidean distance will give fisheye effect!) */
 
-static void	get_distance(t_ray *ray, t_player *player, t_window *window)
+void	get_distance(t_ray *ray, t_player *player, t_window *window)
 {
 	if (ray->side == 0 || ray->side == 1)
 		ray->perp_wall_dist = (ray->map_x - player->pos_x + (1 - ray->step_x) / 2)
@@ -25,16 +25,16 @@ static void	get_distance(t_ray *ray, t_player *player, t_window *window)
 			/ ray->ray_dir_y;
 	ray->line_height = (int)(window->height / ray->perp_wall_dist);
 	ray->draw_start = (-ray->line_height / 2 + ((window->height / 2)
-			* window->player->cam_height));
+				* window->player->cam_height));
 	if (ray->draw_start < 0)
 		ray->draw_start = 0;
 	ray->draw_end = (ray->line_height / 2 + ((window->height / 2)
-		* window->player->cam_height));
+				* window->player->cam_height));
 	if (ray->draw_end >= window->height)
 		ray->draw_end = window->height - 1;
 }
 
-static void	get_wall_side(t_ray *ray)
+void	get_wall_side(t_ray *ray)
 {
 	if (ray->side_dist_x < ray->side_dist_y)
 	{
@@ -56,7 +56,7 @@ static void	get_wall_side(t_ray *ray)
 	}
 }
 
-static void	next_step(t_ray *ray, t_player *player)
+void	next_step(t_ray *ray, t_player *player)
 {
 	if (ray->ray_dir_x < 0)
 	{
@@ -80,7 +80,7 @@ static void	next_step(t_ray *ray, t_player *player)
 	}
 }
 
-static void	init_ray(t_ray *ray, t_player *player, t_window *window)
+void	init_ray(t_ray *ray, t_player *player, t_window *window)
 {
 	ray->cam_x = (2 * ray->pix) / (double)window->width - 1;
 	ray->ray_dir_x = player->dir_x + player->plane_x * ray->cam_x;
@@ -92,27 +92,28 @@ static void	init_ray(t_ray *ray, t_player *player, t_window *window)
 	ray->hit = 0;
 }
 
-void	cast_ray(t_window *window, t_ray *ray)
+void	set_start_pos(t_window *window, char pos, int j, int i)
 {
-	t_player	*player;
-
-	player = window->player;
-	init_ray(ray, player, window);
-	next_step(ray, player);
-	while (ray->hit == 0)
+	if (pos == 'E')
 	{
-		get_wall_side(ray);
-		// printf("lst: %p\n", window->s_info->s_list->next);
-		if (window->map->map_array[ray->map_y][ray->map_x] == '1')
-			ray->hit = 1;
-		else if (window->map->map_array[ray->map_y][ray->map_x] == '2')
-			handle_sprite(window, ray, window->s_info->s_list);
+		window->player->dir_y = 0.0;
+		set_camera(window, 1.0, 0.0, 0.66);
 	}
-	get_distance(ray, player, window);
-	apply_textures(ray, window);
-	ray->z_buffer[ray->pix] = ray->perp_wall_dist;
-	color_vertical_line(window, window->map->ceiling_color, 0, ray->draw_start, ray->pix);
-	color_vertical_line(window, window->map->floor_color, ray->draw_end, window->height, ray->pix);
-	ray->pix++;
+	else if (pos == 'W')
+	{
+		window->player->dir_y = 0.0;
+		set_camera(window, -1.0, 0.0, -0.66);
+	}
+	else if (pos == 'N')
+	{
+		window->player->dir_y = -1.0;
+		set_camera(window, 0.0, 0.66, 0.0);
+	}
+	else if (pos == 'S')
+	{
+		window->player->dir_y = 1.0;
+		set_camera(window, 0.0, -0.66, 0.0);
+	}
+	window->player->pos_x = (double)j + 0.5;
+	window->player->pos_y = (double)i + 0.5;
 }
-
