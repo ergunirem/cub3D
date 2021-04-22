@@ -6,7 +6,7 @@
 /*   By: icikrikc <icikrikc@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/10 14:36:42 by icikrikc      #+#    #+#                 */
-/*   Updated: 2021/04/20 11:24:40 by icikrikc      ########   odam.nl         */
+/*   Updated: 2021/04/22 14:46:31 by icikrikc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -230,6 +230,7 @@ void	set_camera(t_window *win, double dir_x, double plane_x, double plane_y);
 //
 void	exit_w_message(char *msg, int window_open, t_window *window);
 void	ft_exit(char *msg, t_window *window);
+void	ft_exit_basic(char *msg);
 void	init_map(t_window *window);
 void	init_textures(t_window *window);
 void	init_player(t_window *window);

@@ -6,7 +6,7 @@
 /*   By: icikrikc <icikrikc@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/04/06 15:37:02 by icikrikc      #+#    #+#                 */
-/*   Updated: 2021/04/20 17:06:03 by icikrikc      ########   odam.nl         */
+/*   Updated: 2021/04/22 16:13:44 by icikrikc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,16 +22,16 @@ t_sprite *swap(t_sprite *s_one, t_sprite *s_two)
 	return (s_two);
 }
 
-void print_list(t_sprite *s_list, int i)
-{
-	while (s_list)
-	{
-		// printf("%d x: %f y: %f\n", i, s_list->x, s_list->y);
-		printf("Dist %d: %f\n", i, s_list->dist);
-		s_list = s_list->next;
-		i++;
-	}
-}
+// void print_list(t_sprite *s_list, int i)
+// {
+// 	while (s_list)
+// 	{
+// 		printf("%d x: %f y: %f\n", i, s_list->x, s_list->y);
+// 		// printf("Dist %d: %f\n", i, s_list->dist);
+// 		s_list = s_list->next;
+// 		i++;
+// 	}
+// }
 
 /*
 It bubble sorts the sprites list based on distance (perp_wall_dist)
@@ -49,11 +49,11 @@ void	sort_sprites(int num_sprites, t_sprite **s_list, int i, int j)
 		head = s_list;
 		swapped = 0;
 		j = 0;
-		while (j < num_sprites - i - 1)
+		while (j <= num_sprites - i - 1)
 		{
 			s_one = *head;
 			s_two = s_one->next;
-			if (s_one->dist < s_two->dist)
+			if (s_one->dist > s_two->dist)
 			{
 				*head = swap(s_one, s_two);
 				swapped = 1;
@@ -151,10 +151,12 @@ void	draw_sprites(t_window *window, t_ray *ray)
 	s = window->s_info;
 	s_list = s->s_list;
 	s->num_sprites = my_lstsize(s_list);
-	print_list(s_list, 0);
-	sort_sprites(s->num_sprites, &s_list, 0, 0);
-	printf("after\n");
-	print_list(s_list, 0);
+	printf("num:%d\n", s->num_sprites);
+	// printf("before\n");
+	// print_list(s_list, 0);
+	// sort_sprites(s->num_sprites, &s_list, 0, 0);
+	// printf("after\n");
+	// print_list(s_list, 0);
 	i = 0;
 	while (i < s->num_sprites)
 	{

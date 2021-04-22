@@ -6,7 +6,7 @@
 /*   By: icikrikc <icikrikc@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/20 12:47:23 by icikrikc      #+#    #+#                 */
-/*   Updated: 2021/04/19 19:26:51 by icikrikc      ########   odam.nl         */
+/*   Updated: 2021/04/22 16:11:52 by icikrikc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,22 +17,22 @@ void	validate_input(int argc, char **argv, t_window *window)
 	int	len;
 
 	if (argc == 1)
-		ft_exit("No argument provided\n", window);
+		ft_exit_basic("No argument provided\n");
 	if (argc > 3)
-		ft_exit("More than 2 arguments\n", window);
+		ft_exit_basic("More than 2 arguments\n");
 	if (argv[1])
 	{
 		len = ft_strlen(argv[1]);
 		if (len >= 4 && (argv[1][len - 4] != '.' || argv[1][len - 3] != 'c'
 				|| argv[1][len - 2] != 'u' || argv[1][len - 1] != 'b'))
-			ft_exit(".cub extension needed!\n", window);
+			ft_exit_basic(".cub extension needed!\n");
 		else if (len < 4)
-			ft_exit(".cub extension needed!\n", window);
+			ft_exit_basic(".cub extension needed!\n");
 	}
 	if (argc == 3)
 	{
 		if (ft_strncmp(argv[2], "--save", 7))
-			ft_exit("Invalid screenshot argument\n", window);
+			ft_exit_basic("Invalid screenshot argument\n");
 		else
 			window->screenshot = 1;
 	}

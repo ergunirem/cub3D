@@ -6,7 +6,7 @@
 /*   By: icikrikc <icikrikc@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/04/09 21:18:14 by icikrikc      #+#    #+#                 */
-/*   Updated: 2021/04/20 17:24:02 by icikrikc      ########   odam.nl         */
+/*   Updated: 2021/04/22 16:34:25 by icikrikc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	my_lstsize(t_sprite *lst)
 	int		count;
 
 	count = 0;
-	while (lst->next != NULL)
+	while (lst)
 	{
 		count++;
 		lst = lst->next;
@@ -58,13 +58,21 @@ void	my_lstadd_back(t_sprite *lst, t_sprite *new)
 	if (lst == NULL || new == NULL)
 		return ;
 	tmp = lst;
-	while (tmp->next != NULL)
+	while (tmp)
 	{
 		if (tmp->x == new->x && tmp->y == new->y)
 		{
 			free(new);
 			return ;
 		}
+		// if (tmp->x == 0 && tmp->y == 0)
+		// {
+		// 	tmp->x = new->x;
+		// 	tmp->y = new->y;
+		// 	tmp->dist = new->dist;
+		// 	free(new);
+		// 	return ;
+		// }
 		tmp = tmp->next;
 	}
 	last = my_lstlast(lst);
@@ -78,6 +86,7 @@ save sprites in a linked list and save its position in the map
 void	handle_sprite(t_window *window, t_ray *ray, t_sprite *s_list)
 {
 	t_sprite	*sprite;
+	t_sprite	*head;
 	int			i;
 
 	sprite = (t_sprite*)malloc(sizeof(t_sprite));
@@ -87,5 +96,11 @@ void	handle_sprite(t_window *window, t_ray *ray, t_sprite *s_list)
 	sprite->y = ray->map_y;
 	sprite->dist = ray->perp_wall_dist;
 	sprite->next = NULL;
+	// head = s_list;
+	// if (head->x == 0 && head->y == 0)
+	// {
+	// 	head->x = ray->map_x;
+	// 	head->y = ray->map_y;
+	// }
 	my_lstadd_back(window->s_info->s_list, sprite);
 }
