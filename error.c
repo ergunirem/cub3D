@@ -6,7 +6,7 @@
 /*   By: icikrikc <icikrikc@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/20 12:42:41 by icikrikc      #+#    #+#                 */
-/*   Updated: 2021/04/20 01:57:26 by icikrikc      ########   odam.nl         */
+/*   Updated: 2021/04/22 14:46:17 by icikrikc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,5 +59,12 @@ void	ft_exit(char *msg, t_window *window)
 	// free_tex(window);
 	// if (window)
 	// 	free(window);
+	exit(0);
+}
+
+void	ft_exit_basic(char *msg)
+{
+	ft_putstr_fd("Error\n", 1);
+	ft_putstr_fd(msg, 1);
 	exit(0);
 }
