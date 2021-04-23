@@ -6,7 +6,7 @@
 /*   By: icikrikc <icikrikc@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/04/19 19:19:52 by icikrikc      #+#    #+#                 */
-/*   Updated: 2021/04/22 16:34:35 by icikrikc      ########   odam.nl         */
+/*   Updated: 2021/04/23 02:29:37 by icikrikc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,32 +29,14 @@ void	init_image(t_window *window)
 	image->height = window->height;
 	window->image = image;
 }
-void print_list(t_sprite *s_list, int i)
-{
-	while (s_list)
-	{
-		printf("%d x: %f y: %f\n", i, s_list->x, s_list->y);
-		// printf("Dist %d: %f\n", i, s_list->dist);
-		s_list = s_list->next;
-		i++;
-	}
-}
+
 void	init_sprite_info(t_window *window)
 {
-	t_sprite *s_list;
-
-	window->s_info = malloc(sizeof(t_sprite_info));
-	if (!window->s_info)
+	window->s_list = malloc(sizeof(t_sprite));
+	if (!window->s_list)
 		ft_exit("Malloc failed\n", window);
-	ft_bzero(window->s_info, sizeof(t_sprite_info));
-	window->s_info->s_list = s_list;
-	window->s_info->s_list->next = NULL;
-	// print_list(s_list, 0);
-	// window->s_info->s_list = (t_sprite *)malloc(sizeof(t_sprite));
-	// if (!window->s_info->s_list)
-	// 	ft_exit("Malloc failed\n", window);
-	// window->s_info->s_list->x = -1;
-	// window->s_info->s_list->y = -1;
-	// window->s_info->s_list->next = NULL;
-	window->s_info->num_sprites = 0;
+	ft_bzero(window->s_list, sizeof(t_sprite));
+	window->s_list->x = -1;
+	window->s_list->y = -1;
+	window->s_list->next = NULL;
 }
