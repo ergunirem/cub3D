@@ -6,13 +6,13 @@
 /*   By: icikrikc <icikrikc@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/20 12:47:23 by icikrikc      #+#    #+#                 */
-/*   Updated: 2021/04/22 16:11:52 by icikrikc      ########   odam.nl         */
+/*   Updated: 2021/04/23 04:20:10 by icikrikc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	validate_input(int argc, char **argv, t_window *window)
+void	validate_input(int argc, char **argv, int *screenshot)
 {
 	int	len;
 
@@ -34,16 +34,18 @@ void	validate_input(int argc, char **argv, t_window *window)
 		if (ft_strncmp(argv[2], "--save", 7))
 			ft_exit_basic("Invalid screenshot argument\n");
 		else
-			window->screenshot = 1;
+			*screenshot = 1;
 	}
 }
 
 int	main(int argc, char **argv)
 {
 	t_window	*window;
+	int			screenshot;
 
-	validate_input(argc, argv, window);
+	validate_input(argc, argv, &screenshot);
 	window = init_window();
+	window->screenshot = screenshot;
 	init_map(window);
 	init_textures(window);
 	init_player(window);

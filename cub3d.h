@@ -6,7 +6,7 @@
 /*   By: icikrikc <icikrikc@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/10 14:36:42 by icikrikc      #+#    #+#                 */
-/*   Updated: 2021/04/22 14:46:31 by icikrikc      ########   odam.nl         */
+/*   Updated: 2021/04/23 02:28:24 by icikrikc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,9 +55,9 @@ typedef struct		s_sprite_info
 {
 	int				num_sprites;
 	int				v_move_screen;
-	int				sprite_screen_x;
-	int				sprite_height;
-	int				sprite_width;
+	int				s_screen_x;
+	int				s_height;
+	int				s_width;
 	int				draw_start_y;
 	int				draw_end_y;
 	int				draw_start_x;
@@ -70,9 +70,8 @@ typedef struct		s_sprite_info
 	double			sprite_x;
 	double			sprite_y;
 	double			inv_det;
-	double			transform_x;
-	double			transform_y;
-	t_sprite		*s_list;
+	double			trans_x;
+	double			trans_y;
 }					t_sprite_info;
 
 typedef struct	s_keys
@@ -171,7 +170,7 @@ typedef struct		s_window {
 	t_tex			*textures;
 	t_player		*player;
 	t_keys			*keys;
-	t_sprite_info	*s_info;
+	t_sprite		*s_list;
 	//t_ray?
 }					t_window;
 
@@ -200,7 +199,7 @@ void	draw_sprites(t_window *window, t_ray *ray);
 void	handle_sprite(t_window *window, t_ray *ray, t_sprite *s_list);
 
 //list funcs
-void	my_lstfree(t_sprite *ptr_lst);
+void	my_lstfree(t_sprite **ptr_lst);
 int	my_lstsize(t_sprite *lst);
 t_sprite	*my_lstlast(t_sprite *lst);
 void	my_lstadd_back(t_sprite *lst, t_sprite *new);
