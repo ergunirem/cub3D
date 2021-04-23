@@ -6,7 +6,7 @@
 /*   By: icikrikc <icikrikc@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/04/09 21:18:14 by icikrikc      #+#    #+#                 */
-/*   Updated: 2021/04/23 00:14:03 by icikrikc      ########   odam.nl         */
+/*   Updated: 2021/04/23 02:11:02 by icikrikc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,11 +90,5 @@ void	handle_sprite(t_window *window, t_ray *ray, t_sprite *s_list)
 				- sprite->y) * (window->player->pos_y - sprite->y));
 	sprite->next = NULL;
 	head = window->s_list;
-	if (head->x == -1 && head->y == -1)
-	{
-		head->x = sprite->x;
-		head->y = sprite->x;
-		head->dist = sprite->dist;
-	}
 	my_lstadd_back(window->s_list, sprite);
 }
