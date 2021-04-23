@@ -6,7 +6,7 @@
 /*   By: icikrikc <icikrikc@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/04/09 21:18:14 by icikrikc      #+#    #+#                 */
-/*   Updated: 2021/04/23 02:11:02 by icikrikc      ########   odam.nl         */
+/*   Updated: 2021/04/23 02:18:25 by icikrikc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,9 @@ void	my_lstfree(t_sprite **ptr_lst)
 		return ;
 	while (*ptr_lst)
 	{
-		temp = *ptr_lst;
-		free(*ptr_lst);
+		temp = (*ptr_lst)->next;
+		if((*ptr_lst)->x != -1 && (*ptr_lst)->y != -1)
+			free(*ptr_lst);
 		*ptr_lst = temp;
 	}
 	return ;
