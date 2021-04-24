@@ -6,27 +6,20 @@
 /*   By: icikrikc <icikrikc@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/26 20:49:48 by icikrikc      #+#    #+#                 */
-/*   Updated: 2021/04/19 19:20:26 by icikrikc      ########   odam.nl         */
+/*   Updated: 2021/04/24 18:53:42 by icikrikc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-t_window	*init_window(void)
+void	init_window(t_window *new_window)
 {
-	t_window	*new_window;
-
-	new_window = (t_window*)malloc(sizeof(t_window));
-	if (!new_window)
-		ft_exit("init malloc failed\n", new_window);
-	ft_bzero(new_window, sizeof(t_window));
 	new_window->mlx = mlx_init();
 	if (!new_window->mlx)
 		ft_exit("mlx_init failed\n", new_window);
 	new_window->height = 0;
 	new_window->width = 0;
 	new_window->screenshot = 0;
-	return (new_window);
 }
 
 void	init_map(t_window *window)

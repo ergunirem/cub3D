@@ -6,7 +6,7 @@
 /*   By: icikrikc <icikrikc@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/20 12:47:23 by icikrikc      #+#    #+#                 */
-/*   Updated: 2021/04/23 04:20:10 by icikrikc      ########   odam.nl         */
+/*   Updated: 2021/04/24 18:43:45 by icikrikc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,24 +40,24 @@ void	validate_input(int argc, char **argv, int *screenshot)
 
 int	main(int argc, char **argv)
 {
-	t_window	*window;
+	t_window	window;
 	int			screenshot;
 
 	validate_input(argc, argv, &screenshot);
-	window = init_window();
-	window->screenshot = screenshot;
-	init_map(window);
-	init_textures(window);
-	init_player(window);
-	init_keys(window);
-	parse(argv[1], window);
-	init_image(window);
-	init_sprite_info(window);
-	window->win = mlx_new_window(window->mlx, window->width, window->height, "cub3D");
-	mlx_hook(window->win, EVENT_KEY_PRESS, 1L << 0, key_pressed, window);
-	mlx_hook(window->win, EVENT_KEY_RELEASE, 1L << 1, key_released, window);
-	mlx_hook(window->win, EVENT_EXIT, 1L << 17, exit_game, window);
-	mlx_loop_hook(window->mlx, handle_loop, window);
-	mlx_loop(window->mlx);
+	init_window(&window);
+	window.screenshot = screenshot;
+	init_map(&window);
+	init_textures(&window);
+	init_player(&window);
+	init_keys(&window);
+	parse(argv[1], &window);
+	init_image(&window);
+	init_sprite_info(&window);
+	window.win = mlx_new_window(window.mlx, window.width, window.height, "cub3D");
+	mlx_hook(window.win, EVENT_KEY_PRESS, 1L << 0, key_pressed, &window);
+	mlx_hook(window.win, EVENT_KEY_RELEASE, 1L << 1, key_released, &window);
+	mlx_hook(window.win, EVENT_EXIT, 1L << 17, exit_game, &window);
+	mlx_loop_hook(window.mlx, handle_loop, &window);
+	mlx_loop(window.mlx);
 	return (0);
 }
