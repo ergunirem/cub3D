@@ -6,7 +6,7 @@
 /*   By: icikrikc <icikrikc@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/07 11:33:06 by icikrikc      #+#    #+#                 */
-/*   Updated: 2021/04/06 11:32:53 by icikrikc      ########   odam.nl         */
+/*   Updated: 2021/04/24 18:35:37 by icikrikc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,7 @@ int	key_released(int keycode, t_window *window)
 
 int	exit_game(t_window *window)
 {
-	mlx_destroy_window(window->mlx, window->win);
-	exit(0);
+	ft_exit("esc: exited the game\n", window);
 	return (0);
 }
 

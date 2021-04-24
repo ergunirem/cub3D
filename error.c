@@ -6,7 +6,7 @@
 /*   By: icikrikc <icikrikc@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/20 12:42:41 by icikrikc      #+#    #+#                 */
-/*   Updated: 2021/04/22 14:46:17 by icikrikc      ########   odam.nl         */
+/*   Updated: 2021/04/24 18:36:12 by icikrikc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,8 @@ void	free_tex(t_window *window)
 
 void	ft_exit(char *msg, t_window *window)
 {
-	ft_putstr_fd("Error\n", 1);
+	if(msg[0] != 'e' && msg[1] != 's' && msg[1] != 'c')
+		ft_putstr_fd("Error\n", 1);
 	ft_putstr_fd(msg, 1);
 	// if (window->mlx && window->win)
 	// 	mlx_destroy_window(window->mlx, window->win);
