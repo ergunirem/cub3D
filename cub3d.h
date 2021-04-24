@@ -6,7 +6,7 @@
 /*   By: icikrikc <icikrikc@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/10 14:36:42 by icikrikc      #+#    #+#                 */
-/*   Updated: 2021/04/23 02:28:24 by icikrikc      ########   odam.nl         */
+/*   Updated: 2021/04/24 02:23:20 by icikrikc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,21 +29,24 @@
 # define EVENT_MOUSE_MOVE		6
 # define EVENT_EXIT				17
 
-# define TRUE					0 //problem with other macros?
+# define TRUE					0
 # define FALSE					1
 
-typedef struct		s_bmp
+typedef struct s_bmp
 {
 	int				fd;
-	int				size;
-	char			*img;
-	unsigned char	header[14];
-	unsigned char	info[40];
+	int				file_size;
+	int				width_bytes;
+	int				pad_size;
+	int				stride;
+	int				check;
+	unsigned char	*img;
+	unsigned char	file_header[14];
+	unsigned char	info_header[40];
 	unsigned char	pad[3];
-	int				color;
 }					t_bmp;
 
-typedef struct		s_sprite
+typedef struct s_sprite
 {
 	double			x;
 	double			y;
@@ -51,7 +54,7 @@ typedef struct		s_sprite
 	struct s_sprite	*next;
 }					t_sprite;
 
-typedef struct		s_sprite_info
+typedef struct s_sprite_info
 {
 	int				num_sprites;
 	int				v_move_screen;
@@ -74,7 +77,7 @@ typedef struct		s_sprite_info
 	double			trans_y;
 }					t_sprite_info;
 
-typedef struct	s_keys
+typedef struct s_keys
 {
 	int			forward;
 	int			backward;
@@ -85,7 +88,7 @@ typedef struct	s_keys
 	int			close;
 }				t_keys;
 
-typedef	struct	s_player
+typedef struct s_player
 {
 	double		pos_x;
 	double		pos_y;
@@ -99,7 +102,7 @@ typedef	struct	s_player
 	int			health;
 }				t_player;
 
-typedef struct	s_ray
+typedef struct s_ray
 {
 	int			pix;
 	int			map_x;
@@ -120,19 +123,19 @@ typedef struct	s_ray
 	int			draw_start;
 	int			draw_end;
 	double		*z_buffer;
-} t_ray;
+}				t_ray;
 
-typedef struct  s_image {
-    void        *img;
-    char        *addr;
-    int         bits_per_pixel;
-    int         line_length;
-    int         endian;
+typedef struct s_image {
+	void		*img;
+	char		*addr;
+	int			bits_per_pixel;
+	int			line_length;
+	int			endian;
 	int			width;
 	int			height;
-}               t_image;
+}				t_image;
 
-typedef struct  s_map {
+typedef struct s_map {
 	int			map_started;
 	int			floor_color;
 	int			ceiling_color;
@@ -143,7 +146,7 @@ typedef struct  s_map {
 	int			col_pos;
 }				t_map;
 
-typedef struct  s_tex {
+typedef struct s_tex {
 	t_image		*north;
 	t_image		*south;
 	t_image		*east;
@@ -159,7 +162,7 @@ typedef struct  s_tex {
 	double		step;
 }				t_tex;
 
-typedef struct		s_window {
+typedef struct s_window {
 	void			*mlx;
 	void			*win;
 	int				height;
@@ -175,68 +178,63 @@ typedef struct		s_window {
 }					t_window;
 
 //not proper funcs
-int key_pressed(int keycode, t_window *window);
-int key_released(int keycode, t_window *window);
-int exit_game(t_window *window);
-int	handle_loop(void *param);
-
+int			key_pressed(int keycode, t_window *window);
+int			key_released(int keycode, t_window *window);
+int			exit_game(t_window *window);
+int			handle_loop(void *param);
 //pixel funcs
-int				my_mlx_pixel_get(t_image *img, int x, int y);
-void			my_mlx_pixel_set(t_image *img, int x, int y, int color);
-
+int			my_mlx_pixel_get(t_image *img, int x, int y);
+void		my_mlx_pixel_set(t_image *img, int x, int y, int color);
 //ray-casting
-void	draw(t_window *window);
-void	color_vertical_line(t_window *window, int color, int draw_start, int draw_end, int x_ray_pix);
-void	cast_ray(t_window *window, t_ray *ray);
-void	init_ray(t_ray *ray, t_player *player, t_window *window);
-void	next_step(t_ray *ray, t_player *player);
-void	get_wall_side(t_ray *ray);
-void	get_distance(t_ray *ray, t_player *player, t_window *window);
-void	set_start_pos(t_window *window, char pos, int j, int i);
-t_image	*designate_tex(t_ray *ray, t_window *window, double wall_x);
-void	apply_textures(t_ray *ray, t_window *window);
-void	draw_sprites(t_window *window, t_ray *ray);
-void	handle_sprite(t_window *window, t_ray *ray, t_sprite *s_list);
-
+void		draw(t_window *window);
+void		color_vertical_line(t_window *window, int color, int draw_start, int draw_end, int x_ray_pix);
+void		cast_ray(t_window *window, t_ray *ray);
+void		init_ray(t_ray *ray, t_player *player, t_window *window);
+void		next_step(t_ray *ray, t_player *player);
+void		get_wall_side(t_ray *ray);
+void		get_distance(t_ray *ray, t_player *player, t_window *window);
+void		set_start_pos(t_window *window, char pos, int j, int i);
+t_image		*designate_tex(t_ray *ray, t_window *window, double wall_x);
+void		apply_textures(t_ray *ray, t_window *window);
+void		draw_sprites(t_window *window, t_ray *ray);
+void		handle_sprite(t_window *window, t_ray *ray, t_sprite *s_list);
 //list funcs
-void	my_lstfree(t_sprite **ptr_lst);
-int	my_lstsize(t_sprite *lst);
+void		my_lstfree(t_sprite **ptr_lst);
+int			my_lstsize(t_sprite *lst);
 t_sprite	*my_lstlast(t_sprite *lst);
-void	my_lstadd_back(t_sprite *lst, t_sprite *new);
-
+void		my_lstadd_back(t_sprite *lst, t_sprite *new);
 //hook funcs
-void	move_forward(t_window *window);
-void	move_backward(t_window *window);
-void	move_left(t_window *window);
-void	move_right(t_window *window);
-void	look_left(t_window *window);
-void	look_right(t_window *window);
-
-
+void		move_forward(t_window *window);
+void		move_backward(t_window *window);
+void		move_left(t_window *window);
+void		move_right(t_window *window);
+void		look_left(t_window *window);
+void		look_right(t_window *window);
 //proper funcs
-int		parse(char *file_name, t_window *window);
-void	parse_texture(t_window *window, t_image *img, char *line);
-void	parse_resolution(t_window *window, char *line);
-void	parse_color(t_window *window, char *line);
-void	parse_map(t_window *window, char *line, t_list *map_list);
-void	save_map(t_window *window, t_map *map, t_list *map_list);
-void	check_start_pos(t_window *window);
-void	check_map(t_window *window, int row, int col);
-void	check_borders(t_window *window, int row, int col);
-void	restore_map(t_map *map);
+int			parse(char *file_name, t_window *window);
+void		parse_texture(t_window *window, t_image *img, char *line);
+void		parse_resolution(t_window *window, char *line);
+void		parse_color(t_window *window, char *line);
+void		parse_map(t_window *window, char *line, t_list *map_list);
+void		save_map(t_window *window, t_map *map, t_list *map_list);
+void		check_start_pos(t_window *window);
+void		check_map(t_window *window, int row, int col);
+void		check_borders(t_window *window, int row, int col);
+void		restore_map(t_map *map);
 //
-void	set_camera(t_window *win, double dir_x, double plane_x, double plane_y);
+void		set_camera(t_window *win, double dir_x, double plane_x, double plane_y);
 //
-void	exit_w_message(char *msg, int window_open, t_window *window);
-void	ft_exit(char *msg, t_window *window);
-void	ft_exit_basic(char *msg);
-void	init_map(t_window *window);
-void	init_textures(t_window *window);
-void	init_player(t_window *window);
-void	init_keys(t_window *window);
-void	init_image(t_window *window);
-void	init_sprite_info(t_window *window);
+void		exit_w_message(char *msg, int window_open, t_window *window);
+void		ft_exit(char *msg, t_window *window);
+void		ft_exit_basic(char *msg);
+void		init_map(t_window *window);
+void		init_textures(t_window *window);
+void		init_player(t_window *window);
+void		init_keys(t_window *window);
+void		init_image(t_window *window);
+void		init_sprite_info(t_window *window);
 t_window	*init_window(void);
 
-void	create_bitmap(t_window *window);
+
+void		create_bitmap(t_window *window, t_image *img);
 #endif

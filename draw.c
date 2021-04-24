@@ -6,7 +6,7 @@
 /*   By: icikrikc <icikrikc@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/08 17:56:22 by icikrikc      #+#    #+#                 */
-/*   Updated: 2021/04/23 02:28:56 by icikrikc      ########   odam.nl         */
+/*   Updated: 2021/04/24 02:21:37 by icikrikc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,7 @@ void	draw(t_window *window)
 	if (window->screenshot == 1)
 	{
 		window->screenshot = 0;
-		create_bitmap(window);
-		exit(0);
+		create_bitmap(window, window->image);
 	}
 	mlx_put_image_to_window(window->mlx, window->win, window->image->img, 0, 0);
 	free(ray->z_buffer);
