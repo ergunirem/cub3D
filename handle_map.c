@@ -6,7 +6,7 @@
 /*   By: icikrikc <icikrikc@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/23 15:30:38 by icikrikc      #+#    #+#                 */
-/*   Updated: 2021/04/20 02:03:31 by icikrikc      ########   odam.nl         */
+/*   Updated: 2021/04/26 16:32:14 by icikrikc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,19 +78,18 @@ void	check_borders(t_window *window, int row, int col)
 	i = 0;
 	while (i < col)
 	{
-
-		if	(arr[0][col - 1] != '1')
+		if (arr[0][col - 1] != '1')
 			ft_exit("map's first row is not all 1's\n", window);
-		if	(arr[row - 1][i] != '1')
+		if (arr[row - 1][i] != '1')
 			ft_exit("map's last row is not all 1's\n", window);
 		i++;
 	}
 	i = 0;
 	while (i < row)
 	{
-		if	(arr[i][0] != '1')
+		if (arr[i][0] != '1')
 			ft_exit("map's first column is not all 1's\n", window);
-		if	(arr[i][col - 1] != '1')
+		if (arr[i][col - 1] != '1')
 			ft_exit("map's last column is not all 1's\n", window);
 		i++;
 	}

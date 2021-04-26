@@ -6,7 +6,7 @@
 /*   By: icikrikc <icikrikc@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/07 11:33:06 by icikrikc      #+#    #+#                 */
-/*   Updated: 2021/04/24 19:05:35 by icikrikc      ########   odam.nl         */
+/*   Updated: 2021/04/26 16:33:08 by icikrikc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ int	exit_game(t_window *window)
 
 int	handle_loop(void *param)
 {
-	t_window *window;
+	t_window	*window;
 
 	window = (t_window *)param;
 	draw(window);

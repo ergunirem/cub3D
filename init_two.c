@@ -6,7 +6,7 @@
 /*   By: icikrikc <icikrikc@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/04/19 19:19:52 by icikrikc      #+#    #+#                 */
-/*   Updated: 2021/04/26 01:19:47 by icikrikc      ########   odam.nl         */
+/*   Updated: 2021/04/26 12:58:05 by icikrikc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	init_image(t_window *window)
 	window->image = image;
 }
 
-void	init_sprite_info(t_window *window)
+void	init_sprite_list(t_window *window)
 {
 	window->s_list = malloc(sizeof(t_sprite));
 	if (!window->s_list)
