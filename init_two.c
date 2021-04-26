@@ -6,7 +6,7 @@
 /*   By: icikrikc <icikrikc@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/04/19 19:19:52 by icikrikc      #+#    #+#                 */
-/*   Updated: 2021/04/23 02:29:37 by icikrikc      ########   odam.nl         */
+/*   Updated: 2021/04/26 01:19:47 by icikrikc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void	init_image(t_window *window)
 		ft_exit("Malloc failed\n", window);
 	ft_bzero(image, sizeof(t_image));
 	image->img = mlx_new_image(window->mlx, window->width, window->height);
+	window->image_malloc = 1;
 	if (!image->img)
 		ft_exit("mlx_new_image failed\n", window);
 	image->addr = mlx_get_data_addr(image->img, &image->bits_per_pixel,

@@ -6,7 +6,7 @@
 /*   By: icikrikc <icikrikc@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/10 14:36:42 by icikrikc      #+#    #+#                 */
-/*   Updated: 2021/04/24 02:23:20 by icikrikc      ########   odam.nl         */
+/*   Updated: 2021/04/26 01:18:11 by icikrikc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,9 +170,12 @@ typedef struct s_window {
 	int				screenshot;
 	t_map			*map;
 	t_image			*image;
+	int				image_malloc;
 	t_tex			*textures;
 	t_player		*player;
+	int				player_malloc;
 	t_keys			*keys;
+	int				keys_malloc;
 	t_sprite		*s_list;
 	//t_ray?
 }					t_window;
@@ -233,7 +236,7 @@ void		init_player(t_window *window);
 void		init_keys(t_window *window);
 void		init_image(t_window *window);
 void		init_sprite_info(t_window *window);
-t_window	*init_window(void);
+void		init_window(t_window *new_window);
 
 
 void		create_bitmap(t_window *window, t_image *img);

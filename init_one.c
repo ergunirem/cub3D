@@ -6,7 +6,7 @@
 /*   By: icikrikc <icikrikc@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/26 20:49:48 by icikrikc      #+#    #+#                 */
-/*   Updated: 2021/04/24 18:53:42 by icikrikc      ########   odam.nl         */
+/*   Updated: 2021/04/26 01:43:46 by icikrikc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 void	init_window(t_window *new_window)
 {
+	ft_memset(new_window, 0, sizeof(t_window));
 	new_window->mlx = mlx_init();
 	if (!new_window->mlx)
 		ft_exit("mlx_init failed\n", new_window);

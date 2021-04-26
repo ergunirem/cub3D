@@ -6,7 +6,7 @@
 /*   By: icikrikc <icikrikc@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/20 12:47:23 by icikrikc      #+#    #+#                 */
-/*   Updated: 2021/04/24 18:43:45 by icikrikc      ########   odam.nl         */
+/*   Updated: 2021/04/26 00:55:26 by icikrikc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,9 @@ int	main(int argc, char **argv)
 	init_map(&window);
 	init_textures(&window);
 	init_player(&window);
+	window.player_malloc = 1;
 	init_keys(&window);
+	window.keys_malloc = 1;
 	parse(argv[1], &window);
 	init_image(&window);
 	init_sprite_info(&window);
