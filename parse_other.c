@@ -6,7 +6,7 @@
 /*   By: icikrikc <icikrikc@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/19 16:09:36 by icikrikc      #+#    #+#                 */
-/*   Updated: 2021/04/26 12:35:45 by icikrikc      ########   odam.nl         */
+/*   Updated: 2021/04/26 16:38:18 by icikrikc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,13 +37,10 @@ void	parse_texture(t_window *window, t_image *img, char *line)
 	fd = open(path, O_RDONLY);
 	if (fd < 0)
 		ft_exit("opening xpm file failed\n", window);
-	img->img = mlx_xpm_file_to_image(window->mlx, path, &img->width, &img->height);
-	img->addr = mlx_get_data_addr(img->img, &img->bits_per_pixel, &img->line_length,
-			&img->endian);
-	len = img->width;
-	img->width = len;
-	// printf("y: %d ", img->height);
-	// printf("l: %d ", len);
+	img->img = mlx_xpm_file_to_image(window->mlx, path, &img->width,
+			&img->height);
+	img->addr = mlx_get_data_addr(img->img, &img->bits_per_pixel,
+			&img->line_length, &img->endian);
 	free(path);
 	close(fd);
 }
