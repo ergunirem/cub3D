@@ -6,7 +6,7 @@
 /*   By: icikrikc <icikrikc@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/04/06 15:37:02 by icikrikc      #+#    #+#                 */
-/*   Updated: 2021/04/23 02:24:10 by icikrikc      ########   odam.nl         */
+/*   Updated: 2021/04/26 16:42:42 by icikrikc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,8 @@ void	do_projection(t_sprite_info *s, t_window *window, t_sprite *sprite)
 	s->sprite_y = sprite->y - (p->pos_y - 0.5);
 	s->inv_det = 1.0 / (p->plane_x * p->dir_y - p->dir_x * p->plane_y);
 	s->trans_x = s->inv_det * (p->dir_y * s->sprite_x - p->dir_x * s->sprite_y);
-	s->trans_y = s->inv_det * (-p->plane_y * s->sprite_x + p->plane_x * s->sprite_y);
+	s->trans_y = s->inv_det * (-p->plane_y * s->sprite_x
+			+ p->plane_x * s->sprite_y);
 	s->s_screen_x = (int)(window->width / 2) * (1 + s->trans_x / s->trans_y);
 	s->s_height = abs((int)(window->height / s->trans_y));
 	s->draw_start_y = -s->s_height / 2 + window->height / 2;

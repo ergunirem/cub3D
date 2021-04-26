@@ -6,7 +6,7 @@
 /*   By: icikrikc <icikrikc@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/06 23:27:20 by icikrikc      #+#    #+#                 */
-/*   Updated: 2021/04/20 02:30:20 by icikrikc      ########   odam.nl         */
+/*   Updated: 2021/04/26 16:40:50 by icikrikc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,11 @@
 void	get_distance(t_ray *ray, t_player *player, t_window *window)
 {
 	if (ray->side == 0 || ray->side == 1)
-		ray->perp_wall_dist = (ray->map_x - player->pos_x + (1 - ray->step_x) / 2)
-			/ ray->ray_dir_x;
+		ray->perp_wall_dist = (ray->map_x - player->pos_x
+				+ (1 - ray->step_x) / 2) / ray->ray_dir_x;
 	else
-		ray->perp_wall_dist = (ray->map_y - player->pos_y + (1 - ray->step_y) / 2)
-			/ ray->ray_dir_y;
+		ray->perp_wall_dist = (ray->map_y - player->pos_y
+				+ (1 - ray->step_y) / 2) / ray->ray_dir_y;
 	ray->line_height = (int)(window->height / ray->perp_wall_dist);
 	ray->draw_start = (-ray->line_height / 2 + ((window->height / 2)
 				* window->player->cam_height));

@@ -6,25 +6,26 @@
 /*   By: icikrikc <icikrikc@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/04/05 21:59:01 by icikrikc      #+#    #+#                 */
-/*   Updated: 2021/04/13 12:51:05 by icikrikc      ########   odam.nl         */
+/*   Updated: 2021/04/26 16:39:28 by icikrikc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int				my_mlx_pixel_get(t_image *img, int x, int y)
+int	my_mlx_pixel_get(t_image *img, int x, int y)
 {
 	int		color;
 	char	*dst;
 
 	dst = img->addr + (y * img->line_length + x * (img->bits_per_pixel / 8));
-	color = *(unsigned int*)dst;
+	color = *(unsigned int *)dst;
 	return (color);
 }
 
-void			my_mlx_pixel_set(t_image *img, int x, int y, int color)
+void	my_mlx_pixel_set(t_image *img, int x, int y, int color)
 {
-	char		*dst;
+	char	*dst;
+
 	dst = img->addr + (y * img->line_length + x * (img->bits_per_pixel / 8));
 	*(unsigned int *)dst = color;
 }

@@ -6,7 +6,7 @@
 /*   By: icikrikc <icikrikc@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/04/16 15:25:07 by icikrikc      #+#    #+#                 */
-/*   Updated: 2021/04/24 02:23:05 by icikrikc      ########   odam.nl         */
+/*   Updated: 2021/04/26 16:30:04 by icikrikc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,10 @@ static void	set_file_header(t_bmp *bmp, t_image *img, t_window *win)
 		ft_exit("write failed in set_file_header\n", win);
 }
 
-/*
-InfoHeader(40 bytes): HeaderSize = 40(4 bytes) + ImageWidth(4 Bytes) + ImageHeight(4 Bytes) + Planes=1(2 bytes)
-+ BitsPerPixel=0(2 Bytes) + Compression=0(4 Bytes) + ImageSize=0(4 bytes) + XpixelsPerMeter=0(4 Bytes)
+/* InfoHeader(40 bytes): HeaderSize = 40(4 bytes) +
+ImageWidth(4 Bytes) + ImageHeight(4 Bytes) + Planes=1(2 bytes)
++ BitsPerPixel=0(2 Bytes) + Compression=0(4 Bytes)
++ ImageSize=0(4 bytes) + XpixelsPerMeter=0(4 Bytes)
 + YpixelsPerMeter=0(4 Bytes) + TotalColors=0(4 Bytes) + ImportantColors=0(4 Bytes)
 */
 

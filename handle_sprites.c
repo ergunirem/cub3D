@@ -6,7 +6,7 @@
 /*   By: icikrikc <icikrikc@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/04/09 21:18:14 by icikrikc      #+#    #+#                 */
-/*   Updated: 2021/04/26 12:36:13 by icikrikc      ########   odam.nl         */
+/*   Updated: 2021/04/26 16:32:48 by icikrikc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ void	handle_sprite(t_window *window, t_ray *ray, t_sprite *s_list)
 	t_sprite	*head;
 	int			i;
 
-	sprite = (t_sprite*)malloc(sizeof(t_sprite));
+	sprite = (t_sprite *)malloc(sizeof(t_sprite));
 	if (!sprite)
 		ft_exit("malloc failed in handle_sprite\n", window);
 	sprite->x = ray->map_x;

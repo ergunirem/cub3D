@@ -6,7 +6,7 @@
 /*   By: icikrikc <icikrikc@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/04/06 15:20:14 by icikrikc      #+#    #+#                 */
-/*   Updated: 2021/04/06 15:20:35 by icikrikc      ########   odam.nl         */
+/*   Updated: 2021/04/26 16:49:21 by icikrikc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,33 @@
 
 t_image	*designate_tex(t_ray *ray, t_window *window, double wall_x)
 {
-	t_image	*img;
+	if (ray->side == 0)
+		return (window->textures->north);
+	else if (ray->side == 1)
+		return (window->textures->south);
+	else if (ray->side == 2)
+		return (window->textures->east);
+	else
+		return (window->textures->west);
+}
 
-	img = window->textures->north;
-	if (ray->side == 1)
-		img = window->textures->south;
-	if (ray->side == 2)
-		img = window->textures->east;
-	if (ray->side == 3)
-		img = window->textures->west;
-	return (img);
+static void	draw_textures(t_ray *ray, t_window *window, t_image *img)
+{
+	t_player	*p;
+	t_tex		*tex;
+	int			color;
+	int			y;
+
+	tex = window->textures;
+	y = ray->draw_start;
+	while (y < ray->draw_end)
+	{
+		tex->tex_y = (int)tex->tex_pos & (64 - 1);
+		tex->tex_pos += tex->step;
+		color = my_mlx_pixel_get(img, tex->tex_x, tex->tex_y);
+		my_mlx_pixel_set(window->image, ray->pix, y, color);
+		y++;
+	}
 }
 
 void	apply_textures(t_ray *ray, t_window *window)
@@ -32,7 +49,6 @@ void	apply_textures(t_ray *ray, t_window *window)
 	t_tex		*tex;
 	t_image		*img;
 	int			y;
-	int			color;
 
 	p = window->player;
 	tex = window->textures;
@@ -49,16 +65,8 @@ void	apply_textures(t_ray *ray, t_window *window)
 	if ((ray->side == 1 || ray->side == 3) && ray->ray_dir_y < 0)
 		tex->tex_x = img->width - tex->tex_x - 1;
 	tex->step = 1.0 * 64 / ray->line_height;
-	tex->tex_pos = (ray->draw_start - window->height / 2 + ray->line_height / 2) * tex->step;
-
+	tex->tex_pos = (ray->draw_start - window->height / 2
+			+ ray->line_height / 2) * tex->step;
 	// printf("y: %d ", img->height);
-	y = ray->draw_start;
-	while (y < ray->draw_end)
-	{
-		tex->tex_y = (int)tex->tex_pos & (64 - 1);
-		tex->tex_pos += tex->step;
-		color = my_mlx_pixel_get(img, tex->tex_x, tex->tex_y);
-		my_mlx_pixel_set(window->image, ray->pix, y, color);
-		y++;
-	}
+	draw_textures(ray, window, img);
 }
