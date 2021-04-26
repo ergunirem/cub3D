@@ -6,7 +6,7 @@
 /*   By: icikrikc <icikrikc@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/10 14:36:42 by icikrikc      #+#    #+#                 */
-/*   Updated: 2021/04/26 01:18:11 by icikrikc      ########   odam.nl         */
+/*   Updated: 2021/04/26 13:11:52 by icikrikc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,6 +144,7 @@ typedef struct s_map {
 	int			max_col;
 	int			row_pos;
 	int			col_pos;
+	int			arr_malloc;
 }				t_map;
 
 typedef struct s_tex {
@@ -169,18 +170,20 @@ typedef struct s_window {
 	int				width;
 	int				screenshot;
 	t_map			*map;
+	int				map_malloc;
 	t_image			*image;
 	int				image_malloc;
 	t_tex			*textures;
+	int				tex_malloc;
 	t_player		*player;
 	int				player_malloc;
 	t_keys			*keys;
 	int				keys_malloc;
 	t_sprite		*s_list;
-	//t_ray?
+	int				first_node_malloc;
 }					t_window;
 
-//not proper funcs
+//event funcs
 int			key_pressed(int keycode, t_window *window);
 int			key_released(int keycode, t_window *window);
 int			exit_game(t_window *window);
@@ -197,6 +200,7 @@ void		next_step(t_ray *ray, t_player *player);
 void		get_wall_side(t_ray *ray);
 void		get_distance(t_ray *ray, t_player *player, t_window *window);
 void		set_start_pos(t_window *window, char pos, int j, int i);
+void		set_camera(t_window *win, double dir_x, double plane_x, double plane_y);
 t_image		*designate_tex(t_ray *ray, t_window *window, double wall_x);
 void		apply_textures(t_ray *ray, t_window *window);
 void		draw_sprites(t_window *window, t_ray *ray);
@@ -213,7 +217,7 @@ void		move_left(t_window *window);
 void		move_right(t_window *window);
 void		look_left(t_window *window);
 void		look_right(t_window *window);
-//proper funcs
+//parse funcs
 int			parse(char *file_name, t_window *window);
 void		parse_texture(t_window *window, t_image *img, char *line);
 void		parse_resolution(t_window *window, char *line);
@@ -224,20 +228,17 @@ void		check_start_pos(t_window *window);
 void		check_map(t_window *window, int row, int col);
 void		check_borders(t_window *window, int row, int col);
 void		restore_map(t_map *map);
-//
-void		set_camera(t_window *win, double dir_x, double plane_x, double plane_y);
-//
-void		exit_w_message(char *msg, int window_open, t_window *window);
+//exit funcs
 void		ft_exit(char *msg, t_window *window);
 void		ft_exit_basic(char *msg);
+//init funcs
 void		init_map(t_window *window);
 void		init_textures(t_window *window);
 void		init_player(t_window *window);
 void		init_keys(t_window *window);
 void		init_image(t_window *window);
-void		init_sprite_info(t_window *window);
+void		init_sprite_list(t_window *window);
 void		init_window(t_window *new_window);
-
-
+//bitmap func
 void		create_bitmap(t_window *window, t_image *img);
 #endif
