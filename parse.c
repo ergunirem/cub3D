@@ -6,7 +6,7 @@
 /*   By: icikrikc <icikrikc@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/19 10:20:45 by icikrikc      #+#    #+#                 */
-/*   Updated: 2021/04/20 02:17:37 by icikrikc      ########   odam.nl         */
+/*   Updated: 2021/04/26 12:34:59 by icikrikc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,14 +92,14 @@ void	parse_map(t_window *window, char *line, t_list *map_list)
 	while (line[i])
 	{
 		if (ft_strchr("012NSEW ", line[i]) == NULL)
-			exit_w_message("invalid char inside map\n", 1, window);
+			ft_exit("invalid char inside map\n", window);
 		i++;
 	}
 	if (window->map->max_col < ft_strlen(line))
 		window->map->max_col = ft_strlen(line);
 	new = ft_lstnew(ft_strdup(line));
 	if (!new)
-		exit_w_message("ft_lstnew failed\n", 1, window);
+		ft_exit("ft_lstnew failed\n", window);
 	ft_lstadd_back(&map_list, new);
 }
 

@@ -6,7 +6,7 @@
 /*   By: icikrikc <icikrikc@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/19 16:09:36 by icikrikc      #+#    #+#                 */
-/*   Updated: 2021/04/20 16:12:34 by icikrikc      ########   odam.nl         */
+/*   Updated: 2021/04/26 12:35:45 by icikrikc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,19 +24,19 @@ void	parse_texture(t_window *window, t_image *img, char *line)
 	int		fd;
 
 	if (window->map->map_started == TRUE)
-		exit_w_message("map is not the last info\n", 1, window);
+		ft_exit("map is not the last info\n", window);
 	path = ft_strtrim(line, " ");
 	if (path == NULL)
-		exit_w_message("ft_strtrim failed\n", 1, window);
+		ft_exit("ft_strtrim failed\n", window);
 	len = ft_strlen(path);
 	if (len > 4 && (path[len - 4] != '.' || path[len - 3] != 'x'
 			|| path[len - 2] != 'p' || path[len - 1] != 'm'))
-		exit_w_message(".xpm extension needed\n", 1, window);
+		ft_exit(".xpm extension needed\n", window);
 	else if (len < 4)
-		exit_w_message("Invalid texture path\n", 1, window);
+		ft_exit("Invalid texture path\n", window);
 	fd = open(path, O_RDONLY);
 	if (fd < 0)
-		exit_w_message("opening xpm file failed\n", 1, window);
+		ft_exit("opening xpm file failed\n", window);
 	img->img = mlx_xpm_file_to_image(window->mlx, path, &img->width, &img->height);
 	img->addr = mlx_get_data_addr(img->img, &img->bits_per_pixel, &img->line_length,
 			&img->endian);
@@ -54,7 +54,7 @@ void	parse_texture(t_window *window, t_image *img, char *line)
 void	parse_resolution(t_window *window, char *line)
 {
 	if (window->map->map_started == TRUE)
-		exit_w_message("map is not the last info\n", 1, window);
+		ft_exit("map is not the last info\n", window);
 	while (ft_iswhitespace(*line))
 		line++;
 	window->width = ft_atoi(line);
@@ -72,7 +72,7 @@ void	parse_resolution(t_window *window, char *line)
 	while (ft_iswhitespace(*line))
 		line++;
 	if (*line != '\0')
-		exit_w_message("Resolution info is incorrect\n", 1, window);
+		ft_exit("Resolution info is incorrect\n", window);
 }
 
 /*printf("color:%d\n", rgb); */
@@ -113,7 +113,7 @@ void	parse_color(t_window *window, char *line)
 	int		index;
 
 	if (window->map->map_started == TRUE)
-		exit_w_message("map is not the last info\n", 1, window);
+		ft_exit("map is not the last info\n", window);
 	info = *line;
 	line++;
 	while (ft_iswhitespace(*line))
