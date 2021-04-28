@@ -6,7 +6,7 @@
 /*   By: icikrikc <icikrikc@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/20 12:42:41 by icikrikc      #+#    #+#                 */
-/*   Updated: 2021/04/26 16:30:47 by icikrikc      ########   odam.nl         */
+/*   Updated: 2021/04/28 03:49:42 by icikrikc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,20 @@ static void	free_tex(t_window *window)
 		free(window->textures);
 }
 
+static void	free_spr(t_window *window)
+{
+	int	i;
+
+	i = 0;
+	while (i < window->spr_num)
+	{
+		if (window->spr[i])
+			free(window->spr[i]);
+		i++;
+	}
+	free(window->spr);
+}
+
 void	ft_exit(char *msg, t_window *window)
 {
 	if (msg[0] != 'e' && msg[1] != 's' && msg[1] != 'c')
@@ -60,10 +74,10 @@ void	ft_exit(char *msg, t_window *window)
 		free(window->keys);
 	if (window->image_malloc == 1)
 		free(window->image);
-	if (window->first_node_malloc == 1)
-		free(window->s_list);
-	if (window->textures)
-		free_tex(window);
+	if (window->spr)
+		free_spr(window);
+	// if (window->textures)
+	// 	free_tex(window);
 	exit(0);
 }
 
