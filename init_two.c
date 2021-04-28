@@ -6,7 +6,7 @@
 /*   By: icikrikc <icikrikc@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/04/19 19:19:52 by icikrikc      #+#    #+#                 */
-/*   Updated: 2021/04/26 12:58:05 by icikrikc      ########   odam.nl         */
+/*   Updated: 2021/04/28 03:26:42 by icikrikc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,15 +29,4 @@ void	init_image(t_window *window)
 	image->width = window->width;
 	image->height = window->height;
 	window->image = image;
-}
-
-void	init_sprite_list(t_window *window)
-{
-	window->s_list = malloc(sizeof(t_sprite));
-	if (!window->s_list)
-		ft_exit("Malloc failed\n", window);
-	ft_bzero(window->s_list, sizeof(t_sprite));
-	window->s_list->x = -1;
-	window->s_list->y = -1;
-	window->s_list->next = NULL;
 }
