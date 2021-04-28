@@ -6,7 +6,7 @@
 /*   By: icikrikc <icikrikc@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/19 10:20:45 by icikrikc      #+#    #+#                 */
-/*   Updated: 2021/04/26 12:45:53 by icikrikc      ########   odam.nl         */
+/*   Updated: 2021/04/28 03:28:43 by icikrikc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,6 @@ static void	handle_map(t_window *window, t_list	*map_list)
 	save_map(window, window->map, map_list);
 	check_start_pos(window);
 	window->map->arr_malloc = 1;
-	// printf("row:%d col: %d\n", window->map->max_row, window->map->max_col);
 	check_borders(window, window->map->max_row, window->map->max_col);
 	check_map(window, window->map->row_pos, window->map->col_pos);
 	restore_map(window->map);
@@ -125,6 +124,7 @@ int	parse(char *file_name, t_window *window)
 	}
 	parse_check(window);
 	handle_map(window, map_list);
+	get_sprites(window);
 	close(fd);
 	return (0);
 }
