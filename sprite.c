@@ -6,53 +6,11 @@
 /*   By: icikrikc <icikrikc@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/04/06 15:37:02 by icikrikc      #+#    #+#                 */
-/*   Updated: 2021/04/26 16:42:42 by icikrikc      ########   odam.nl         */
+/*   Updated: 2021/04/28 04:04:09 by icikrikc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-t_sprite	*swap(t_sprite *s_one, t_sprite *s_two, int *swapped)
-{
-	t_sprite	*tmp;
-
-	tmp = s_two->next;
-	s_two->next = s_one;
-	s_one->next = tmp;
-	*swapped = 1;
-	return (s_two);
-}
-
-/*
-It bubble sorts the sprites list based on distance (perp_wall_dist)
-*/
-
-void	sort_sprites(int num_sprites, t_sprite **s_list, int i, int j)
-{
-	t_sprite	**head;
-	t_sprite	*s_one;
-	t_sprite	*s_two;
-	int			swapped;
-
-	while (i <= num_sprites)
-	{
-		head = s_list;
-		swapped = 0;
-		j = 0;
-		while (j < num_sprites - i - 1)
-		{
-			s_one = *head;
-			s_two = s_one->next;
-			if (s_one->dist < s_two->dist)
-				*head = swap(s_one, s_two, &swapped);
-			head = &(*head)->next;
-			j++;
-		}
-		if (swapped == 0)
-			break ;
-		i++;
-	}
-}
 
 /*
 It projects each sprite, calculates the size it should have on screen.
@@ -60,18 +18,18 @@ First, translates sprite position to relative to camera. Then, calculates
 lowest and highest pixel to fill in current stripe.
 */
 
-void	do_projection(t_sprite_info *s, t_window *window, t_sprite *sprite)
+static void	do_projection(t_sprite_info *s, t_window *window, double *sprite)
 {
 	t_player	*p;
 
 	p = window->player;
-	s->sprite_x = sprite->x - (p->pos_x - 0.5);
-	s->sprite_y = sprite->y - (p->pos_y - 0.5);
+	s->sprite_x = sprite[0] - (p->pos_x - 0.5);
+	s->sprite_y = sprite[1] - (p->pos_y - 0.5);
 	s->inv_det = 1.0 / (p->plane_x * p->dir_y - p->dir_x * p->plane_y);
 	s->trans_x = s->inv_det * (p->dir_y * s->sprite_x - p->dir_x * s->sprite_y);
 	s->trans_y = s->inv_det * (-p->plane_y * s->sprite_x
 			+ p->plane_x * s->sprite_y);
-	s->s_screen_x = (int)(window->width / 2) * (1 + s->trans_x / s->trans_y);
+	s->s_screen_x = (int)(window->width / 2)*(1 + s->trans_x / s->trans_y);
 	s->s_height = abs((int)(window->height / s->trans_y));
 	s->draw_start_y = -s->s_height / 2 + window->height / 2;
 	if (s->draw_start_y < 0)
@@ -96,7 +54,7 @@ ZBuffer, with perpendicular distance, then it loops through every pixel of the s
 gets the color for each pixel and paints it to the window if not black.
 */
 
-void	draw_vertical_stripe(t_sprite_info *s, t_ray *ray, t_window *win)
+static void	draw_vertical_stripe(t_sprite_info *s, t_ray *ray, t_window *win)
 {
 	int	color;
 
@@ -125,32 +83,73 @@ void	draw_vertical_stripe(t_sprite_info *s, t_ray *ray, t_window *win)
 }
 
 /*
+It bubble sorts the sprite array based on distance
+*/
+
+static void	sort_sprites(double **spr, int spr_num)
+{
+	int	i;
+	int	x;
+	int	y;
+	int	dist;
+
+	i = 0;
+	while (i < spr_num && i + 1 != spr_num)
+	{
+		if (spr[i][2] < spr[i + 1][2])
+		{
+			x = spr[i + 1][0];
+			y = spr[i + 1][1];
+			dist = spr[i + 1][2];
+			spr[i + 1][0] = spr[i][0];
+			spr[i + 1][1] = spr[i][1];
+			spr[i + 1][2] = spr[i][2];
+			spr[i][0] = x;
+			spr[i][1] = y;
+			spr[i][2] = dist;
+			i = 0;
+		}
+		else
+			i++;
+	}
+}
+
+static void	get_spr_distance(t_window *window)
+{
+	int	i;
+
+	i = 0;
+	while (i < window->spr_num)
+	{
+		window->spr[i][2] = ((window->player->pos_x - window->spr[i][0])
+				* (window->player->pos_x
+					- window->spr[i][0]) + (window->player->pos_y
+					- window->spr[i][1]) * (window->player->pos_y - window->spr[i][1]));
+		i++;
+	}
+}
+
+/*
 Draws sprites one by one with a loop that goes through the linked list
 */
 
 void	draw_sprites(t_window *window, t_ray *ray)
 {
 	t_sprite_info	*s;
-	t_sprite		*s_list;
-	t_sprite		*tmp_list;
 	int				i;
 
 	s = malloc(sizeof(t_sprite_info));
 	if (!s)
 		ft_exit("Malloc failed\n", window);
 	ft_bzero(s, sizeof(t_sprite_info));
-	s_list = window->s_list;
-	tmp_list = s_list;
-	s->num_sprites = my_lstsize(s_list);
-	sort_sprites(s->num_sprites, &s_list, 0, 0);
+	get_spr_distance(window);
+	sort_sprites(window->spr, window->spr_num);
 	i = 0;
-	while (i < s->num_sprites)
+	while (i < window->spr_num)
 	{
-		do_projection(s, window, s_list);
+		do_projection(s, window, window->spr[i]);
 		draw_vertical_stripe(s, ray, window);
-		s_list = s_list->next;
 		i++;
 	}
 	free(s);
-	my_lstfree(&tmp_list);
 }
