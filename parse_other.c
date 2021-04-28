@@ -6,7 +6,7 @@
 /*   By: icikrikc <icikrikc@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/19 16:09:36 by icikrikc      #+#    #+#                 */
-/*   Updated: 2021/04/26 16:38:18 by icikrikc      ########   odam.nl         */
+/*   Updated: 2021/04/28 14:58:42 by icikrikc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ void	parse_texture(t_window *window, t_image *img, char *line)
 			&img->height);
 	img->addr = mlx_get_data_addr(img->img, &img->bits_per_pixel,
 			&img->line_length, &img->endian);
+	window->textures->tex_num = window->textures->tex_num + 1;
 	free(path);
 	close(fd);
 }
