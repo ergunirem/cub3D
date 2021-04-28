@@ -6,51 +6,9 @@
 #    By: icikrikc <icikrikc@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2021/02/10 14:12:56 by icikrikc      #+#    #+#                  #
-#    Updated: 2021/04/26 16:00:33 by icikrikc      ########   odam.nl          #
+#    Updated: 2021/04/28 03:38:09 by icikrikc      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
-
-# NAME = cub3D
-
-# SOURCE_FILES =		main.c
-
-
-# OBJ_FILES = $(SOURCE_FILES:.c=.o)
-# # HEADER_FILE = ft_printf.h
-# CFLAGS = -Wall -Wextra -Werror
-# LIBFT = libft/libft.a
-# MLX_LIB = minilibx
-
-# all: $(NAME)
-
-# $(NAME): $(OBJ_FILES)
-# 	$(MAKE) -C libft
-# 	$(MAKE) -C minilibx
-# 	# $(CC) -Lmlx -lmlx -framework OpenGL -framework AppKit -o $(NAME)
-# 	$(CC) -o $(NAME) $(OBJS) -L libft -lft -L$(MLX_DIR) -lmlx -framework OpenGL -framework AppKit
-
-# %.o: %.c #$(HEADER_FILE)
-# 	@echo "$(GREEN)Compiling:$(NORMAL)"
-# 	$(CC) $(CFLAGS) -Imlx -c $< -o $@
-
-# # $(LIBRARY):
-# # 	make bonus -C libft
-
-# clean:
-# 	@echo "$(RED)Removing all object files...$(NORMAL)"
-# 	# make clean -C libft
-# 	rm -f $(OBJ_FILES)
-# 	@echo "$(GREEN)Succesfully removed all object files!$(NORMAL)"
-
-# fclean: clean
-# 	@echo "$(RED)Removing library...$(NORMAL)"
-# 	# rm -f $(LIBRARY)
-# 	rm -f $(NAME)
-# 	@echo "$(GREEN)Successfully removed library!$(NORMAL)"
-
-# re: fclean all
-
-# .PHONY: all clean fclean re
 
 GREEN = \033[38;5;2m
 NORMAL = \033[38;5;255m
@@ -63,7 +21,7 @@ SRCS	=	utils/gnl/get_next_line.c utils/gnl/get_next_line_utils.c \
 			error.c \
 			init_one.c init_two.c \
 			hooks.c \
-			draw.c ray-casting.c texture.c sprite.c handle_sprites.c \
+			draw.c ray-casting.c texture.c sprite.c get_sprites.c \
 			move.c rotate.c \
 			pixel_funcs.c bitmap.c\
 
@@ -71,11 +29,11 @@ OBJS	= $(SRCS:.c=.o)
 
 NAME	= cub3D
 
-GCC		= clang
+GCC		= gcc
 
 FLAGS	= -Wall -Wextra -Werror -fsanitize=address -g
 
-INCLUDEH	= -I minilibx
+INCLUDE_H	= -I minilibx
 
 MLX_DIR		=	minilibx_opengl
 
@@ -86,7 +44,7 @@ all:	$(NAME)
 $(NAME):	$(OBJS)
 	$(MAKE) bonus -C utils/libft
 	$(MAKE) -C minilibx_opengl
-	gcc $(FLAGS) -o $(NAME) $(OBJS) -L utils/libft -lft -L$(MLX_DIR) -lmlx -framework OpenGL -framework AppKit
+	$(GCC) $(FLAGS) -o $(NAME) $(OBJS) -L utils/libft -lft -L$(MLX_DIR) -lmlx -framework OpenGL -framework AppKit
 
 clean:
 	@echo "$(RED)Removing all object files...$(NORMAL)"
@@ -95,15 +53,22 @@ clean:
 	@echo "$(GREEN)Succesfully removed all object files!$(NORMAL)"
 
 fclean: clean
-	@echo "$(RED)Removing library...$(NORMAL)"
+	@echo "$(RED)Removing library and bitmap file...$(NORMAL)"
 	rm -f $(NAME)
-	rm -f screenshot.bmp
+	rm -f cub3d.bmp
 	rm -f ./utils/libft/libft.a
-	@echo "$(GREEN)Successfully removed library!$(NORMAL)"
+	@echo "$(GREEN)Successfully removed library and bitmap file!$(NORMAL)"
 
 re: fclean all
 
 %.o: %.c
 	@echo "$(GREEN)Compiling:$(NORMAL)"
-	$(GCC) $(INCLUDEH) -c $<  -o $(<:.c=.o)
+	$(GCC) $(INCLUDE_H) -c $<  -o $(<:.c=.o)
 	@echo "$(GREEN)Successfully compiled!$(NORMAL)"
+
+# .PHONY: leaks
+# leaks: CC = /usr/local/opt/llvm/bin/clang
+# leaks: CFLAGS += -mlinker-version=450 -fsanitize=address -g
+# leaks: fclean $(NAME)
+# 	ASAN_OPTIONS=detect_leaks=1 ./$(NAME) r-map.cub
+# .PHONY: fclean

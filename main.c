@@ -6,7 +6,7 @@
 /*   By: icikrikc <icikrikc@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/20 12:47:23 by icikrikc      #+#    #+#                 */
-/*   Updated: 2021/04/26 16:34:04 by icikrikc      ########   odam.nl         */
+/*   Updated: 2021/04/28 03:26:08 by icikrikc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,6 @@ int	main(int argc, char **argv)
 	window.keys_malloc = 1;
 	parse(argv[1], &window);
 	init_image(&window);
-	init_sprite_list(&window);
-	window.first_node_malloc = 1;
 	window.win = mlx_new_window(window.mlx, window.width,
 			window.height, "cub3D");
 	mlx_hook(window.win, EVENT_KEY_PRESS, 1L << 0, key_pressed, &window);

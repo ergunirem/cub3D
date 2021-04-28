@@ -6,7 +6,7 @@
 /*   By: icikrikc <icikrikc@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/10 14:36:42 by icikrikc      #+#    #+#                 */
-/*   Updated: 2021/04/26 13:11:52 by icikrikc      ########   odam.nl         */
+/*   Updated: 2021/04/28 03:36:40 by icikrikc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,36 +46,26 @@ typedef struct s_bmp
 	unsigned char	pad[3];
 }					t_bmp;
 
-typedef struct s_sprite
-{
-	double			x;
-	double			y;
-	double			dist;
-	struct s_sprite	*next;
-}					t_sprite;
-
 typedef struct s_sprite_info
 {
-	int				num_sprites;
-	int				v_move_screen;
-	int				s_screen_x;
-	int				s_height;
-	int				s_width;
-	int				draw_start_y;
-	int				draw_end_y;
-	int				draw_start_x;
-	int				draw_end_x;
-	int				tex_x;
-	int				tex_y;
-	int				stripe;
-	int				d;
-	int				y;
-	double			sprite_x;
-	double			sprite_y;
-	double			inv_det;
-	double			trans_x;
-	double			trans_y;
-}					t_sprite_info;
+	int			s_screen_x;
+	int			s_height;
+	int			s_width;
+	int			draw_start_y;
+	int			draw_end_y;
+	int			draw_start_x;
+	int			draw_end_x;
+	int			tex_x;
+	int			tex_y;
+	int			stripe;
+	int			d;
+	int			y;
+	double		sprite_x;
+	double		sprite_y;
+	double		inv_det;
+	double		trans_x;
+	double		trans_y;
+}				t_sprite_info;
 
 typedef struct s_keys
 {
@@ -164,24 +154,24 @@ typedef struct s_tex {
 }				t_tex;
 
 typedef struct s_window {
-	void			*mlx;
-	void			*win;
-	int				height;
-	int				width;
-	int				screenshot;
-	t_map			*map;
-	int				map_malloc;
-	t_image			*image;
-	int				image_malloc;
-	t_tex			*textures;
-	int				tex_malloc;
-	t_player		*player;
-	int				player_malloc;
-	t_keys			*keys;
-	int				keys_malloc;
-	t_sprite		*s_list;
-	int				first_node_malloc;
-}					t_window;
+	void		*mlx;
+	void		*win;
+	int			height;
+	int			width;
+	int			screenshot;
+	double		**spr;
+	int			spr_num;
+	t_map		*map;
+	int			map_malloc;
+	t_image		*image;
+	int			image_malloc;
+	t_tex		*textures;
+	int			tex_malloc;
+	t_player	*player;
+	int			player_malloc;
+	t_keys		*keys;
+	int			keys_malloc;
+}				t_window;
 
 //event funcs
 int			key_pressed(int keycode, t_window *window);
@@ -204,12 +194,7 @@ void		set_camera(t_window *win, double dir_x, double plane_x, double plane_y);
 t_image		*designate_tex(t_ray *ray, t_window *window, double wall_x);
 void		apply_textures(t_ray *ray, t_window *window);
 void		draw_sprites(t_window *window, t_ray *ray);
-void		handle_sprite(t_window *window, t_ray *ray, t_sprite *s_list);
-//list funcs
-void		my_lstfree(t_sprite **ptr_lst);
-int			my_lstsize(t_sprite *lst);
-t_sprite	*my_lstlast(t_sprite *lst);
-void		my_lstadd_back(t_sprite *lst, t_sprite *new);
+void		get_sprites(t_window *window);
 //hook funcs
 void		move_forward(t_window *window);
 void		move_backward(t_window *window);
@@ -237,7 +222,6 @@ void		init_textures(t_window *window);
 void		init_player(t_window *window);
 void		init_keys(t_window *window);
 void		init_image(t_window *window);
-void		init_sprite_list(t_window *window);
 void		init_window(t_window *new_window);
 //bitmap func
 void		create_bitmap(t_window *window, t_image *img);
