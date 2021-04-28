@@ -6,7 +6,7 @@
 /*   By: icikrikc <icikrikc@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/04/06 15:37:02 by icikrikc      #+#    #+#                 */
-/*   Updated: 2021/04/28 04:04:09 by icikrikc      ########   odam.nl         */
+/*   Updated: 2021/04/28 16:03:56 by icikrikc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,8 @@ static void	draw_vertical_stripe(t_sprite_info *s, t_ray *ray, t_window *win)
 	while (s->stripe < s->draw_end_x)
 	{
 		s->tex_x = (int)(256 * (s->stripe - (-s->s_width / 2 + s->s_screen_x))
-				* win->textures->sprite->width / s->s_width)
-			/ win->textures->sprite->line_length;
+				* win->textures->tex[4].width / s->s_width)
+			/ win->textures->tex[4].line_length;
 		if (s->trans_y > 0 && s->stripe > 0 && s->stripe < win->width
 			&& s->trans_y < ray->z_buffer[s->stripe])
 		{
@@ -72,7 +72,7 @@ static void	draw_vertical_stripe(t_sprite_info *s, t_ray *ray, t_window *win)
 			{
 				s->d = (s->y) * 256 - win->height * 128 + s->s_height * 128;
 				s->tex_y = ((s->d * 64) / s->s_height) / 256; //change 64 here: it's actually tex_height but there is a problem with it
-				color = my_mlx_pixel_get(win->textures->sprite, s->tex_x, s->tex_y);
+				color = my_mlx_pixel_get(&win->textures->tex[4], s->tex_x, s->tex_y);
 				if ((color & 0x00FFFFFF) != 0)
 					my_mlx_pixel_set(win->image, s->stripe, s->y, color);
 				s->y++;

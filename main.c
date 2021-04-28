@@ -6,7 +6,7 @@
 /*   By: icikrikc <icikrikc@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/20 12:47:23 by icikrikc      #+#    #+#                 */
-/*   Updated: 2021/04/28 03:26:08 by icikrikc      ########   odam.nl         */
+/*   Updated: 2021/04/28 16:16:18 by icikrikc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,29 +38,42 @@ void	validate_input(int argc, char **argv, int *screenshot)
 	}
 }
 
+static void	init_window(t_window *new_window)
+{
+	ft_memset(new_window, 0, sizeof(t_window));
+	new_window->mlx = mlx_init();
+	if (!new_window->mlx)
+		ft_exit("mlx_init failed\n", new_window);
+	new_window->height = 0;
+	new_window->width = 0;
+	new_window->screenshot = 0;
+}
+
 int	main(int argc, char **argv)
 {
-	t_window	window;
+	t_window	win;
+	t_tex		textures;
+	t_player	player;
 	int			screenshot;
 
 	validate_input(argc, argv, &screenshot);
-	init_window(&window);
-	window.screenshot = screenshot;
-	init_map(&window);
-	window.map_malloc = 1;
-	init_textures(&window);
-	init_player(&window);
-	window.player_malloc = 1;
-	init_keys(&window);
-	window.keys_malloc = 1;
-	parse(argv[1], &window);
-	init_image(&window);
-	window.win = mlx_new_window(window.mlx, window.width,
-			window.height, "cub3D");
-	mlx_hook(window.win, EVENT_KEY_PRESS, 1L << 0, key_pressed, &window);
-	mlx_hook(window.win, EVENT_KEY_RELEASE, 1L << 1, key_released, &window);
-	mlx_hook(window.win, EVENT_EXIT, 1L << 17, exit_game, &window);
-	mlx_loop_hook(window.mlx, handle_loop, &window);
-	mlx_loop(window.mlx);
+	init_window(&win);
+	win.screenshot = screenshot;
+	init_map(&win);
+	win.map_malloc = 1;
+	textures = init_textures(&win);
+	win.textures = &textures;
+	player = init_player(&win);
+	win.player = &player;
+	init_keys(&win);
+	win.keys_malloc = 1;
+	parse(argv[1], &win);
+	init_image(&win);
+	win.win = mlx_new_window(win.mlx, win.width, win.height, "cub3D");
+	mlx_hook(win.win, EVENT_KEY_PRESS, 1L << 0, key_pressed, &win);
+	mlx_hook(win.win, EVENT_KEY_RELEASE, 1L << 1, key_released, &win);
+	mlx_hook(win.win, EVENT_EXIT, 1L << 17, exit_game, &win);
+	mlx_loop_hook(win.mlx, handle_loop, &win);
+	mlx_loop(win.mlx);
 	return (0);
 }

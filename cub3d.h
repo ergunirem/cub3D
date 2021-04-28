@@ -6,7 +6,7 @@
 /*   By: icikrikc <icikrikc@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/10 14:36:42 by icikrikc      #+#    #+#                 */
-/*   Updated: 2021/04/28 03:36:40 by icikrikc      ########   odam.nl         */
+/*   Updated: 2021/04/28 16:16:28 by icikrikc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,11 +138,7 @@ typedef struct s_map {
 }				t_map;
 
 typedef struct s_tex {
-	t_image		*north;
-	t_image		*south;
-	t_image		*east;
-	t_image		*west;
-	t_image		*sprite;
+	t_image		tex[5];
 	int			tex_num;
 	int			tex_x;
 	int			tex_y;
@@ -166,9 +162,7 @@ typedef struct s_window {
 	t_image		*image;
 	int			image_malloc;
 	t_tex		*textures;
-	int			tex_malloc;
 	t_player	*player;
-	int			player_malloc;
 	t_keys		*keys;
 	int			keys_malloc;
 }				t_window;
@@ -218,11 +212,10 @@ void		ft_exit(char *msg, t_window *window);
 void		ft_exit_basic(char *msg);
 //init funcs
 void		init_map(t_window *window);
-void		init_textures(t_window *window);
-void		init_player(t_window *window);
+t_tex		init_textures(t_window *window);
+t_player	init_player(t_window *window);
 void		init_keys(t_window *window);
 void		init_image(t_window *window);
-void		init_window(t_window *new_window);
 //bitmap func
 void		create_bitmap(t_window *window, t_image *img);
 #endif
