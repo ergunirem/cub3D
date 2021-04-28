@@ -6,22 +6,11 @@
 /*   By: icikrikc <icikrikc@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/26 20:49:48 by icikrikc      #+#    #+#                 */
-/*   Updated: 2021/04/28 00:44:52 by icikrikc      ########   odam.nl         */
+/*   Updated: 2021/04/28 16:26:32 by icikrikc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-void	init_window(t_window *new_window)
-{
-	ft_memset(new_window, 0, sizeof(t_window));
-	new_window->mlx = mlx_init();
-	if (!new_window->mlx)
-		ft_exit("mlx_init failed\n", new_window);
-	new_window->height = 0;
-	new_window->width = 0;
-	new_window->screenshot = 0;
-}
 
 void	init_map(t_window *window)
 {
@@ -33,53 +22,41 @@ void	init_map(t_window *window)
 	window->map->col_pos = 0;
 	window->map->max_row = 0;
 	window->map->max_col = 0;
+	window->map->arr_malloc = 0;
 	window->map->floor_color = -1;
 	window->map->ceiling_color = -1;
 }
 
-void	init_textures(t_window *window)
+t_tex	init_textures(t_window *window)
 {
-	window->textures = malloc(sizeof(t_tex));
-	if (!window->textures)
-		ft_exit("Malloc failed\n", window);
-	window->textures->north = malloc(sizeof(t_image *));
-	if (!window->textures->north)
-		ft_exit("Malloc failed\n", window);
-	window->textures->south = malloc(sizeof(t_image *));
-	if (!window->textures->south)
-		ft_exit("Malloc failed\n", window);
-	window->textures->west = malloc(sizeof(t_image *));
-	if (!window->textures->west)
-		ft_exit("Malloc failed\n", window);
-	window->textures->east = malloc(sizeof(t_image *));
-	if (!window->textures->east)
-		ft_exit("Malloc failed\n", window);
-	window->textures->sprite = malloc(sizeof(t_image *));
-	if (!window->textures->sprite)
-		ft_exit("Malloc failed\n", window);
-	window->textures->north->endian = -1;
-	window->textures->south->endian = -1;
-	window->textures->east->endian = -1;
-	window->textures->west->endian = -1;
-	window->textures->sprite->endian = -1;
+	t_tex	textures;
+
+	textures.tex_num = 0;
+	textures.tex_x = 0;
+	textures.tex_y = 0;
+	textures.width = 0;
+	textures.height = 0;
+	textures.wall_x = 0;
+	textures.tex_pos = 0;
+	textures.step = 0;
+	return (textures);
 }
 
-void	init_player(t_window *window)
+t_player	init_player(t_window *window)
 {
-	window->player = malloc(sizeof(t_player));
-	if (!window->player)
-		ft_exit("Malloc failed\n", window);
-	ft_bzero(window->player, sizeof(t_player));
-	window->player->pos_x = -20.0;
-	window->player->pos_y = -20.0;
-	window->player->move_speed = 0.10;
-	window->player->dir_x = 1.0;
-	window->player->dir_y = 0.0;
-	window->player->plane_x = -20.0;
-	window->player->plane_y = -20.0;
-	window->player->rotate_speed = 0.10;
-	window->player->cam_height = 1.0;
-	window->player->health = 20;
+	t_player	player;
+
+	player.pos_x = -20.0;
+	player.pos_y = -20.0;
+	player.move_speed = 0.10;
+	player.dir_x = 1.0;
+	player.dir_y = 0.0;
+	player.plane_x = -20.0;
+	player.plane_y = -20.0;
+	player.rotate_speed = 0.10;
+	player.cam_height = 1.0;
+	player.health = 20;
+	return (player);
 }
 
 void	init_keys(t_window *window)
@@ -95,4 +72,23 @@ void	init_keys(t_window *window)
 	window->keys->look_left = 0;
 	window->keys->look_right = 0;
 	window->keys->close = 0;
+}
+
+void	init_image(t_window *window)
+{
+	t_image	*image;
+
+	image = malloc(sizeof(t_image));
+	if (!image)
+		ft_exit("Malloc failed\n", window);
+	ft_bzero(image, sizeof(t_image));
+	image->img = mlx_new_image(window->mlx, window->width, window->height);
+	window->image_malloc = 1;
+	if (!image->img)
+		ft_exit("mlx_new_image failed\n", window);
+	image->addr = mlx_get_data_addr(image->img, &image->bits_per_pixel,
+			&image->line_length, &image->endian);
+	image->width = window->width;
+	image->height = window->height;
+	window->image = image;
 }
