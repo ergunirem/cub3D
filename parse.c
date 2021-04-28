@@ -6,7 +6,7 @@
 /*   By: icikrikc <icikrikc@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/19 10:20:45 by icikrikc      #+#    #+#                 */
-/*   Updated: 2021/04/28 03:28:43 by icikrikc      ########   odam.nl         */
+/*   Updated: 2021/04/28 15:00:22 by icikrikc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,16 +20,8 @@ static void	parse_check(t_window *window)
 		ft_exit("invalid or no color\n", window);
 	if (window->map->floor_color == window->map->ceiling_color)
 		ft_exit("same colour for floor&ceiling\n", window);
-	if (window->textures->north->endian == -1)
-		ft_exit("no north texture path\n", window);
-	if (window->textures->south->endian == -1)
-		ft_exit("no south texture path\n", window);
-	if (window->textures->east->endian == -1)
-		ft_exit("no east texture path\n", window);
-	if (window->textures->west->endian == -1)
-		ft_exit("no west texture path\n", window);
-	if (window->textures->sprite->endian == -1)
-		ft_exit("no sprite texture path\n", window);
+	if (window->textures->tex_num < 5)
+		ft_exit("texture and/or sprite path missing\n", window);
 }
 
 static void	parse_line(t_window *window, char *line, t_list *map_list, int i)
@@ -45,15 +37,15 @@ static void	parse_line(t_window *window, char *line, t_list *map_list, int i)
 	else if (line[i] == 'F' || line[i] == 'C')
 		parse_color(window, line + i);
 	else if (line[i] == 'N' && line[i + 1] == 'O')
-		parse_texture(window, window->textures->north, line + i + 2);
+		parse_texture(window, &window->textures->tex[0], line + i + 2);
 	else if (line[i] == 'S' && line[i + 1] == 'O')
-		parse_texture(window, window->textures->south, line + i + 2);
+		parse_texture(window, &window->textures->tex[1], line + i + 2);
 	else if (line[i] == 'W' && line[i + 1] == 'E')
-		parse_texture(window, window->textures->west, line + i + 2);
+		parse_texture(window, &window->textures->tex[2], line + i + 2);
 	else if (line[i] == 'E' && line[i + 1] == 'A')
-		parse_texture(window, window->textures->east, line + i + 2);
+		parse_texture(window, &window->textures->tex[3], line + i + 2);
 	else if (line[i] == 'S' && line[i + 1] == ' ')
-		parse_texture(window, window->textures->sprite, line + i + 2);
+		parse_texture(window, &window->textures->tex[4], line + i + 2);
 	else if (line[i] == '1' || line[i] == '0')
 		parse_map(window, line, map_list);
 	else if ((line[i] && line[i] != '\0'))
