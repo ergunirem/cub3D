@@ -6,7 +6,7 @@
 /*   By: icikrikc <icikrikc@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/04/06 15:20:14 by icikrikc      #+#    #+#                 */
-/*   Updated: 2021/04/26 16:49:21 by icikrikc      ########   odam.nl         */
+/*   Updated: 2021/04/28 15:02:54 by icikrikc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,13 @@
 t_image	*designate_tex(t_ray *ray, t_window *window, double wall_x)
 {
 	if (ray->side == 0)
-		return (window->textures->north);
+		return (&window->textures->tex[0]);
 	else if (ray->side == 1)
-		return (window->textures->south);
+		return (&window->textures->tex[1]);
 	else if (ray->side == 2)
-		return (window->textures->east);
+		return (&window->textures->tex[2]);
 	else
-		return (window->textures->west);
+		return (&window->textures->tex[3]);
 }
 
 static void	draw_textures(t_ray *ray, t_window *window, t_image *img)
@@ -64,9 +64,9 @@ void	apply_textures(t_ray *ray, t_window *window)
 		tex->tex_x = img->width - tex->tex_x - 1;
 	if ((ray->side == 1 || ray->side == 3) && ray->ray_dir_y < 0)
 		tex->tex_x = img->width - tex->tex_x - 1;
+	// printf("tex-height: %d\n", tex->height);
 	tex->step = 1.0 * 64 / ray->line_height;
 	tex->tex_pos = (ray->draw_start - window->height / 2
 			+ ray->line_height / 2) * tex->step;
-	// printf("y: %d ", img->height);
 	draw_textures(ray, window, img);
 }
