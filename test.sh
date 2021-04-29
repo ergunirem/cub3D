@@ -66,7 +66,7 @@ echo -e "${PURPLE}Invalid char in map ${NORMAL}"
 ./cub3D ./maps/invalid-char.cub
 
 echo -e "${PURPLE}Info Order: Map is not the last info${NORMAL}"
-./cub3D ./maps/invalid-char.cub
+./cub3D ./maps/map-not-last-info.cub
 
 echo -e "${PURPLE}Unknown identifier in map.cub ${NORMAL}"
 ./cub3D ./maps/unknown-identifier.cub
@@ -100,3 +100,21 @@ echo -e "${BLUE}Last row has '0'${NORMAL}"
 
 echo -e "${BLUE}Last col has '0'${NORMAL}"
 ./cub3D ./maps/last-col-error.cub
+
+echo -e "${BLUE}Multiple starting position${NORMAL}"
+./cub3D ./maps/multiple-starting-pos.cub
+
+echo -e "${BLUE}8-floodfill check${NORMAL}"
+./cub3D ./maps/8-floodfill-check.cub
+
+echo -e "${BLUE}invalid grid (left)${NORMAL}"
+./cub3D ./maps/invalid-1st-char-row.cub
+
+echo -e "${BLUE}invalid grid (right)${NORMAL}"
+./cub3D ./maps/invalid-grid-right.cub
+
+echo -e "${BLUE}invalid grid (top)${NORMAL}"
+./cub3D ./maps/invalid-first-row-grid.cub
+
+echo -e "${BLUE}invalid grid (bottom)${NORMAL}"
+./cub3D ./maps/invalid-grid-bottom.cub
