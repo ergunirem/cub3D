@@ -6,7 +6,7 @@
 /*   By: icikrikc <icikrikc@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/23 15:30:38 by icikrikc      #+#    #+#                 */
-/*   Updated: 2021/04/26 16:32:14 by icikrikc      ########   odam.nl         */
+/*   Updated: 2021/04/29 13:21:18 by icikrikc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,13 @@ void	save_map(t_window *window, t_map *map, t_list *map_list)
 		map->map_array[i] = ft_calloc(map->max_col + 1, sizeof(char));
 		if (!map->map_array[i])
 			ft_exit("save_map malloc failed\n", window);
-		j = 0;
-		while (str[j] != '\0')
-		{
+		j = -1;
+		while (str[j++] != '\0')
 			map->map_array[i][j] = str[j];
-			j++;
-		}
+		j--;
+		while (j++ < map->max_col)
+			map->map_array[i][j] = ' ';
+		map->map_array[i][j] = '\0';
 		free(map_list->content);
 		map_list = map_list->next;
 		i++;
