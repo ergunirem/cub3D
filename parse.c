@@ -6,7 +6,7 @@
 /*   By: icikrikc <icikrikc@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/19 10:20:45 by icikrikc      #+#    #+#                 */
-/*   Updated: 2021/04/28 16:51:11 by icikrikc      ########   odam.nl         */
+/*   Updated: 2021/04/29 17:57:56 by icikrikc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,12 +60,12 @@ static void	handle_map(t_window *window, t_list	*map_list)
 		ft_exit("no map provided\n", window);
 	map_list = map_list->next;
 	window->map->max_row = ft_lstsize(map_list);
-	save_map(window, window->map, map_list);
+	save_map(window, window->map, map_list, 0);
 	check_start_pos(window);
 	window->map->arr_malloc = 1;
-	check_borders(window, window->map->max_row, window->map->max_col);
 	check_map(window, window->map->row_pos, window->map->col_pos);
 	restore_map(window->map);
+	check_borders(window);
 	while (map_list)
 	{
 		temp = map_list->next;
@@ -83,8 +83,8 @@ void	parse_map(t_window *window, char *line, t_list *map_list)
 	i = 0;
 	while (line[i])
 	{
-		// if (ft_strchr("012NSEW ", line[i]) == NULL)
-		// 	ft_exit("invalid char inside map\n", window);
+		if (ft_strchr("012NSEW ", line[i]) == NULL)
+			ft_exit("invalid char inside map\n", window);
 		i++;
 	}
 	if (window->map->max_col < ft_strlen(line))
