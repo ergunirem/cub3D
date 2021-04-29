@@ -6,7 +6,7 @@
 /*   By: icikrikc <icikrikc@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/04/06 15:37:02 by icikrikc      #+#    #+#                 */
-/*   Updated: 2021/04/28 16:03:56 by icikrikc      ########   odam.nl         */
+/*   Updated: 2021/04/29 18:48:55 by icikrikc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,15 +46,7 @@ static void	do_projection(t_sprite_info *s, t_window *window, double *sprite)
 		s->draw_end_x = window->width - 1;
 }
 
-/*
-It loops through every vertical stripe of the sprite on screen,
-and if: it's in front of camera plane so you don't see things behind you &&
-it's on the screen (left) && it's on the screen (right) &&
-ZBuffer, with perpendicular distance, then it loops through every pixel of the stripe
-gets the color for each pixel and paints it to the window if not black.
-*/
-
-static void	draw_vertical_stripe(t_sprite_info *s, t_ray *ray, t_window *win)
+static void	vertical_stripe(t_sprite_info *s, t_ray *ray, t_window *win, int h)
 {
 	int	color;
 
@@ -71,8 +63,9 @@ static void	draw_vertical_stripe(t_sprite_info *s, t_ray *ray, t_window *win)
 			while (s->y < s->draw_end_y)
 			{
 				s->d = (s->y) * 256 - win->height * 128 + s->s_height * 128;
-				s->tex_y = ((s->d * 64) / s->s_height) / 256; //change 64 here: it's actually tex_height but there is a problem with it
-				color = my_mlx_pixel_get(&win->textures->tex[4], s->tex_x, s->tex_y);
+				s->tex_y = ((s->d * h) / s->s_height) / 256;
+				color = my_mlx_pixel_get(&win->textures->tex[4],
+						s->tex_x, s->tex_y);
 				if ((color & 0x00FFFFFF) != 0)
 					my_mlx_pixel_set(win->image, s->stripe, s->y, color);
 				s->y++;
@@ -124,7 +117,8 @@ static void	get_spr_distance(t_window *window)
 		window->spr[i][2] = ((window->player->pos_x - window->spr[i][0])
 				* (window->player->pos_x
 					- window->spr[i][0]) + (window->player->pos_y
-					- window->spr[i][1]) * (window->player->pos_y - window->spr[i][1]));
+					- window->spr[i][1]) * (window->player->pos_y
+					- window->spr[i][1]));
 		i++;
 	}
 }
@@ -148,7 +142,7 @@ void	draw_sprites(t_window *window, t_ray *ray)
 	while (i < window->spr_num)
 	{
 		do_projection(s, window, window->spr[i]);
-		draw_vertical_stripe(s, ray, window);
+		vertical_stripe(s, ray, window, window->textures->tex[4].height);
 		i++;
 	}
 	free(s);
