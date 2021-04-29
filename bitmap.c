@@ -6,7 +6,7 @@
 /*   By: icikrikc <icikrikc@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/04/16 15:25:07 by icikrikc      #+#    #+#                 */
-/*   Updated: 2021/04/26 16:30:04 by icikrikc      ########   odam.nl         */
+/*   Updated: 2021/04/29 18:22:54 by icikrikc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,10 +47,12 @@ static void	set_file_header(t_bmp *bmp, t_image *img, t_window *win)
 }
 
 /* InfoHeader(40 bytes): HeaderSize = 40(4 bytes) +
-ImageWidth(4 Bytes) + ImageHeight(4 Bytes) + Planes=1(2 bytes)
+ImageWidth(4 Bytes) + ImageHeight(4 Bytes)
++ Planes=1(2 bytes)
 + BitsPerPixel=0(2 Bytes) + Compression=0(4 Bytes)
 + ImageSize=0(4 bytes) + XpixelsPerMeter=0(4 Bytes)
-+ YpixelsPerMeter=0(4 Bytes) + TotalColors=0(4 Bytes) + ImportantColors=0(4 Bytes)
++ YpixelsPerMeter=0(4 Bytes) + TotalColors=0(4 Bytes)
++ ImportantColors=0(4 Bytes)
 */
 
 static void	set_info_header(t_bmp *bmp, t_image *img, t_window *win)
@@ -76,9 +78,8 @@ static void	set_info_header(t_bmp *bmp, t_image *img, t_window *win)
 		ft_exit("write failed in set_info_header\n", win);
 }
 
-void	create_bitmap(t_window *window, t_image *img)
+void	create_bitmap(t_window *window, t_image *img, int y)
 {
-	int		y;
 	t_bmp	bmp;
 
 	bmp.fd = open("cub3d.bmp", O_CREAT | O_WRONLY, S_IRWXU);
@@ -94,7 +95,8 @@ void	create_bitmap(t_window *window, t_image *img)
 	y = 0;
 	while (y < img->height)
 	{
-		bmp.check = write(bmp.fd, bmp.img + (y * img->line_length), img->width * 4);
+		bmp.check = write(bmp.fd, bmp.img + (y * img->line_length),
+				img->width * 4);
 		if (bmp.check < 0)
 			ft_exit("write failed in create_bitmap\n", window);
 		bmp.check = write(bmp.fd, bmp.pad, bmp.pad_size);
