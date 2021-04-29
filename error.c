@@ -6,7 +6,7 @@
 /*   By: icikrikc <icikrikc@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/20 12:42:41 by icikrikc      #+#    #+#                 */
-/*   Updated: 2021/04/28 16:28:30 by icikrikc      ########   odam.nl         */
+/*   Updated: 2021/04/29 19:13:08 by icikrikc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,18 +25,6 @@ static void	free_map_arr(t_window *window)
 		i++;
 	}
 	free(arr);
-}
-
-static void	free_tex(t_window *window)
-{
-	int	i;
-
-	i = 0;
-	while (i < window->textures->tex_num)
-	{
-		mlx_destroy_image(window->mlx, &window->textures->tex[i]);
-		i++;
-	}
 }
 
 static void	free_spr(t_window *window)
@@ -68,8 +56,6 @@ void	ft_exit(char *msg, t_window *window)
 		free(window->image);
 	if (window->spr)
 		free_spr(window);
-	// if (window->textures)
-	// 	free_tex(window);
 	if (window->mlx && window->win)
 		mlx_destroy_window(window->mlx, window->win);
 	exit(0);
