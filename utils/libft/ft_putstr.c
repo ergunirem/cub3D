@@ -6,7 +6,7 @@
 /*   By: icikrikc <icikrikc@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/11/10 09:24:59 by icikrikc      #+#    #+#                 */
-/*   Updated: 2021/02/23 17:20:45 by icikrikc      ########   odam.nl         */
+/*   Updated: 2021/04/29 19:23:14 by icikrikc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 void	ft_putstr(char *s)
 {
-	size_t len;
+	size_t	len;
 
 	if (!s)
 		return ;
@@ -23,7 +23,7 @@ void	ft_putstr(char *s)
 	write(1, s, len);
 }
 
-int		ft_putstr_protected(char *s)
+int	ft_putstr_protected(char *s)
 {
 	size_t	len;
 	int		ret_val;

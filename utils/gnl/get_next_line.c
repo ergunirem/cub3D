@@ -6,7 +6,7 @@
 /*   By: icikrikc <icikrikc@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/01 07:53:02 by ergunirem     #+#    #+#                 */
-/*   Updated: 2021/02/19 10:36:06 by icikrikc      ########   odam.nl         */
+/*   Updated: 2021/04/29 19:16:47 by icikrikc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ static char	*append_buffer_to_container(char *container, char *buffer)
 	return (tmp);
 }
 
-int			get_next_line(int fd, char **line)
+int	get_next_line(int fd, char **line)
 {
 	static char		*container;
 	char			buffer[100 + 1];

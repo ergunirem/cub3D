@@ -3,10 +3,10 @@
 /*                                                        ::::::::            */
 /*   ft_lstnew.c                                        :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: ergunirem <ergunirem@student.codam.nl>       +#+                     */
+/*   By: icikrikc <icikrikc@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/11/13 09:05:07 by ergunirem     #+#    #+#                 */
-/*   Updated: 2020/11/18 13:40:23 by ergunirem     ########   odam.nl         */
+/*   Updated: 2021/04/29 19:25:34 by icikrikc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 
 t_list	*ft_lstnew(void *content)
 {
-	t_list *new_list;
+	t_list	*new_list;
 
-	new_list = (t_list*)malloc(sizeof(t_list));
+	new_list = (t_list *)malloc(sizeof(t_list));
 	if (!new_list)
 		return (NULL);
 	new_list->content = content;

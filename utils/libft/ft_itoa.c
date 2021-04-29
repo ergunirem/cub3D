@@ -6,15 +6,15 @@
 /*   By: icikrikc <icikrikc@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/11/15 17:10:58 by icikrikc      #+#    #+#                 */
-/*   Updated: 2020/12/31 15:52:41 by icikrikc      ########   odam.nl         */
+/*   Updated: 2021/04/29 19:28:05 by icikrikc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 
-static	int		get_digit_count(long number)
+static	int	get_digit_count(long number)
 {
-	int count;
+	int	count;
 
 	count = 0;
 	if (number <= 0)
@@ -48,7 +48,7 @@ static	char	*fill_in_str(char *str, long n, int len)
 	return (str);
 }
 
-char			*ft_itoa(int nbr)
+char	*ft_itoa(int nbr)
 {
 	int			len;
 	char		*str;
@@ -68,7 +68,7 @@ char			*ft_itoa(int nbr)
 	return (str);
 }
 
-char			*ft_uitoa(unsigned int nbr)
+char	*ft_uitoa(unsigned int nbr)
 {
 	int					len;
 	char				*str;

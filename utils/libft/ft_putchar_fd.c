@@ -6,7 +6,7 @@
 /*   By: icikrikc <icikrikc@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/09/14 08:51:48 by icikrikc      #+#    #+#                 */
-/*   Updated: 2021/01/06 21:29:32 by icikrikc      ########   odam.nl         */
+/*   Updated: 2021/04/29 19:24:16 by icikrikc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	ft_putchar_fd(char c, int fd)
 	write(fd, &c, 1);
 }
 
-int		ft_putchar_fd_protected(char c, int fd)
+int	ft_putchar_fd_protected(char c, int fd)
 {
 	if (write(fd, &c, 1) == -1)
 		return (-1);

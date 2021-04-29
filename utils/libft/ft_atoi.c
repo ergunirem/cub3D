@@ -6,13 +6,13 @@
 /*   By: icikrikc <icikrikc@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/11/15 17:10:58 by icikrikc      #+#    #+#                 */
-/*   Updated: 2020/11/18 13:11:51 by ergunirem     ########   odam.nl         */
+/*   Updated: 2021/04/29 19:28:49 by icikrikc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 static	int	skip_whitespace(const char *str)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (str[i] != '\0')
@@ -35,11 +35,11 @@ static	int	ft_isdigit(const char c)
 	return (0);
 }
 
-int			ft_atoi(const char *str)
+int	ft_atoi(const char *str)
 {
-	int i;
-	int result;
-	int sign;
+	int	i;
+	int	result;
+	int	sign;
 
 	result = 0;
 	sign = 1;

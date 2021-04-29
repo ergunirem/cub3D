@@ -3,10 +3,10 @@
 /*                                                        ::::::::            */
 /*   get_next_line_utils.c                              :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: ergunirem <ergunirem@student.codam.nl>       +#+                     */
+/*   By: icikrikc <icikrikc@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/11/24 10:04:55 by ergunirem     #+#    #+#                 */
-/*   Updated: 2020/12/09 12:32:08 by ergunirem     ########   odam.nl         */
+/*   Updated: 2021/04/29 19:17:42 by icikrikc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 size_t	ft_strlen(const char *s)
 {
-	size_t count;
+	size_t	count;
 
 	count = 0;
 	while (s[count] != '\0')
@@ -89,8 +89,8 @@ char	*ft_strjoin(char const *s1, char const *s2)
 
 	if (!s1 || !s2)
 		return (NULL);
-	joined_str = (char *)malloc(sizeof(char) *
-		(ft_strlen(s1) + ft_strlen(s2) + 1));
+	joined_str = (char *)malloc(sizeof(char)
+			* (ft_strlen(s1) + ft_strlen(s2) + 1));
 	if (!joined_str)
 		return (NULL);
 	i = 0;

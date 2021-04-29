@@ -6,7 +6,7 @@
 /*   By: icikrikc <icikrikc@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/09/15 10:00:31 by icikrikc      #+#    #+#                 */
-/*   Updated: 2021/01/06 17:00:23 by icikrikc      ########   odam.nl         */
+/*   Updated: 2021/04/29 19:20:20 by icikrikc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 size_t	ft_strlen(const char *s)
 {
-	size_t count;
+	size_t	count;
 
 	if (!s)
 		return (0);

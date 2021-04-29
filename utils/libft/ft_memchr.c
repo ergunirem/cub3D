@@ -6,7 +6,7 @@
 /*   By: icikrikc <icikrikc@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/11/15 17:42:12 by icikrikc      #+#    #+#                 */
-/*   Updated: 2020/11/15 19:17:33 by icikrikc      ########   odam.nl         */
+/*   Updated: 2021/04/29 19:25:19 by icikrikc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	*ft_memchr(const void *s, int c, size_t n)
 	unsigned char	*p;
 	unsigned char	converted_c;
 
-	p = (unsigned char	*)s;
+	p = (unsigned char *)s;
 	converted_c = c;
 	i = 0;
 	while (i < n)

@@ -6,7 +6,7 @@
 /*   By: icikrikc <icikrikc@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/11/10 12:47:42 by icikrikc      #+#    #+#                 */
-/*   Updated: 2020/11/17 12:41:37 by icikrikc      ########   odam.nl         */
+/*   Updated: 2021/04/29 19:21:42 by icikrikc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static int	get_word_count(char const *s, char c)
 
 static int	get_word_len(const char *s, char c)
 {
-	int len;
+	int	len;
 
 	len = 0;
 	while (*s != '\0' && *s != c)
@@ -58,7 +58,7 @@ static void	*ft_free_all(char **array, int length)
 	return (NULL);
 }
 
-char		**ft_split(char const *s, char c)
+char	**ft_split(char const *s, char c)
 {
 	char	**array;
 	int		word_count;
@@ -67,7 +67,7 @@ char		**ft_split(char const *s, char c)
 	if (!s)
 		return (NULL);
 	word_count = get_word_count(s, c);
-	array = (char**)malloc(sizeof(s) * (word_count + 1));
+	array = (char **)malloc(sizeof(s) * (word_count + 1));
 	if (!array)
 		return (NULL);
 	i = 0;

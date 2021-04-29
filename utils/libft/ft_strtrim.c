@@ -6,7 +6,7 @@
 /*   By: icikrikc <icikrikc@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/11/17 12:56:35 by icikrikc      #+#    #+#                 */
-/*   Updated: 2020/11/17 20:05:53 by icikrikc      ########   odam.nl         */
+/*   Updated: 2021/04/29 19:20:09 by icikrikc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static	int	get_right_offset(char const *s1, char const *set)
 	return (offset);
 }
 
-char		*ft_strtrim(char const *s1, char const *set)
+char	*ft_strtrim(char const *s1, char const *set)
 {
 	char	*trimmed_str;
 	int		offset_l;

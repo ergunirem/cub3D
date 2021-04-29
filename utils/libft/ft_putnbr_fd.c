@@ -6,7 +6,7 @@
 /*   By: icikrikc <icikrikc@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/11/10 09:24:42 by icikrikc      #+#    #+#                 */
-/*   Updated: 2020/11/16 10:38:09 by ergunirem     ########   odam.nl         */
+/*   Updated: 2021/04/29 19:23:51 by icikrikc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	ft_putnbr_fd(int n, int fd)
 {
-	long	long	nbr;
+	long long	nbr;
 
 	nbr = n;
 	if (nbr < 0)
