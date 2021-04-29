@@ -6,7 +6,7 @@
 /*   By: icikrikc <icikrikc@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/04/05 21:59:01 by icikrikc      #+#    #+#                 */
-/*   Updated: 2021/04/26 16:39:28 by icikrikc      ########   odam.nl         */
+/*   Updated: 2021/04/29 18:31:15 by icikrikc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,15 @@ void	my_mlx_pixel_set(t_image *img, int x, int y, int color)
 	*(unsigned int *)dst = color;
 }
 
-void	color_vertical_line(t_window *window, int color, int draw_start, int draw_end, int x_ray_pix)
+void	color_vertical_line(t_window *window, int draw_start,
+	int draw_end, int x_ray_pix)
 {
+	int	color;
+
+	if (draw_start == 0)
+		color = window->map->ceiling_color;
+	if (draw_end == window->height)
+		color = window->map->floor_color;
 	if (draw_start >= 0)
 	{
 		while (draw_start < draw_end)
