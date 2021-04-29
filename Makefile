@@ -6,7 +6,7 @@
 #    By: icikrikc <icikrikc@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2021/02/10 14:12:56 by icikrikc      #+#    #+#                  #
-#    Updated: 2021/04/28 16:17:24 by icikrikc      ########   odam.nl          #
+#    Updated: 2021/04/29 19:33:41 by icikrikc      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,13 +16,10 @@ RED = \033[38;5;1m
 BLUE = \033[38;5;4m
 
 SRCS	=	utils/gnl/get_next_line.c utils/gnl/get_next_line_utils.c \
-			main.c \
-			parse.c parse_other.c handle_map.c\
-			error.c \
-			init_one.c \
-			hooks.c \
+			main.c error.c init.c \
+			parse.c parse_other.c map_handle.c map_check.c map_check_2.c\
+			hooks.c move.c rotate.c \
 			draw.c ray-casting.c texture.c sprite.c get_sprites.c \
-			move.c rotate.c \
 			pixel_funcs.c bitmap.c\
 
 OBJS	= $(SRCS:.c=.o)
@@ -65,10 +62,3 @@ re: fclean all
 	@echo "$(GREEN)Compiling:$(NORMAL)"
 	$(GCC) $(INCLUDE_H) -c $<  -o $(<:.c=.o)
 	@echo "$(GREEN)Successfully compiled!$(NORMAL)"
-
-# .PHONY: leaks
-# leaks: CC = /usr/local/opt/llvm/bin/clang
-# leaks: CFLAGS += -mlinker-version=450 -fsanitize=address -g
-# leaks: fclean $(NAME)
-# 	ASAN_OPTIONS=detect_leaks=1 ./$(NAME) r-map.cub
-# .PHONY: fclean

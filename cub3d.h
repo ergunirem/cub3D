@@ -6,7 +6,7 @@
 /*   By: icikrikc <icikrikc@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/10 14:36:42 by icikrikc      #+#    #+#                 */
-/*   Updated: 2021/04/28 16:16:28 by icikrikc      ########   odam.nl         */
+/*   Updated: 2021/04/30 00:22:37 by icikrikc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <fcntl.h>
 # include <unistd.h>
 # include <math.h>
+# include <time.h>
 
 # define EVENT_KEY_PRESS		2
 # define EVENT_KEY_RELEASE		3
@@ -175,16 +176,18 @@ int			handle_loop(void *param);
 //pixel funcs
 int			my_mlx_pixel_get(t_image *img, int x, int y);
 void		my_mlx_pixel_set(t_image *img, int x, int y, int color);
+void		color_vertical_line(t_window *window, int draw_start,
+				int draw_end, int x_ray_pix);
 //ray-casting
 void		draw(t_window *window);
-void		color_vertical_line(t_window *window, int color, int draw_start, int draw_end, int x_ray_pix);
 void		cast_ray(t_window *window, t_ray *ray);
 void		init_ray(t_ray *ray, t_player *player, t_window *window);
 void		next_step(t_ray *ray, t_player *player);
 void		get_wall_side(t_ray *ray);
 void		get_distance(t_ray *ray, t_player *player, t_window *window);
 void		set_start_pos(t_window *window, char pos, int j, int i);
-void		set_camera(t_window *win, double dir_x, double plane_x, double plane_y);
+void		set_camera(t_window *win, double dir_x, double plane_x,
+				double plane_y);
 t_image		*designate_tex(t_ray *ray, t_window *window, double wall_x);
 void		apply_textures(t_ray *ray, t_window *window);
 void		draw_sprites(t_window *window, t_ray *ray);
@@ -202,10 +205,12 @@ void		parse_texture(t_window *window, t_image *img, char *line);
 void		parse_resolution(t_window *window, char *line);
 void		parse_color(t_window *window, char *line);
 void		parse_map(t_window *window, char *line, t_list *map_list);
-void		save_map(t_window *window, t_map *map, t_list *map_list);
+void		save_map(t_window *window, t_map *map, t_list *map_list, int i);
 void		check_start_pos(t_window *window);
 void		check_map(t_window *window, int row, int col);
-void		check_borders(t_window *window, int row, int col);
+void		check_borders(t_window *window);
+void		check_bottom(t_window *window);
+void		check_top(t_window *window);
 void		restore_map(t_map *map);
 //exit funcs
 void		ft_exit(char *msg, t_window *window);
@@ -217,5 +222,5 @@ t_player	init_player(t_window *window);
 void		init_keys(t_window *window);
 void		init_image(t_window *window);
 //bitmap func
-void		create_bitmap(t_window *window, t_image *img);
+void		create_bitmap(t_window *window, t_image *img, int y);
 #endif
