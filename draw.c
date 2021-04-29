@@ -6,7 +6,7 @@
 /*   By: icikrikc <icikrikc@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/08 17:56:22 by icikrikc      #+#    #+#                 */
-/*   Updated: 2021/04/28 16:04:29 by icikrikc      ########   odam.nl         */
+/*   Updated: 2021/04/29 18:29:42 by icikrikc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,8 @@ void	cast_ray(t_window *window, t_ray *ray)
 	get_distance(ray, player, window);
 	apply_textures(ray, window);
 	ray->z_buffer[ray->pix] = ray->perp_wall_dist;
-	color_vertical_line(window, window->map->ceiling_color, 0,
-		ray->draw_start, ray->pix);
-	color_vertical_line(window, window->map->floor_color, ray->draw_end,
-		window->height, ray->pix);
+	color_vertical_line(window, 0, ray->draw_start, ray->pix);
+	color_vertical_line(window, ray->draw_end, window->height, ray->pix);
 	ray->pix++;
 }
 
@@ -53,7 +51,7 @@ void	draw(t_window *window)
 	if (window->screenshot == 1)
 	{
 		window->screenshot = 0;
-		create_bitmap(window, window->image);
+		create_bitmap(window, window->image, 0);
 	}
 	mlx_put_image_to_window(window->mlx, window->win, window->image->img, 0, 0);
 	free(ray->z_buffer);
