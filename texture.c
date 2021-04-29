@@ -6,7 +6,7 @@
 /*   By: icikrikc <icikrikc@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/04/06 15:20:14 by icikrikc      #+#    #+#                 */
-/*   Updated: 2021/04/28 15:02:54 by icikrikc      ########   odam.nl         */
+/*   Updated: 2021/04/29 18:54:37 by icikrikc      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static void	draw_textures(t_ray *ray, t_window *window, t_image *img)
 	y = ray->draw_start;
 	while (y < ray->draw_end)
 	{
-		tex->tex_y = (int)tex->tex_pos & (64 - 1);
+		tex->tex_y = (int)tex->tex_pos & (img->height - 1);
 		tex->tex_pos += tex->step;
 		color = my_mlx_pixel_get(img, tex->tex_x, tex->tex_y);
 		my_mlx_pixel_set(window->image, ray->pix, y, color);
@@ -64,8 +64,7 @@ void	apply_textures(t_ray *ray, t_window *window)
 		tex->tex_x = img->width - tex->tex_x - 1;
 	if ((ray->side == 1 || ray->side == 3) && ray->ray_dir_y < 0)
 		tex->tex_x = img->width - tex->tex_x - 1;
-	// printf("tex-height: %d\n", tex->height);
-	tex->step = 1.0 * 64 / ray->line_height;
+	tex->step = 1.0 * img->height / ray->line_height;
 	tex->tex_pos = (ray->draw_start - window->height / 2
 			+ ray->line_height / 2) * tex->step;
 	draw_textures(ray, window, img);
