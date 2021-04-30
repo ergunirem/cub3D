@@ -118,3 +118,6 @@ echo -e "${BLUE}invalid grid (top)${NORMAL}"
 
 echo -e "${BLUE}invalid grid (bottom)${NORMAL}"
 ./cub3D ./maps/invalid-grid-bottom.cub
+
+echo -e "${BLUE}map starts with '2' (valid map identifier but not in the beginning)${NORMAL}"
+./cub3D ./maps/map-starts-w-2.cub

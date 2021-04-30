@@ -6,7 +6,7 @@
 #    By: icikrikc <icikrikc@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2021/02/10 14:12:56 by icikrikc      #+#    #+#                  #
-#    Updated: 2021/04/29 19:33:41 by icikrikc      ########   odam.nl          #
+#    Updated: 2021/04/30 01:54:45 by icikrikc      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,35 +30,45 @@ GCC		= gcc
 
 FLAGS	= -Wall -Wextra -Werror -fsanitize=address -g
 
-INCLUDE_H	= -I minilibx
+HEADER_FILE = cub3d.h
 
-MLX_DIR		=	minilibx_opengl
+MLX_DIR	= minilibx_opengl
+
+MLX_LIB = libmlx.a
+
+LIBFT_DIR = utils/libft
+
+LIBFT_LIB = libft.a
+
+LINKS = -framework OpenGL -framework AppKit
 
 all:	$(NAME)
 
-.PHONY:	clean fclean re bonus bench bclean
-
 $(NAME):	$(OBJS)
-	$(MAKE) bonus -C utils/libft
-	$(MAKE) -C minilibx_opengl
-	$(GCC) $(FLAGS) -o $(NAME) $(OBJS) -L utils/libft -lft -L$(MLX_DIR) -lmlx -framework OpenGL -framework AppKit
+	$(MAKE) bonus -C $(LIBFT_DIR)
+	$(MAKE) -C $(MLX_DIR)
+	$(GCC) $(FLAGS) -o $(NAME) $(OBJS) $(LIBFT_DIR)/$(LIBFT_LIB) $(MLX_DIR)/$(MLX_LIB) $(LINKS)
+
+%.o: %.c $(HEADER_FILE)
+	@echo "$(GREEN)Compiling:$(NORMAL)"
+	$(GCC) -c $< -o $(<:.c=.o)
+	@echo "$(GREEN)Successfully compiled!$(NORMAL)"
 
 clean:
 	@echo "$(RED)Removing all object files...$(NORMAL)"
 	rm -f $(OBJS)
-	make clean -C ./utils/libft
+	make -C $(MLX_DIR) clean
+	make -C $(LIBFT_DIR) clean
 	@echo "$(GREEN)Succesfully removed all object files!$(NORMAL)"
 
 fclean: clean
-	@echo "$(RED)Removing library and bitmap file...$(NORMAL)"
+	@echo "$(RED)Removing libraries and bitmap file...$(NORMAL)"
 	rm -f $(NAME)
 	rm -f cub3d.bmp
-	rm -f ./utils/libft/libft.a
-	@echo "$(GREEN)Successfully removed library and bitmap file!$(NORMAL)"
+	make -C $(MLX_DIR) clean
+	make -C $(LIBFT_DIR) fclean
+	@echo "$(GREEN)Successfully removed libraries and bitmap file!$(NORMAL)"
 
 re: fclean all
 
-%.o: %.c
-	@echo "$(GREEN)Compiling:$(NORMAL)"
-	$(GCC) $(INCLUDE_H) -c $<  -o $(<:.c=.o)
-	@echo "$(GREEN)Successfully compiled!$(NORMAL)"
+.PHONY:	clean fclean re bonus
