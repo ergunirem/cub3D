@@ -232,36 +232,6 @@ study ray-casting
 
 study bitmaps
 
-## TIMELINE OF MY CUB3D JOURNEY
-
-Week 1: I tried to find which sources are out there about this project. I followed the miniLibX tutorial by Harm Smits. It seemed a bit complex in the beginning but once I understood what the library is for, I also understood what the project is all about. My thought is that I will try to draw pixels to a window according to a map consisting of walls, floors, sky etc. This window is seen from the player's perspective (this is where ray-casting comes into play but I will look into it after I completely figure out miniLibX and changing how window looks upon events). So, the next step is to change the window view (player's perspective) every time an event happens like moving forward or backward & looking up and down etc.)
-
-Week 2: Finally, I was able to change the image once an event happened and put it to the window. (changing colours, moving the square) MiniLibX tutorial is finished. + I tried to come up with a basic structure for the code by examining different examples. + I started parsing the scene description file!
-
-Week 3: Parsed resolution, colours, textures! Parsed the map = a bit harder than expected. Wrote error functions and parse check function to avoid any errors. Wrote a bash script to check every possible error with example maps. + Followed lodev's ray-casting tutorial and tried to understand its logic. Took notes on how to apply it to my project.
-
-Week 4: Light week due to back pain. Mostly implemented lodev's untextured raycasting logic to my cub3D but there was a bug and it took me the whole week to figure it out but in the end I was able to draw the player's perspective with the walls coloured based on their side. Here is a pic of how it looked like. Remaining parts for next week: adding textures to walls, sprites, moving with keys and rotating the view.
-
-![just-walls](pics/just-walls.png)
-
-Week 5: Finally able to move around the map. Moving up, down, left, right and looking left and right.  
-
-Week 6: Implemented lodev's textured raycasting logic to my cub3D. The only difference is that lodev generated the textures but I upload it from an image. It's a bit hard to grasp for me. So, I researched how to get the color info from an image based on the position of the pixel. It's still not clear to me at the end of this week I have an overall structure which needs some bug fixing.  I finally understood how to get color info from texture images. It's basically the inverse of putting pixels to the screen image. Check out my pixel_get and pixel_put functions. At the end of the week, I applied different textures to each side of the wall. I also draw floor and ceiling with different colour parsed from map.cub.
-
-![textures](pics/texture.png)
-
-Week 7: Implemented lodev's sprites logic to my cub3D. The difference with lodev is that cub3D uses one type of sprite.png. Also, only the sprites in player's view should be drawn. So, while raycasting the coordinates of each sprite in the view should be saved. I've used linked list to store these values. It's been a bumpy road (with a lot of segfaults and speed problems) > Later on I changed this approach and saved sprites and their coordinates in the parsing part and applied sprite drawing. In the end, only the ones in the view are drawn when calculations are taken into consideration. This way, I got rid of using malloc in the game loop which was really dangerous memory-wise.
-
-![sprites](pics/sprite.png)
-
-Week 8: Whole week was spent trying to solve the speed problem with sprites. I took so long and got so boring that I tried to write the screenshot bitmap part. There are some memory problems but I think I got the hang of it. With sprites, I thought it might be a memory problem and spent a good day on re-learning how to check memory leaks. While doing so I accidentally deleted all the printf's in my sprite code (I was using them to see the coordinates), and VOLA the speed problem disappeared! It turned out to be just calling too many printf's in my mlx_loop. (19.04.2021)
-
-Week 9:  Wrote sort_sprite function to draw sprites from furthest to nearest. Fixed further sprite inside near sprite problem. Wrote the functions to save the first rendered image in bmp format when its second argument is "––save". Separated ft_exit and ft_exit_basic (for validate_input part) to prevent seg fault before window is created. 
-
-Week 10:  rewrote the sprite and texture handling. adjusted max resolution problem. adjusted code to fulfil the following requirement "the screenshot needs to be taken, without any window being opened" checked for memory leaks and norm compliance. learnt apple Instruments for leaks and how to build a docker environment with linux to use valgrind. wrote a whole new logic for checking the funny shaped maps like the one in the subject.pdf example. In the end, with 8 floodfiil I am checking if the player cannot escape the walls + literal meaning of 'map should be surrounded by walls' and checking each char in the outer walls.
-
----
-
 ## Makefile
 
 Since libft functions are allowed in this project, we have to add that to our directory and find a way to create libft. So, in the green part first I am compiling libft eventually creating libft.a and using it as a libray to compile program. As for get_next_line, I put it in the srcs part and just compiled with everything else since it will not create a library. 
